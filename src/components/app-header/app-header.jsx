@@ -7,8 +7,8 @@ import headerStyles from './app-header.module.css';
 const AppHeader = () => {
   
   return (
-    <header className={`${headerStyles.header} mt-10 mr-10 ml-10`} >
-      <ul className={`${headerStyles.content}`}>
+    <header className={headerStyles.header} >
+      <ul className={headerStyles.content}>
         <li className={headerStyles.menu__item}>
           <nav className={headerStyles.menu__wrapper}>
             <ul className={headerStyles.menu}>

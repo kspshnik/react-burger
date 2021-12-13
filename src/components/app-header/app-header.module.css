@@ -1,6 +1,6 @@
 .header {
   height: 88px;
-  width: calc(100% - 80px);
+  width: calc(100%);
   background-color: var(--background);
   display: flex;
   flex-flow: row nowrap;
