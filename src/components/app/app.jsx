@@ -1,5 +1,5 @@
 import React from "react";
-// import AppHeader from '../app-header/app-header';
+import AppHeader from '../app-header/app-header';
 
 import '@ya.praktikum/react-developer-burger-ui-components';
 // import appStyles from 'app.module.css';
@@ -7,6 +7,7 @@ import '@ya.praktikum/react-developer-burger-ui-components';
 const App = () => {
   return (
     <>
+      <AppHeader />
     </>
   )
 }
