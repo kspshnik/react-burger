@@ -211,4 +211,4 @@ const ingredients = [
   }
 ];
 
-export default ingredients;
+export { ingredients };
