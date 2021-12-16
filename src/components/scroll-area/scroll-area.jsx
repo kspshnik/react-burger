@@ -2,9 +2,10 @@ import React from "react";
 
 const ScrollArea = React.forwardRef(({contentClass, children}, ref ) =>  {
   return (
-    <div ref={ref} className={contentClass}>
-      {children}
+    <div className={contentClass} ref={ref}>
+        {children}
     </div>
   )
 });
+
 export default ScrollArea;
