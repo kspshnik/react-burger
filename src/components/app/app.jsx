@@ -12,7 +12,7 @@ import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 
 const App = () => {
-  const [ingredients, setIngredients] = useState({});
+  const [ingredients, setIngredients] = useState(null);
   const [order, setOrder] = useState(initialOrder);
 
   const addIngredient = (id) => {
