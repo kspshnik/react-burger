@@ -6,7 +6,7 @@
   max-height: calc(100vh - var(--header__height));
   height: 100vh;
   overflow: hidden;
-  }
+}
 
 .header {
   display: flex;
@@ -14,7 +14,7 @@
   justify-content: flex-start;
   align-items: flex-end;
   width: 100%;
-  }
+}
 
 .title {
   margin-block-start: 0;
@@ -23,14 +23,14 @@
   margin-inline-end: 0;
   padding-inline-start: 0;
   text-align: left;
-  }
+}
 
 .menu {
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
   align-items: center;
-  }
+}
 
 .scroll {
   overflow-y: scroll;
@@ -39,12 +39,21 @@
   justify-content: flex-start;
   align-items: center;
   height: 100%;
-  }
+}
 
 .grid {
   display: flex;
   flex-flow: row wrap;
   justify-content: flex-start;
   align-items: center;
-  }
-  
+}
+
+.loading {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+}
+

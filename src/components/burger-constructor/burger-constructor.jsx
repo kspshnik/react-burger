@@ -11,6 +11,7 @@ import ingredientsContext from '../../contexts/ingredientsContext';
 import bcStyles from './burger-constructor.module.css';
 
 import ScrollArea from '../scroll-area/scroll-area';
+import Preloader from '../preloader/preloader';
 
 const BurgerConstructor = ({ order, minusCallback }) => {
   const ingredients = useContext(ingredientsContext);
@@ -32,7 +33,7 @@ const BurgerConstructor = ({ order, minusCallback }) => {
 
   return (
     <>
-      {!isDataLoaded && <p className={bcStyles.loading}>Информация загружается...</p>}
+      {!isDataLoaded && <div className={bcStyles.loading}><Preloader /></div>}
       {isDataLoaded && (
         <section className={`${bcStyles.section} pt-25`}>
           {!!bun && (

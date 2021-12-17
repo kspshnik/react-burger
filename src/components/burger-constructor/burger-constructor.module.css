@@ -6,12 +6,12 @@
   max-height: calc(100vh - var(--header__height));
   height: 100vh;
   overflow: hidden;
-  }
+}
 
 .scroll {
   overflow-y: scroll;
   width: 100%;
-  }
+}
 
 .grid {
   display: flex;
@@ -24,7 +24,7 @@
   margin-inline-end: 0;
   padding-inline-start: 0;
   list-style: none outside;
-  }
+}
 
 .item {
   display: flex;
@@ -32,21 +32,21 @@
   justify-content: flex-end;
   align-items: center;
   width: calc(100% - 16px);
-  }
+}
 
 .drag {
   display: flex;
   flex-flow: column nowrap;
   justify-content: center;
   align-items: flex-end;
-  }
+}
 
 .price {
   display: flex;
   flex-flow: row nowrap;
   justify-content: center;
   align-items: center;
-  }
+}
 
 .footer {
   display: flex;
@@ -54,4 +54,13 @@
   justify-content: flex-end;
   align-items: center;
   width: 100%;
-  }
+}
+
+.loading {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+}

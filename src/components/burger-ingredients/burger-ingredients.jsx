@@ -1,15 +1,16 @@
 import React, {
   useContext, useEffect, useRef, useState,
 } from 'react';
+import PropTypes from 'prop-types';
 
 import { useInView } from 'react-intersection-observer';
 
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
-import PropTypes from 'prop-types';
+import biStyles from './burger-ingredients.module.css';
+
 import ScrollArea from '../scroll-area/scroll-area';
 import IngredientCard from '../ingredient-card/ingredient-card';
-
-import biStyles from './burger-ingredients.module.css';
+import Preloader from '../preloader/preloader';
 
 import ingredientsContext from '../../contexts/ingredientsContext';
 
@@ -39,7 +40,7 @@ const BurgerIngredients = ({ order, plusCallback }) => {
   }, [ingredients]);
   return (
     <>
-      {!isDataLoaded && <p className={biStyles.loading}>Информация загружается...</p>}
+      {!isDataLoaded && <div className={biStyles.loading}><Preloader /></div>}
       {isDataLoaded && (
         <section className={biStyles.section}>
           <header className={`${biStyles.header} pt-10 pb-5`}>
