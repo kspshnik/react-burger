@@ -15,10 +15,10 @@ import ScrollArea from '../scroll-area/scroll-area';
 const BurgerConstructor = ({ order, minusCallback }) => {
   const ingredients = useContext(ingredientsContext);
   const [isDataLoaded, setDataState] = useState(false);
-  const [bun, setBun] = useState({});
+  const [bun, setBun] = useState(null);
   useEffect(() => {
-    if (!!ingredients && Object.keys(ingredients).length !== 0) {
-      const isBun = order.some((item) => ingredients[item].type === 'bun');
+    if (ingredients) {
+      const isBun = order.some((item) => ingredients[item]?.type === 'bun');
       if (isBun) {
         setBun(order.find((item) => ingredients[item]?.type === 'bun'));
       } else {
