@@ -1,5 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 
+import PropTypes from 'prop-types';
+
 import { ConstructorElement, DragIcon, CurrencyIcon, Button, } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import ingredientsContext from "../../contexts/ingredientsContext";
@@ -26,7 +28,7 @@ const BurgerConstructor = ({order, minusCallback}) => {
   useEffect(() => {
     setDataState(Object.keys(ingredients).length !== 0);
   },[ingredients]);
-  
+
   return (
     <>
       {!isDataLoaded && <p className={bcStyles.loading}>Информация загружается...</p>}
@@ -65,7 +67,7 @@ const BurgerConstructor = ({order, minusCallback}) => {
                              thumbnail={ingredients[ bun ]?.image_mobile}
                              price={ingredients[ bun ]?.price}/>
         </div>}
-       
+
         <footer className={bcStyles.footer}>
           <div className={`${bcStyles.price} mr-10`}>
             <p className='text text_type_digits-medium pr-2'>
@@ -82,5 +84,10 @@ const BurgerConstructor = ({order, minusCallback}) => {
     </>
   )
 }
+
+BurgerConstructor.propTypes = {
+  order         : PropTypes.arrayOf(PropTypes.string).isRequired,
+  minusCallback : PropTypes.func.isRequired
+};
 
 export default BurgerConstructor;
