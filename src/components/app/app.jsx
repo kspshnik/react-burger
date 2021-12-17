@@ -1,17 +1,19 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import AppHeader                                   from '../app-header/app-header';
 
 import '@ya.praktikum/react-developer-burger-ui-components';
 import appStyles from './app.module.css';
 
-import { ingredients as ingredientsData } from '../../utils/data';
+import { ingredients as ingredientsData, initialOrder } from '../../utils/data';
 
 import ingredientsContext from "../../contexts/ingredientsContext";
-import BurgerIngredients  from "../burger-ingredients/burger-ingredients";
+
+import BurgerIngredients from "../burger-ingredients/burger-ingredients";
+import BurgerConstructor from "../burger-constructor/burger-constructor";
 
 const App = () => {
-  const [ingredients, setIngredients] = useState({ });
-  const [order, setOrder] = useState([]);
+  const [ingredients, setIngredients] = useState({});
+  const [order, setOrder] = useState(initialOrder);
   
 const addIngredient = (id) => {
   console.log(`Добавляем ингредиент с id = '${id}!'`);
@@ -19,15 +21,16 @@ const addIngredient = (id) => {
     console.error(`Нет ингредиента с id = '${id}'!!!`);
     return;
   }
-  if ((ingredients[id].type === 'bun') && order.some((item) => item.id === id)) {
-    // будет заменено на показ модалки с сообщением об ошибке
-    console.warn(`Не бывает двух булок в одном заказе!!!'!!!`);
-    return undefined;
-  }
+  console.log(`Тип добавляемого ингредиента: '${ingredients[id]?.type}'.`)
+  if (ingredients[id]?.type === 'bun') {
+    console.log(`Замена булочки!`);
+    setOrder([...order.filter(( item ) => ingredients[item]?.type !== 'bun'), id]);
+  } else {
     setOrder([...order, id]);
+  }
   };
     const removeIngredient = (id) => {
-    setOrder(order.filter((item) => item !== id));
+    setOrder([...order.filter(item => item !== id), ...order.filter(item => item === id).slice(0, order.filter(item => item === id).length - 1)]);
   };
   useEffect(() => {
     // на втором этапе будет добавлено получение данных с API вместо захардкоженных
@@ -44,6 +47,7 @@ const addIngredient = (id) => {
       <div className={appStyles.wrapper}>
         <main className= {appStyles.main}>
           <BurgerIngredients order={order} plusCallback={(ingr) => {addIngredient(ingr)}} />
+          <BurgerConstructor order={order} minusCallback={(ingr) => {removeIngredient(ingr)}} />
         </main>
       </div>
       </ingredientsContext.Provider>
