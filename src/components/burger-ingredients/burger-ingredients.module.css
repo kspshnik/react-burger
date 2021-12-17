@@ -41,13 +41,6 @@
   height: 100%;
 }
 
-.grid {
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: flex-start;
-  align-items: center;
-}
-
 .loading {
   width: 100%;
   height: 100%;
