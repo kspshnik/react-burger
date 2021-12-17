@@ -1,25 +1,40 @@
 import React from 'react';
 
-import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import PropTypes from 'prop-types';
-import cardStyles from './ingredient-card.module.css';
+import icStyles from './ingredient-card.module.css';
 
 const IngredientCard = ({
   id, name, price, count, img, plusCallback,
-}) => <li className='list-item'>
-    <article className={`${cardStyles.card} `}>
-      {count > 0 ? (<Counter size='default' count={count} />) : (<></>)}
-    <img src={img} alt={name} className={cardStyles.image} />
-      <div className={`${ cardStyles.pricing } p-2`}>
-        <p className={`text text_type_digits-default mr-2`}>{price}</p>
-        <CurrencyIcon type="primary" />
-      </div>
-      <h4 className={`text text_type_main-default`} onClick={() => {
-        plusCallback(id);
-      }}>{name}</h4>
-    </article>
+}) => {
+  const handleNameClick = () => plusCallback(id);
+  const handleKeyPressOnName = (evt) => {
+    if ((evt.target === evt.currentTarget) && (evt.key === 'Enter' || evt.key === 'Space')) {
+      plusCallback(id);
+    }
+  };
+  return (
+    <li className='list-item'>
+      <article className={`${icStyles.card} `}>
+        {count > 0 ? (<Counter size='default' count={count} />) : ('')}
+        <img src={img} alt={name} className={icStyles.image} />
+        <div className={`${icStyles.pricing} p-2`}>
+          <p className='text text_type_digits-default mr-2'>{price}</p>
+          <CurrencyIcon type='primary' />
+        </div>
+        <button
+          className={`${icStyles.add} text text_type_main-default`}
+          type='button'
+          tabIndex='0'
+          onClick={handleNameClick}
+          onKeyPress={handleKeyPressOnName}>
+          {name}
+        </button>
+      </article>
     </li>
+  );
+};
 
 IngredientCard.defaultProps = {
   count: 0,
