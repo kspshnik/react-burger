@@ -1,10 +1,10 @@
 import React from 'react';
-import './Preloader.css';
+import plStyles from './preloader.module.css';
 
 const Preloader = () => (
-  <div className='preloader'>
-    <div className='preloader__container'>
-      <span className='preloader__round' />
+  <div className={plStyles.preloader}>
+    <div className={plStyles.preloader__container}>
+      <span className={plStyles.preloader__round} />
     </div>
   </div>
 );
