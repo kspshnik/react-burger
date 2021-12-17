@@ -17,10 +17,10 @@ const BurgerConstructor = ({ order, minusCallback }) => {
   const [isDataLoaded, setDataState] = useState(false);
   const [bun, setBun] = useState(null);
 
-  const calculateTotal = () => order.reduce(
+  const calculateTotal = React.useMemo(() => ((!!ingredients && !!bun) ? order.reduce(
     (total, item) => total + ingredients[item].price,
-    ingredients[bun]?.price,
-  );
+    ingredients[bun].price,
+  ) : 0), [order, bun, ingredients]);
 
   useEffect(() => {
     if (ingredients) {
@@ -69,7 +69,7 @@ const BurgerConstructor = ({ order, minusCallback }) => {
           <footer className={`${bcStyles.footer} mb-3 mr-5`}>
             <div className={`${bcStyles.price} mr-10`}>
               <p className='text text_type_digits-medium pr-2'>
-                {calculateTotal()}
+                {calculateTotal}
               </p>
               <CurrencyIcon type='primary' />
             </div>
