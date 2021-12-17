@@ -4,13 +4,22 @@
   justify-content: flex-start;
   align-items: center;
   max-height: calc(100vh - var(--header__height));
-  height: 100vh;
+  height: 100%;
   overflow: hidden;
 }
 
 .scroll {
   overflow-y: scroll;
   width: 100%;
+}
+
+.wrapper {
+  max-height: calc(100% - 212px);
+  height: 100%;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+  align-items: center;
 }
 
 .price {

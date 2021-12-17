@@ -40,32 +40,33 @@ const BurgerConstructor = ({ order, minusCallback }) => {
     <>
       {!isDataLoaded && <div className={bcStyles.loading}><Preloader /></div>}
       {isDataLoaded && (
-        <section className={`${bcStyles.section} pt-25`}>
-          {!!bun && (
-            <div className='pb-2'>
-              <ConstructorElement
-                type='top'
-                isLocked
-                text={`${ingredients[bun]?.name} (верх)`}
-                thumbnail={ingredients[bun]?.image_mobile}
-                price={ingredients[bun]?.price} />
-            </div>
-          )}
-          <ScrollArea contentClass={`${bcStyles.scroll} custom-scroll`}>
-            <ConstructorGrid minusCallback={minusCallback} order={order} />
-          </ScrollArea>
-          {!!bun && (
-            <div className='pt-2 pb-10'>
-              <ConstructorElement
-                type='bottom'
-                isLocked
-                text={`${ingredients[bun]?.name} (низ)`}
-                thumbnail={ingredients[bun]?.image_mobile}
-                price={ingredients[bun]?.price} />
-            </div>
-          )}
-
-          <footer className={bcStyles.footer}>
+        <section className={`${bcStyles.section} mt-25 mb-10`}>
+          <main className={bcStyles.wrapper}>
+            {!!bun && (
+              <div className='pb-2'>
+                <ConstructorElement
+                  type='top'
+                  isLocked
+                  text={`${ingredients[bun]?.name} (верх)`}
+                  thumbnail={ingredients[bun]?.image_mobile}
+                  price={ingredients[bun]?.price} />
+              </div>
+            )}
+            <ScrollArea contentClass={`${bcStyles.scroll} custom-scroll`}>
+              <ConstructorGrid minusCallback={minusCallback} order={order} />
+            </ScrollArea>
+            {!!bun && (
+              <div className='pt-2 pb-10'>
+                <ConstructorElement
+                  type='bottom'
+                  isLocked
+                  text={`${ingredients[bun]?.name} (низ)`}
+                  thumbnail={ingredients[bun]?.image_mobile}
+                  price={ingredients[bun]?.price} />
+              </div>
+            )}
+          </main>
+          <footer className={`${bcStyles.footer} mb-3 mr-5`}>
             <div className={`${bcStyles.price} mr-10`}>
               <p className='text text_type_digits-medium pr-2'>
                 {calculateTotal()}
