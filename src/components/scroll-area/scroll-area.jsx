@@ -13,9 +13,13 @@ ScrollArea.defaultProps = {
   ref: null,
 };
 ScrollArea.propTypes = {
-  contentClass : PropTypes.string.isRequired,
-  children: PropTypes.node.isRequired,
-  ref: PropTypes.node,
+  contentClass: PropTypes.string.isRequired,
+  children    : PropTypes.node.isRequired,
+  ref         : PropTypes.oneOfType([
+                                      PropTypes.shape({
+                                              current: PropTypes.node
+                                            }),
+                                      null]),
 };
 
 export default ScrollArea;
