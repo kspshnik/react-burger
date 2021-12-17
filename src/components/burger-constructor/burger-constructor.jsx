@@ -18,8 +18,7 @@ const BurgerConstructor = ({ order, minusCallback }) => {
   const [bun, setBun] = useState(null);
   useEffect(() => {
     if (ingredients) {
-      const isBun = order.some((item) => ingredients[item]?.type === 'bun');
-      if (isBun) {
+      if (order.some((item) => ingredients[item]?.type === 'bun')) {
         setBun(order.find((item) => ingredients[item]?.type === 'bun'));
       } else {
         setBun(Object.values(ingredients).find((item) => ingredients[item]?.type === 'bun'));
