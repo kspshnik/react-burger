@@ -33,6 +33,7 @@ const BurgerIngredients = function ({ order, plusCallback }) {
     root: baseRef.current,
   });
   const [isDataLoaded, setDataState] = useState(false);
+
   useEffect(() => {
     setDataState(!!ingredients);
   }, [ingredients]);
