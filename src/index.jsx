@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import App from './components/app/app';
 
 import './index.css';
-import ErrorBoundary from './components/error-boundary/ErrorBoundary';
+import ErrorBoundary from './components/error-boundary/error-boundary';
 
 ReactDOM.render(
   <React.StrictMode>
