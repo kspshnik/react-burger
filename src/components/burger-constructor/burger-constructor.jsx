@@ -2,9 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 
 import PropTypes from 'prop-types';
 
-import {
-  Button, ConstructorElement, CurrencyIcon, DragIcon,
-} from '@ya.praktikum/react-developer-burger-ui-components';
+import { Button, ConstructorElement, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import ingredientsContext from '../../contexts/ingredientsContext';
 
@@ -12,11 +10,18 @@ import bcStyles from './burger-constructor.module.css';
 
 import ScrollArea from '../scroll-area/scroll-area';
 import Preloader from '../preloader/preloader';
+import ConstructorGrid from '../constructor-grid/constructor-grid';
 
 const BurgerConstructor = ({ order, minusCallback }) => {
   const ingredients = useContext(ingredientsContext);
   const [isDataLoaded, setDataState] = useState(false);
   const [bun, setBun] = useState(null);
+
+  const calculateTotal = () => order.reduce(
+    (total, item) => total + ingredients[item].price,
+    ingredients[bun]?.price,
+  );
+
   useEffect(() => {
     if (ingredients) {
       if (order.some((item) => ingredients[item]?.type === 'bun')) {
@@ -47,31 +52,7 @@ const BurgerConstructor = ({ order, minusCallback }) => {
             </div>
           )}
           <ScrollArea contentClass={`${bcStyles.scroll} custom-scroll`}>
-            <ul className={bcStyles.grid}>
-              {order.filter((item) => ingredients[item]?.type === 'sauce')
-                .concat(order.filter((item) => ingredients[item]?.type === 'main'))
-                .map((item, index) => {
-                  const {
-                    _id, name, price, image_mobile,
-                  } = ingredients[item];
-                  return (
-                    // Индекс используется _совместно_ с _id именно для целей уникальности:
-                    //  могут быть выбраны два и более одинаковых ингредиента
-                    // eslint-disable-next-line react/no-array-index-key
-                    <li className={`${bcStyles.item} p-2`} key={`${_id}-${index}`}>
-                      <div className={`${bcStyles.drag} pr-1`}>
-                        <DragIcon type='secondary' />
-                      </div>
-                      <ConstructorElement
-                        isLocked={false}
-                        text={name}
-                        price={price}
-                        thumbnail={image_mobile}
-                        handleClose={() => minusCallback(_id)} />
-                    </li>
-                  );
-                })}
-            </ul>
+            <ConstructorGrid minusCallback={minusCallback} order={order} />
           </ScrollArea>
           {!!bun && (
             <div className='pt-2 pb-10'>
@@ -87,10 +68,7 @@ const BurgerConstructor = ({ order, minusCallback }) => {
           <footer className={bcStyles.footer}>
             <div className={`${bcStyles.price} mr-10`}>
               <p className='text text_type_digits-medium pr-2'>
-                {order.reduce(
-                  (total, item) => total + ingredients[item].price,
-                  ingredients[bun]?.price,
-                )}
+                {calculateTotal()}
               </p>
               <CurrencyIcon type='primary' />
             </div>
