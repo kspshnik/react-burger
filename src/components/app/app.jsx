@@ -31,6 +31,7 @@ const App = () => {
         .slice(0, order.filter((item) => item === id)
           .length - 1)]);
   };
+
   useEffect(() => {
     // на втором этапе будет добавлено получение данных с API вместо захардкоженных
     setIngredients(ingredientsData.reduce((acc, ingredient) => {
@@ -47,14 +48,10 @@ const App = () => {
           <main className={appStyles.main}>
             <BurgerIngredients
               order={order}
-              plusCallback={(ingr) => {
-                addIngredient(ingr);
-              }} />
+              plusCallback={addIngredient} />
             <BurgerConstructor
               order={order}
-              minusCallback={(ingr) => {
-                removeIngredient(ingr);
-              }} />
+              minusCallback={removeIngredient} />
           </main>
         </div>
       </ingredientsContext.Provider>
