@@ -43,7 +43,9 @@ const App = () => {
       setIngredientsLoadigState(true);
       try {
         const ingredientsData = await burgerAPI.getIngredients();
-        setIngredients(ingredientsData.reduce((acc, ingredient) => {
+        console.log('Данные, полученные в App:');
+        console.dir(ingredientsData);
+        setIngredients(ingredientsData.data.reduce((acc, ingredient) => {
           acc[ingredient._id] = ingredient;
           return acc;
         }, {}));

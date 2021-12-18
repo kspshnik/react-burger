@@ -12,8 +12,11 @@ class API {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' },
     };
+    console.log(`Формируем URL: '${this._base}${this._routes.ingredients}'`);
     const ingredientsPromise = fetch(`${this._base}${this._routes.ingredients}`, options);
     const ingredientsResponse = await ingredientsPromise;
+    console.log('Полученный ответ:');
+    console.dir(ingredientsResponse);
     return ingredientsResponse.json();
   }
 }
