@@ -1,0 +1,18 @@
+.main {
+  display: grid;
+  grid-template-columns: repeat(2, 600px);
+  gap: 0 40px;
+  overflow: hidden;
+  max-height: calc(100vh - var(--header__height));
+  height: 100vh;
+  }
+
+.wrapper {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  max-height: calc(100vh - var(--header__height));
+  height: 100vh;
+  }

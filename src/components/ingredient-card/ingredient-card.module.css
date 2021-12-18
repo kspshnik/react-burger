@@ -1,0 +1,28 @@
+.card {
+  width: 272px;
+  height: 208px;
+  position: relative;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.image {
+  display: block;
+  width: 240px;
+  height: 120px;
+}
+
+.pricing {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.add {
+  border: none;
+  background-color: transparent;
+  color: inherit;
+}
