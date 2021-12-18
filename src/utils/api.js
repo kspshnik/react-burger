@@ -7,7 +7,18 @@ class API {
     //    this._jwt = '';
   }
 
-  /*  async signUp(name, email, password) {
+  async getIngredients() {
+    const options = {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' },
+    };
+    const ingredientsPromise = fetch(`${this._base}${this._routes.ingredients}`, options);
+    const ingredientsResponse = await ingredientsPromise;
+    return ingredientsResponse.json();
+  }
+}
+
+/*  async signUp(name, email, password) {
       const options = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -96,17 +107,6 @@ class API {
     this._jwt = token;
   }
    */
-
-  async getIngredients() {
-    const options = {
-      method: 'GET',
-      headers: { 'Content-Type': 'application/json' },
-    };
-    const ingredientsPromise = fetch(this._routes.ingredients, options);
-    const ingredientsResponse = await ingredientsPromise;
-    return ingredientsResponse.json();
-  }
-}
 
 const burgerAPI = new API(BACKEND_ROUTES);
 export default burgerAPI;
