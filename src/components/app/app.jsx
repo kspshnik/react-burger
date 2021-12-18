@@ -16,7 +16,7 @@ import burgerAPI from '../../utils/api';
 const App = () => {
   const [ingredients, setIngredients] = useState(null);
   const [order, setOrder] = useState(initialOrder);
-  const [isIngredientsLoading, setIngredientsLoadigState] = useState(false);
+  const [isIngredientsLoading, setIngredientsLoadingState] = useState(false);
   const [isLoadingError, setLoadingErrorState] = useState(false);
   const [loadingError, setLoadingError] = useState('');
 
@@ -38,13 +38,10 @@ const App = () => {
   };
 
   useEffect(() => {
-    // на втором этапе будет добавлено получение данных с API вместо захардкоженных
     async function getIngredientsData() {
-      setIngredientsLoadigState(true);
+      setIngredientsLoadingState(true);
       try {
         const ingredientsData = await burgerAPI.getIngredients();
-        console.log('Данные, полученные в App:');
-        console.dir(ingredientsData);
         setIngredients(ingredientsData.data.reduce((acc, ingredient) => {
           acc[ingredient._id] = ingredient;
           return acc;
@@ -55,7 +52,7 @@ const App = () => {
         console.dir(err);
         setLoadingError(err.name);
       } finally {
-        setIngredientsLoadigState(false);
+        setIngredientsLoadingState(false);
       }
     }
 
