@@ -11,7 +11,13 @@ const IngredientsGrid = ({ order, plusCallback, type }) => {
   const ingredients = useContext(ingredientsContext);
   const ingredientsValues = ingredients ? Object.values(ingredients) : [];
 
-  const count = (id) => order.filter((val) => val === id).length;
+  const count = (id) => {
+    let preCount = order.filter((val) => val === id).length;
+    if (ingredients[id].type === 'bun' && order.includes(id)) {
+      preCount += 1;
+    }
+    return preCount;
+  };
   return (
     <ul className={icStyles.grid}>
       {ingredientsValues.filter((el) => el.type === type).map((item) => (

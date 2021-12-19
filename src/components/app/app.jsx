@@ -13,7 +13,7 @@ import burgerAPI from '../../utils/api';
 
 const App = () => {
   const [ingredients, setIngredients] = useState(null);
-  const [order, setOrder] = useState(initialOrder);
+  const [order, setOrder] = useState(null);
   const [isIngredientsLoading, setIngredientsLoadingState] = useState(false);
   const [isLoadingError, setLoadingErrorState] = useState(false);
   const [loadingError, setLoadingError] = useState('');
@@ -69,10 +69,10 @@ const App = () => {
         <div className={appStyles.wrapper}>
           <main className={appStyles.main}>
             <BurgerIngredients
-              order={order}
+              order={order || []}
               plusCallback={addIngredient} />
             <BurgerConstructor
-              order={order}
+              order={order || []}
               minusCallback={removeIngredient}
               plusCallback={addIngredient} />
           </main>

@@ -83,7 +83,7 @@ const BurgerIngredients = ({ order, plusCallback }) => {
 };
 
 BurgerIngredients.propTypes = {
-  order: PropTypes.arrayOf(PropTypes.string).isRequired,
+  order: PropTypes.oneOf([PropTypes.arrayOf(PropTypes.string), null]).isRequired,
   plusCallback: PropTypes.func.isRequired,
 };
 

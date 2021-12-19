@@ -17,14 +17,16 @@ const BurgerConstructor = ({ order, minusCallback, plusCallback }) => {
   const [isDataLoaded, setDataState] = useState(false);
   const [bun, setBun] = useState(null);
 
-  const calculateTotal = React.useMemo(() => ((!!ingredients && !!bun) ? order.reduce(
-    (total, item) => {
-      console.log(`В подсчёте общей суммы. \n!!ingredients = ${!!ingredients}, !!bun = ${!!bun}.\nitem = '${item}', total = ${total}./n ingredients.[item]:`);
-      console.dir(ingredients[item]);
-      return total + ingredients[item].price;
-    },
-    ingredients[bun]?.price,
-  ) : 0), [order, bun, ingredients]);
+  const calculateTotal = React.useMemo(() => ((!!ingredients && !!bun && order.length > 0)
+    ? order.reduce(
+      (total, item) => {
+        console.log(`В подсчёте общей суммы. \n!!ingredients = ${!!ingredients}, !!bun = ${!!bun}.\nitem = '${item}', total = ${total}./n ingredients.[item]:`);
+        console.dir(ingredients[item]);
+        return total + ingredients[item].price;
+      },
+      ingredients[bun]?.price,
+    )
+    : 0), [order, bun, ingredients]);
 
   useEffect(() => {
     console.log('Order in BurgerConstructor:');
