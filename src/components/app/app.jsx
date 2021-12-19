@@ -20,22 +20,22 @@ const App = () => {
   const [isLoadingError, setLoadingErrorState] = useState(false);
   const [loadingError, setLoadingError] = useState('');
 
-  const addIngredient = (id) => {
+  const addIngredient = React.useCallback((id) => {
     if (!ingredients[id]) {
       return;
     }
     if (ingredients[id]?.type === 'bun') {
-      setOrder([...order.filter((item) => ingredients[item]?.type !== 'bun'), id]);
+      setOrder((oldOrder) => [...oldOrder.filter((item) => ingredients[item]?.type !== 'bun'), id]);
     } else {
-      setOrder([...order, id]);
+      setOrder((oldOrder) => [...oldOrder, id]);
     }
-  };
-  const removeIngredient = (id) => {
-    setOrder([...order.filter((item) => item !== id),
-      ...order.filter((item) => item === id)
-        .slice(0, order.filter((item) => item === id)
+  }, []);
+  const removeIngredient = React.useCallback((id) => {
+    setOrder((oldOrder) => [...oldOrder.filter((item) => item !== id),
+      ...oldOrder.filter((item) => item === id)
+        .slice(0, oldOrder.filter((item) => item === id)
           .length - 1)]);
-  };
+  }, []);
 
   useEffect(() => {
     async function getIngredientsData() {
@@ -57,7 +57,14 @@ const App = () => {
     }
 
     getIngredientsData();
+    console.log('Установили ингредиенты!');
   }, []);
+
+  useEffect(() => {
+    const orderIds = Object.keys(ingredients);
+    console.log('в новом эффекте!');
+    setOrder((oldOrder) => oldOrder.filter((item) => orderIds.includes(item)));
+  }, [ingredients]);
 
   return (
     <>
@@ -70,7 +77,8 @@ const App = () => {
               plusCallback={addIngredient} />
             <BurgerConstructor
               order={order}
-              minusCallback={removeIngredient} />
+              minusCallback={removeIngredient}
+              plusCallback={addIngredient} />
           </main>
         </div>
       </ingredientsContext.Provider>

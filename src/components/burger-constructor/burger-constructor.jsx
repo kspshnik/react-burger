@@ -12,25 +12,37 @@ import ScrollArea from '../scroll-area/scroll-area';
 import Preloader from '../preloader/preloader';
 import ConstructorGrid from '../constructor-grid/constructor-grid';
 
-const BurgerConstructor = ({ order, minusCallback }) => {
+const BurgerConstructor = ({ order, minusCallback, plusCallback }) => {
   const ingredients = useContext(ingredientsContext);
   const [isDataLoaded, setDataState] = useState(false);
   const [bun, setBun] = useState(null);
 
   const calculateTotal = React.useMemo(() => ((!!ingredients && !!bun) ? order.reduce(
-    (total, item) => total + ingredients[item].price,
-    ingredients[bun].price,
+    (total, item) => {
+      console.log(`В подсчёте общей суммы. \n!!ingredients = ${!!ingredients}, !!bun = ${!!bun}.\nitem = '${item}', total = ${total}./n ingredients.[item]:`);
+      console.dir(ingredients[item]);
+      return total + ingredients[item].price;
+    },
+    ingredients[bun]?.price,
   ) : 0), [order, bun, ingredients]);
 
   useEffect(() => {
-    if (ingredients) {
+    console.log('Order in BurgerConstructor:');
+    console.dir(order);
+    console.log('Ingredients in BurgerConstructor:');
+    console.dir(ingredients);
+    if (ingredients && order.length > 0) {
       if (order.some((item) => ingredients[item]?.type === 'bun')) {
+        console.log('Есть булка в заказе!');
         setBun(order.find((item) => ingredients[item]?.type === 'bun'));
       } else {
-        setBun(Object.values(ingredients).find((item) => ingredients[item]?.type === 'bun'));
+        console.log('Нет булки в заказе!');
+        console.dir(Object.values(ingredients).find((item) => item.type === 'bun')?._id);
+        console.log(Object.values(ingredients).find((item) => ingredients[item]?.type === 'bun')?._id);
+        plusCallback(Object.values(ingredients).find((item) => item.type === 'bun')?._id);
       }
     }
-  }, [ingredients, order]);
+  }, [ingredients, order, plusCallback]);
 
   useEffect(() => {
     setDataState(!!ingredients);
@@ -84,6 +96,7 @@ const BurgerConstructor = ({ order, minusCallback }) => {
 BurgerConstructor.propTypes = {
   order: PropTypes.arrayOf(PropTypes.string).isRequired,
   minusCallback: PropTypes.func.isRequired,
+  plusCallback: PropTypes.func.isRequired,
 };
 
 export default BurgerConstructor;
