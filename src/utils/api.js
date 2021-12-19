@@ -1,4 +1,5 @@
 import { BACKEND_ROUTES } from '../react-burger.config';
+import { initialOrder } from './data';
 
 class API {
   constructor(server) {
@@ -15,6 +16,16 @@ class API {
     const ingredientsPromise = fetch(`${this._base}${this._routes.ingredients}`, options);
     const ingredientsResponse = await ingredientsPromise;
     return ingredientsResponse.json();
+  }
+
+  // Мок получения данных с сервера
+  // Подавление ошибки линтера включено сознательно - здесь _не_ _нужны_
+  // поля класса, данные для мока импортируются.
+  // eslint-disable-next-line class-methods-use-this
+  async getOrder() {
+    return new Promise((resolve) => {
+      setTimeout(() => resolve(initialOrder), 100);
+    });
   }
 }
 

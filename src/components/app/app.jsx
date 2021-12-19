@@ -4,8 +4,6 @@ import AppHeader from '../app-header/app-header';
 import '@ya.praktikum/react-developer-burger-ui-components';
 import appStyles from './app.module.css';
 
-import { initialOrder } from '../../utils/data';
-
 import ingredientsContext from '../../contexts/ingredientsContext';
 
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
@@ -29,7 +27,7 @@ const App = () => {
     } else {
       setOrder((oldOrder) => [...oldOrder, id]);
     }
-  }, []);
+  }, [ingredients]);
   const removeIngredient = React.useCallback((id) => {
     setOrder((oldOrder) => [...oldOrder.filter((item) => item !== id),
       ...oldOrder.filter((item) => item === id)
@@ -38,14 +36,18 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    async function getIngredientsData() {
+    async function getData() {
       setIngredientsLoadingState(true);
       try {
-        const ingredientsData = await burgerAPI.getIngredients();
+        const [ingredientsData, orderData] = await Promise.all(
+          [burgerAPI.getIngredients(), burgerAPI.getOrder()],
+        );
+        const allIds = ingredientsData.data.reduce((acc, item) => [...acc, item._id], []);
         setIngredients(ingredientsData.data.reduce((acc, ingredient) => {
           acc[ingredient._id] = ingredient;
           return acc;
         }, {}));
+        setOrder(orderData.filter((item) => allIds.includes(item)));
       } catch (err) {
         setLoadingErrorState(true);
         // TODO: Сделать нормальное модальное окно с ошибкой.
@@ -56,15 +58,9 @@ const App = () => {
       }
     }
 
-    getIngredientsData();
-    console.log('Установили ингредиенты!');
+    getData();
+    console.log('Установили ингредиенты и заказ!');
   }, []);
-
-  useEffect(() => {
-    const orderIds = Object.keys(ingredients);
-    console.log('в новом эффекте!');
-    setOrder((oldOrder) => oldOrder.filter((item) => orderIds.includes(item)));
-  }, [ingredients]);
 
   return (
     <>
