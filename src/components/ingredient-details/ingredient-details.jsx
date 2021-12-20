@@ -1,12 +1,12 @@
 import React from 'react';
 
 import PropTypes from 'prop-types';
-import ingredientsContext from '../../contexts/ingredientsContext';
+import IngredientsContext from '../../contexts/ingredientsContext';
 
 import idStyles from './ingredient-details.module.css';
 
 const IngredientDetails = ({ id }) => {
-  const ingredients = React.useContext(ingredientsContext);
+  const ingredients = React.useContext(IngredientsContext);
   const {
     name, image_large, proteins, fat,
     carbohydrates,

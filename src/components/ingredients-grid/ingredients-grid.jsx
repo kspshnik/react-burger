@@ -5,12 +5,12 @@ import icStyles from './ingredients-grid.module.css';
 
 import IngredientCard from '../ingredient-card/ingredient-card';
 
-import ingredientsContext from '../../contexts/ingredientsContext';
+import IngredientsContext from '../../contexts/ingredientsContext';
 
 const IngredientsGrid = ({
   order, plusCallback, detailsCallback, type,
 }) => {
-  const ingredients = useContext(ingredientsContext);
+  const ingredients = useContext(IngredientsContext);
   const ingredientsValues = ingredients ? Object.values(ingredients) : [];
 
   const count = (id) => {

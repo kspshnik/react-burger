@@ -11,11 +11,11 @@ import biStyles from './burger-ingredients.module.css';
 import ScrollArea from '../scroll-area/scroll-area';
 import Preloader from '../preloader/preloader';
 
-import ingredientsContext from '../../contexts/ingredientsContext';
+import IngredientsContext from '../../contexts/ingredientsContext';
 import IngredientsGrid from '../ingredients-grid/ingredients-grid';
 
 const BurgerIngredients = ({ order, plusCallback, detailsCallback }) => {
-  const ingredients = useContext(ingredientsContext);
+  const ingredients = useContext(IngredientsContext);
   const baseRef = useRef(null);
   const bunsRef = useRef(null);
   const saucesRef = useRef(null);

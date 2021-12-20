@@ -6,7 +6,7 @@ import AppHeader from '../app-header/app-header';
 import '@ya.praktikum/react-developer-burger-ui-components';
 import appStyles from './app.module.css';
 
-import ingredientsContext from '../../contexts/ingredientsContext';
+import IngredientsContext from '../../contexts/ingredientsContext';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 
@@ -84,7 +84,7 @@ const App = () => {
   return (
     <>
       <AppHeader />
-      <ingredientsContext.Provider value={ingredients}>
+      <IngredientsContext.Provider value={ingredients}>
         <div className={appStyles.wrapper}>
           <main className={appStyles.main}>
             <BurgerIngredients
@@ -117,7 +117,7 @@ const App = () => {
             )}
           </Portal>
         )}
-      </ingredientsContext.Provider>
+      </IngredientsContext.Provider>
 
     </>
   );

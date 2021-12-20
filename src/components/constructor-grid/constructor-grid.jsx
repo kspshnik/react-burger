@@ -4,10 +4,10 @@ import PropTypes from 'prop-types';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import cgStyles from './constructor-grid.module.css';
 
-import ingredientsContext from '../../contexts/ingredientsContext';
+import IngredientsContext from '../../contexts/ingredientsContext';
 
 const ConstructorGrid = ({ order, minusCallback }) => {
-  const ingredients = useContext(ingredientsContext);
+  const ingredients = useContext(IngredientsContext);
   const itemsToMap = order.filter((item) => ingredients[item]?.type === 'sauce')
     .concat(order.filter((item) => ingredients[item]?.type === 'main')).map((item) => ingredients[item]);
   const getKey = (id) => `${id}-${Math.random() * Date.now()}`;

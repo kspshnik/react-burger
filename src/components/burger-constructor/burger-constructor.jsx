@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import { Button, ConstructorElement, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import ingredientsContext from '../../contexts/ingredientsContext';
+import IngredientsContext from '../../contexts/ingredientsContext';
 
 import bcStyles from './burger-constructor.module.css';
 import ScrollArea from '../scroll-area/scroll-area';
@@ -14,7 +14,7 @@ import ConstructorGrid from '../constructor-grid/constructor-grid';
 const BurgerConstructor = ({
   order, minusCallback, plusCallback, detailsCallback,
 }) => {
-  const ingredients = useContext(ingredientsContext);
+  const ingredients = useContext(IngredientsContext);
   const [isDataLoaded, setDataState] = useState(false);
   const [bun, setBun] = useState(null);
 

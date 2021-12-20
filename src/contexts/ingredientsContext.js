@@ -1,4 +1,4 @@
 import React from 'react';
 
-const ingredientsContext = React.createContext();
-export default ingredientsContext;
+const IngredientsContext = React.createContext();
+export default IngredientsContext;
