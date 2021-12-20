@@ -12,7 +12,7 @@ import Preloader from '../preloader/preloader';
 import ConstructorGrid from '../constructor-grid/constructor-grid';
 
 const BurgerConstructor = ({
-  order, minusCallback, plusCallback, detailsCallback,
+  minusCallback, plusCallback, detailsCallback, order,
 }) => {
   const ingredients = useContext(IngredientsContext);
   const [isDataLoaded, setDataState] = useState(false);
