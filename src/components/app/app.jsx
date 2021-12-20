@@ -11,7 +11,6 @@ import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 
 import burgerAPI from '../../utils/api';
-import Portal from '../portal/portal';
 import portalReducer from '../../reducers/portal-reducer';
 import {
   ACTION_CLOSE, ACTION_OPEN_INGREDIENT, ACTION_OPEN_ORDER, ACTION_SHOW_ERROR,
@@ -24,7 +23,6 @@ import ErrorPopup from '../error-popup/error-popup';
 const App = () => {
   const [ingredients, setIngredients] = useState(null);
   const [order, setOrder] = useState(null);
-  const [isPortal, setPortalState] = useState(false);
   const [isModal, modalDispatch] = useReducer(portalReducer, {
     ingredient: false,
     order: false,
@@ -57,9 +55,6 @@ const App = () => {
   const handleOpenOrder = () => modalDispatch(ACTION_OPEN_ORDER);
   // const showError = () => modalDispatch(ACTION_SHOW_ERROR);
   useEffect(() => {
-    setPortalState(isModal.ingredient || isModal.order || isModal.error);
-  }, [isModal.ingredient, isModal.order, isModal.error]);
-  useEffect(() => {
     async function getData() {
       try {
         const [ingredientsData, orderData] = await Promise.all(
@@ -73,7 +68,6 @@ const App = () => {
         setOrder(orderData.filter((item) => allIds.includes(item)));
       } catch (err) {
         // TODO: Сделать нормальное модальное окно с ошибкой.
-        console.dir(err);
         modalDispatch({ ...ACTION_SHOW_ERROR, payload: err.message });
       }
     }
@@ -98,25 +92,22 @@ const App = () => {
               plusCallback={addIngredient} />
           </main>
         </div>
-        {isPortal && (
-          <Portal handleClose={handlePortalClose}>
-            {isModal.ingredient && (
-              <Modal title='Детали ингредиента' onClose={handlePortalClose}>
-                <IngredientDetails id={isModal.id} />
-              </Modal>
-            )}
-            {isModal.order && (
-              <Modal onClose={handlePortalClose}>
-                <OrderDetails />
-              </Modal>
-            )}
-            {isModal.error && (
-              <Modal onClose={handlePortalClose}>
-                <ErrorPopup message={isModal.message} />
-              </Modal>
-            )}
-          </Portal>
+        {isModal.ingredient && (
+          <Modal title='Детали ингредиента' onClose={handlePortalClose}>
+            <IngredientDetails id={isModal.id} />
+          </Modal>
         )}
+        {isModal.order && (
+          <Modal onClose={handlePortalClose}>
+            <OrderDetails />
+          </Modal>
+        )}
+        {isModal.error && (
+          <Modal onClose={handlePortalClose}>
+            <ErrorPopup message={isModal.message} />
+          </Modal>
+        )}
+
       </IngredientsContext.Provider>
 
     </>
