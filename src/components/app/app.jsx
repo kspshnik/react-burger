@@ -74,7 +74,6 @@ const App = () => {
 
     getData();
   }, []);
-
   return (
     <>
       <AppHeader />
