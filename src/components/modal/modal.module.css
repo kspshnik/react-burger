@@ -9,6 +9,10 @@
   background-color: var(--background);
   opacity: 1;
   z-index: 199;
+  position: fixed;
+  top: 20vh;
+  left: calc((100vw - 720px) / 2);
+
 }
 
 .header {

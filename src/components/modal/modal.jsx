@@ -27,7 +27,8 @@ const Modal = ({
     };
   }, [onClose, portalRoot, portalElement]);
   return ReactDOM.createPortal((
-    <ModalOverlay onClose={onClose}>
+    <>
+      <ModalOverlay onClose={onClose} />
       <div className={`${mdStyles.modal} p-10`}>
         <header className={mdStyles.header}>
           <div className={mdStyles.caption}>
@@ -39,7 +40,7 @@ const Modal = ({
           children
         }
       </div>
-    </ModalOverlay>), portalElement);
+    </>), portalElement);
 };
 Modal.defaultProps = {
   title: '   ',
