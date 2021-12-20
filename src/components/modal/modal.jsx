@@ -10,9 +10,7 @@ import ModalOverlay from '../modal-overlay/modal-overlay';
 const Modal = ({
   onClose, title, children,
 }) => {
-  const portalElement = useMemo(() => document.createElement('div'), []);
-  portalElement.id = 'modal';
-  const portalRoot = useMemo(() => document.body, []);
+  const portalRoot = useMemo(() => document.getElementById('modals'), []);
   useEffect(() => {
     const handleEscClose = (evt) => {
       if (evt.key === 'Escape') {
@@ -20,12 +18,10 @@ const Modal = ({
       }
     };
     document.addEventListener('keydown', handleEscClose);
-    portalRoot.appendChild(portalElement);
     return () => {
       document.removeEventListener('keydown', handleEscClose);
-      portalRoot.removeChild(portalElement);
     };
-  }, [onClose, portalRoot, portalElement]);
+  }, [onClose, portalRoot]);
   return ReactDOM.createPortal((
     <>
       <ModalOverlay onClose={onClose} />
@@ -40,7 +36,7 @@ const Modal = ({
           children
         }
       </div>
-    </>), portalElement);
+    </>), portalRoot);
 };
 Modal.defaultProps = {
   title: '   ',
