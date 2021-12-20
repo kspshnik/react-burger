@@ -7,40 +7,29 @@ import { Button, ConstructorElement, CurrencyIcon } from '@ya.praktikum/react-de
 import ingredientsContext from '../../contexts/ingredientsContext';
 
 import bcStyles from './burger-constructor.module.css';
-
 import ScrollArea from '../scroll-area/scroll-area';
 import Preloader from '../preloader/preloader';
 import ConstructorGrid from '../constructor-grid/constructor-grid';
 
-const BurgerConstructor = ({ order, minusCallback, plusCallback }) => {
+const BurgerConstructor = ({
+  order, minusCallback, plusCallback, detailsCallback,
+}) => {
   const ingredients = useContext(ingredientsContext);
   const [isDataLoaded, setDataState] = useState(false);
   const [bun, setBun] = useState(null);
 
   const calculateTotal = React.useMemo(() => ((!!ingredients && !!bun && order.length > 0)
     ? order.reduce(
-      (total, item) => {
-        console.log(`В подсчёте общей суммы. \n!!ingredients = ${!!ingredients}, !!bun = ${!!bun}.\nitem = '${item}', total = ${total}./n ingredients.[item]:`);
-        console.dir(ingredients[item]);
-        return total + ingredients[item].price;
-      },
+      (total, item) => total + ingredients[item].price,
       ingredients[bun]?.price,
     )
     : 0), [order, bun, ingredients]);
 
   useEffect(() => {
-    console.log('Order in BurgerConstructor:');
-    console.dir(order);
-    console.log('Ingredients in BurgerConstructor:');
-    console.dir(ingredients);
     if (ingredients && order.length > 0) {
       if (order.some((item) => ingredients[item]?.type === 'bun')) {
-        console.log('Есть булка в заказе!');
         setBun(order.find((item) => ingredients[item]?.type === 'bun'));
       } else {
-        console.log('Нет булки в заказе!');
-        console.dir(Object.values(ingredients).find((item) => item.type === 'bun')?._id);
-        console.log(Object.values(ingredients).find((item) => ingredients[item]?.type === 'bun')?._id);
         plusCallback(Object.values(ingredients).find((item) => item.type === 'bun')?._id);
       }
     }
@@ -87,7 +76,13 @@ const BurgerConstructor = ({ order, minusCallback, plusCallback }) => {
               </p>
               <CurrencyIcon type='primary' />
             </div>
-            <Button type='primary' size='medium'>Оформить заказ</Button>
+            <Button
+              type='primary'
+              size='medium'
+              onClick={detailsCallback}>
+              Оформить
+              заказ
+            </Button>
           </footer>
         </section>
       )}
@@ -99,6 +94,7 @@ BurgerConstructor.propTypes = {
   order: PropTypes.arrayOf(PropTypes.string).isRequired,
   minusCallback: PropTypes.func.isRequired,
   plusCallback: PropTypes.func.isRequired,
+  detailsCallback: PropTypes.func.isRequired,
 };
 
 export default BurgerConstructor;
