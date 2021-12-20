@@ -15,7 +15,10 @@ class API {
     };
     const ingredientsPromise = fetch(`${this._base}${this._routes.ingredients}`, options);
     const ingredientsResponse = await ingredientsPromise;
-    return ingredientsResponse.json();
+    if (ingredientsResponse.ok) {
+      return ingredientsResponse.json();
+    }
+    return Promise.reject(ingredientsResponse.status);
   }
 
   // Мок получения данных с сервера
