@@ -5,13 +5,21 @@ import icStyles from './ingredients-grid.module.css';
 
 import IngredientCard from '../ingredient-card/ingredient-card';
 
-import ingredientsContext from '../../contexts/ingredientsContext';
+import IngredientsContext from '../../contexts/ingredientsContext';
 
-const IngredientsGrid = ({ order, plusCallback, type }) => {
-  const ingredients = useContext(ingredientsContext);
+const IngredientsGrid = ({
+  order, plusCallback, detailsCallback, type,
+}) => {
+  const ingredients = useContext(IngredientsContext);
   const ingredientsValues = ingredients ? Object.values(ingredients) : [];
 
-  const count = (id) => order.filter((val) => val === id).length;
+  const count = (id) => {
+    let preCount = order.filter((val) => val === id).length;
+    if (ingredients[id].type === 'bun' && order.includes(id)) {
+      preCount += 1;
+    }
+    return preCount;
+  };
   return (
     <ul className={icStyles.grid}>
       {ingredientsValues.filter((el) => el.type === type).map((item) => (
@@ -22,6 +30,7 @@ const IngredientsGrid = ({ order, plusCallback, type }) => {
           img={item.image}
           count={count(item._id)}
           plusCallback={plusCallback}
+          detailsCallback={detailsCallback}
           key={item._id} />
       ))}
     </ul>
@@ -31,6 +40,7 @@ const IngredientsGrid = ({ order, plusCallback, type }) => {
 IngredientsGrid.propTypes = {
   order: PropTypes.arrayOf(PropTypes.string).isRequired,
   plusCallback: PropTypes.func.isRequired,
+  detailsCallback: PropTypes.func.isRequired,
   type: PropTypes.string.isRequired,
 };
 

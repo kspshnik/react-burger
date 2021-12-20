@@ -1,0 +1,23 @@
+.content {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.image {
+  display: block;
+}
+
+.subtitle {
+  margin-block-start: 0;
+  margin-block-end: 0;
+  margin-inline-start: 0;
+  margin-inline-end: 0;
+}
+
+.props {
+  display: grid;
+  grid-template-columns: 120px repeat(3, 112px);
+  gap: 8px 20px;
+}

@@ -26,3 +26,13 @@
   background-color: transparent;
   color: inherit;
 }
+
+.details {
+  cursor: pointer;
+  box-sizing: border-box;
+  background-color: transparent;
+  margin: 0;
+  padding: 0;
+  border: none;
+  display: block;
+}

@@ -4,33 +4,36 @@ import PropTypes from 'prop-types';
 
 import { Button, ConstructorElement, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import ingredientsContext from '../../contexts/ingredientsContext';
+import IngredientsContext from '../../contexts/ingredientsContext';
 
 import bcStyles from './burger-constructor.module.css';
-
 import ScrollArea from '../scroll-area/scroll-area';
 import Preloader from '../preloader/preloader';
 import ConstructorGrid from '../constructor-grid/constructor-grid';
 
-const BurgerConstructor = ({ order, minusCallback }) => {
-  const ingredients = useContext(ingredientsContext);
+const BurgerConstructor = ({
+  minusCallback, plusCallback, detailsCallback, order,
+}) => {
+  const ingredients = useContext(IngredientsContext);
   const [isDataLoaded, setDataState] = useState(false);
   const [bun, setBun] = useState(null);
 
-  const calculateTotal = React.useMemo(() => ((!!ingredients && !!bun) ? order.reduce(
-    (total, item) => total + ingredients[item].price,
-    ingredients[bun].price,
-  ) : 0), [order, bun, ingredients]);
+  const calculateTotal = React.useMemo(() => ((!!ingredients && !!bun && order.length > 0)
+    ? order.reduce(
+      (total, item) => total + ingredients[item].price,
+      ingredients[bun]?.price,
+    )
+    : 0), [order, bun, ingredients]);
 
   useEffect(() => {
-    if (ingredients) {
+    if (ingredients && order.length > 0) {
       if (order.some((item) => ingredients[item]?.type === 'bun')) {
         setBun(order.find((item) => ingredients[item]?.type === 'bun'));
       } else {
-        setBun(Object.values(ingredients).find((item) => ingredients[item]?.type === 'bun'));
+        plusCallback(Object.values(ingredients).find((item) => item.type === 'bun')?._id);
       }
     }
-  }, [ingredients, order]);
+  }, [ingredients, order, plusCallback]);
 
   useEffect(() => {
     setDataState(!!ingredients);
@@ -73,7 +76,13 @@ const BurgerConstructor = ({ order, minusCallback }) => {
               </p>
               <CurrencyIcon type='primary' />
             </div>
-            <Button type='primary' size='medium'>Оформить заказ</Button>
+            <Button
+              type='primary'
+              size='medium'
+              onClick={detailsCallback}>
+              Оформить
+              заказ
+            </Button>
           </footer>
         </section>
       )}
@@ -84,6 +93,8 @@ const BurgerConstructor = ({ order, minusCallback }) => {
 BurgerConstructor.propTypes = {
   order: PropTypes.arrayOf(PropTypes.string).isRequired,
   minusCallback: PropTypes.func.isRequired,
+  plusCallback: PropTypes.func.isRequired,
+  detailsCallback: PropTypes.func.isRequired,
 };
 
 export default BurgerConstructor;

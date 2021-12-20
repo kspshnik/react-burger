@@ -11,11 +11,11 @@ import biStyles from './burger-ingredients.module.css';
 import ScrollArea from '../scroll-area/scroll-area';
 import Preloader from '../preloader/preloader';
 
-import ingredientsContext from '../../contexts/ingredientsContext';
+import IngredientsContext from '../../contexts/ingredientsContext';
 import IngredientsGrid from '../ingredients-grid/ingredients-grid';
 
-const BurgerIngredients = ({ order, plusCallback }) => {
-  const ingredients = useContext(ingredientsContext);
+const BurgerIngredients = ({ order, plusCallback, detailsCallback }) => {
+  const ingredients = useContext(IngredientsContext);
   const baseRef = useRef(null);
   const bunsRef = useRef(null);
   const saucesRef = useRef(null);
@@ -65,15 +65,19 @@ const BurgerIngredients = ({ order, plusCallback }) => {
           <ScrollArea ref={baseRef} contentClass={`${biStyles.scroll} custom-scroll`}>
             <div ref={bunsWatchRef}>
               <h3 ref={bunsRef} className='{$biStyles.title} text text_type_main-medium mb-6 mt-10'>Булки</h3>
-              <IngredientsGrid order={order} plusCallback={plusCallback} type='bun' />
+              <IngredientsGrid order={order} plusCallback={plusCallback} detailsCallback={detailsCallback} type='bun' />
             </div>
             <div ref={saucesWatchRef}>
               <h3 ref={saucesRef} className='{$biStyles.title} text text_type_main-medium mb-6 mt-10'>Соусы</h3>
-              <IngredientsGrid order={order} plusCallback={plusCallback} type='sauce' />
+              <IngredientsGrid
+                order={order}
+                plusCallback={plusCallback}
+                detailsCallback={detailsCallback}
+                type='sauce' />
             </div>
             <div ref={mainsWatchRef}>
               <h3 ref={mainsRef} className='{$biStyles.title} text text_type_main-medium mb-6 mt-10'>Начинки</h3>
-              <IngredientsGrid order={order} plusCallback={plusCallback} type='main' />
+              <IngredientsGrid order={order} plusCallback={plusCallback} detailsCallback={detailsCallback} type='main' />
             </div>
           </ScrollArea>
         </section>
@@ -85,6 +89,7 @@ const BurgerIngredients = ({ order, plusCallback }) => {
 BurgerIngredients.propTypes = {
   order: PropTypes.arrayOf(PropTypes.string).isRequired,
   plusCallback: PropTypes.func.isRequired,
+  detailsCallback: PropTypes.func.isRequired,
 };
 
 export default BurgerIngredients;
