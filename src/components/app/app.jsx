@@ -1,6 +1,9 @@
 import React, {
   useCallback, useEffect, useReducer, useState,
 } from 'react';
+
+import * as Sentry from '@sentry/react';
+
 import AppHeader from '../app-header/app-header';
 
 import '@ya.praktikum/react-developer-burger-ui-components';
@@ -113,4 +116,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default Sentry.withProfiler(App);
