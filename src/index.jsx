@@ -3,11 +3,14 @@ import ReactDOM from 'react-dom';
 
 import * as Sentry from '@sentry/react';
 import { Integrations } from '@sentry/tracing';
+import LogRocket from 'logrocket';
 
 import App from './components/app/app';
 
 import './index.css';
 import ErrorBoundary from './components/error-boundary/error-boundary';
+
+LogRocket.init('owbpwl/react-burger');
 
 Sentry.init({
   dsn: 'https://f37c7f225379469fb19d16f6454f4529@o1127696.ingest.sentry.io/6169821',
