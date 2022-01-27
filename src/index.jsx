@@ -14,7 +14,11 @@ import ErrorBoundary from './components/error-boundary/error-boundary';
 LogRocket.init('owbpwl/react-burger');
 // after calling LogRocket.init()
 setupLogRocketReact(LogRocket);
-
+LogRocket.getSessionURL((sessionURL) => {
+  Sentry.configureScope((scope) => {
+    scope.setExtra('sessionURL', sessionURL);
+  });
+});
 Sentry.init({
   dsn: 'https://f37c7f225379469fb19d16f6454f4529@o1127696.ingest.sentry.io/6169821',
   integrations: [new Integrations.BrowserTracing()],
