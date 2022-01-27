@@ -2,6 +2,7 @@ const BACKEND_ROUTES = {
   base: 'https://norma.nomoreparties.space/api',
   routes: {
     ingredients: '/ingredients',
+    orders: '/orders',
   },
 
 };
@@ -18,6 +19,8 @@ const ACTION_CLOSE = { type: CLOSE };
 const ACTION_OPEN_INGREDIENT = { type: INGREDIENT };
 const ACTION_OPEN_ORDER = { type: ORDER };
 const ACTION_SHOW_ERROR = { type: ERROR };
+
+const BAD_ORDER_NO = '000000';
 export {
   BUN,
   SAUCE,
@@ -31,4 +34,5 @@ export {
   ACTION_OPEN_ORDER,
   ACTION_SHOW_ERROR,
   BACKEND_ROUTES,
+  BAD_ORDER_NO,
 };

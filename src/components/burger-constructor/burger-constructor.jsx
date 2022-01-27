@@ -36,7 +36,7 @@ const BurgerConstructor = ({
   }, [ingredients, order, plusCallback]);
 
   useEffect(() => {
-    setDataState(!!ingredients);
+    setDataState(Object.keys(ingredients).length > 0);
   }, [ingredients]);
 
   return (
