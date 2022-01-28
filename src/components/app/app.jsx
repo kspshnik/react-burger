@@ -113,7 +113,7 @@ const App = () => {
         {isModal.order && (
           <Modal onClose={handlePortalClose}>
             <OrderDetails
-              no={confirmedOrder.order.number
+              orderNumber={confirmedOrder.order.number
                 ? String(confirmedOrder.order.number)
                 : BAD_ORDER_NO} />
           </Modal>
