@@ -25,6 +25,8 @@ const BurgerConstructor = ({
     )
     : 0), [order, bun, ingredients]);
 
+  const handlePlaceOrderClick = () => detailsCallback(setBun);
+
   useEffect(() => {
     if (ingredients && order.length > 0) {
       if (order.some((item) => ingredients[item]?.type === 'bun')) {
@@ -79,7 +81,7 @@ const BurgerConstructor = ({
             <Button
               type='primary'
               size='medium'
-              onClick={detailsCallback}>
+              onClick={handlePlaceOrderClick}>
               Оформить
               заказ
             </Button>

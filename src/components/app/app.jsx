@@ -60,13 +60,14 @@ const App = () => {
     modalDispatch({ ...ACTION_OPEN_INGREDIENT, payload: id });
   };
   //  Позже будет добавлена работа с номером заказа
-  const handlePlaceOrder = async () => {
+  const handlePlaceOrder = async (clearBunCallback) => {
     try {
       const orderPromise = burgerAPI.placeOrder(order);
       const placedOrder = await orderPromise;
       setConfirmedOrder(placedOrder);
       modalDispatch({ ...ACTION_OPEN_ORDER });
       setOrder([]);
+      clearBunCallback(null);
     } catch (err) {
       modalDispatch({ ...ACTION_SHOW_ERROR, payload: err.message });
     }
