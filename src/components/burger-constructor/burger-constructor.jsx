@@ -18,12 +18,16 @@ const BurgerConstructor = ({
   const [isDataLoaded, setDataState] = useState(false);
   const [bun, setBun] = useState(null);
 
-  const calculateTotal = React.useMemo(() => ((!!ingredients && !!bun && order.length > 0)
-    ? order.reduce(
+  const calculateTotal = React.useMemo(() => {
+    if (!(!!ingredients && !!bun && order.length > 0 && !!ingredients[bun])) {
+      return 0;
+    }
+    const bunsPrice = ingredients[bun].price * 2;
+    return order.filter((item) => ingredients[item]?.type !== 'bun').reduce(
       (total, item) => total + ingredients[item].price,
-      ingredients[bun]?.price,
-    )
-    : 0), [order, bun, ingredients]);
+      bunsPrice,
+    );
+  }, [order, bun, ingredients]);
 
   const handlePlaceOrderClick = () => detailsCallback(setBun);
 
