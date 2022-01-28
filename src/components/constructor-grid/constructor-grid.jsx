@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import cgStyles from './constructor-grid.module.css';
 
-import IngredientsContext from '../../contexts/ingredientsContext';
+import IngredientsContext from '../../services/ingredientsContext';
 
 const ConstructorGrid = ({ order, minusCallback }) => {
   const ingredients = useContext(IngredientsContext);

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import { Button, ConstructorElement, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import IngredientsContext from '../../contexts/ingredientsContext';
+import IngredientsContext from '../../services/ingredientsContext';
 
 import bcStyles from './burger-constructor.module.css';
 import ScrollArea from '../scroll-area/scroll-area';

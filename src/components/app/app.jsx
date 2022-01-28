@@ -9,7 +9,7 @@ import AppHeader from '../app-header/app-header';
 import '@ya.praktikum/react-developer-burger-ui-components';
 import appStyles from './app.module.css';
 
-import IngredientsContext from '../../contexts/ingredientsContext';
+import IngredientsContext from '../../services/ingredientsContext';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 
