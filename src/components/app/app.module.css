@@ -5,7 +5,7 @@
   overflow: hidden;
   max-height: calc(100vh - var(--header__height));
   height: 100vh;
-  }
+}
 
 .wrapper {
   display: flex;
@@ -15,4 +15,4 @@
   width: 100%;
   max-height: calc(100vh - var(--header__height));
   height: 100vh;
-  }
+}
