@@ -64,7 +64,7 @@ const BurgerIngredients = ({ order, plusCallback, detailsCallback }) => {
               Булки
             </Tab>
             <Tab
-              active={saucesInView && !bunsInView}
+              active={saucesInView && !bunsInView && !mainsInView}
               value='Соусы'
               onClick={() => {
                 baseRef.current.scroll(0, saucesRef.current.offsetTop);
