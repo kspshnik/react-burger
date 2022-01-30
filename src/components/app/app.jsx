@@ -13,7 +13,7 @@ import IngredientsContext from '../../services/ingredientsContext';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 
-import burgerAPI from '../../utils/api';
+import burgerAPI from '../../services/api';
 import portalReducer from '../../reducers/portal-reducer';
 import {
   ACTION_CLOSE,
@@ -21,7 +21,7 @@ import {
   ACTION_OPEN_ORDER,
   ACTION_SHOW_ERROR,
   BAD_ORDER_NO,
-} from '../../utils/constants';
+} from '../../constants';
 import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import OrderDetails from '../order-details/order-details';

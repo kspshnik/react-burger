@@ -1,6 +1,6 @@
 import {
   CLOSE, ERROR, INGREDIENT, ORDER,
-} from '../utils/constants';
+} from '../constants';
 
 const portalReducer = (state, action) => {
   switch (action.type) {

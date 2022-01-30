@@ -1,4 +1,4 @@
-import { BACKEND_ROUTES } from './constants';
+import { BACKEND_ROUTES } from '../constants';
 
 class API {
   constructor(server) {
