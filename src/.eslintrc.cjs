@@ -36,6 +36,7 @@ module.exports = {
       {
         allow: [
           '_id',
+          '__REDUX_DEVTOOLS_EXTENSION_COMPOSE__',
         ],
         enforceInMethodNames: true,
         allowAfterThis: true,
