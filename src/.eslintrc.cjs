@@ -60,6 +60,7 @@ module.exports = {
           classPropertiesAllowed: false,
         },
       ],
+    'default-param-last': 'off',
   },
 }
 ;
