@@ -1,5 +1,4 @@
 import { BACKEND_ROUTES } from './constants';
-import initialOrder from './data';
 
 class API {
   constructor(server) {
@@ -25,10 +24,18 @@ class API {
   // Подавление ошибки линтера включено сознательно - здесь _не_ _нужны_
   // поля класса, данные для мока импортируются.
   // eslint-disable-next-line class-methods-use-this
-  async getOrder() {
-    return new Promise((resolve) => {
-      setTimeout(() => resolve(initialOrder), 100);
-    });
+  async placeOrder(order) {
+    const options = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ ingredients: order }),
+    };
+    const orderPromise = fetch(`${this._base}${this._routes.orders}`, options);
+    const orderResponse = await orderPromise;
+    if (!orderResponse.ok) {
+      return Promise.reject(new Error(orderResponse.status));
+    }
+    return orderResponse.json();
   }
 }
 

@@ -11,7 +11,7 @@ import biStyles from './burger-ingredients.module.css';
 import ScrollArea from '../scroll-area/scroll-area';
 import Preloader from '../preloader/preloader';
 
-import IngredientsContext from '../../contexts/ingredientsContext';
+import IngredientsContext from '../../services/ingredientsContext';
 import IngredientsGrid from '../ingredients-grid/ingredients-grid';
 
 const BurgerIngredients = ({ order, plusCallback, detailsCallback }) => {
@@ -20,6 +20,7 @@ const BurgerIngredients = ({ order, plusCallback, detailsCallback }) => {
   const bunsRef = useRef(null);
   const saucesRef = useRef(null);
   const mainsRef = useRef(null);
+  // const scrollTopRef = useRef(null);
   const [bunsWatchRef, bunsInView] = useInView({
     threshold: 0.55,
     root: baseRef.current,
@@ -33,10 +34,18 @@ const BurgerIngredients = ({ order, plusCallback, detailsCallback }) => {
     root: baseRef.current,
   });
   const [isDataLoaded, setDataState] = useState(false);
+  //  const [scrollTop, setScrollTop] = useState(0);
 
   useEffect(() => {
     setDataState(!!ingredients);
   }, [ingredients]);
+
+  /* useEffect(() => {
+      console.dir(baseRef);
+      const temp = baseRef.current?.offsetTop;
+      console.dir(temp);
+      setScrollTop(temp);
+    }, []); */
   return (
     <>
       {!isDataLoaded && <div className={biStyles.loading}><Preloader /></div>}
@@ -49,18 +58,27 @@ const BurgerIngredients = ({ order, plusCallback, detailsCallback }) => {
             <Tab
               active={bunsInView}
               value='Булки'
-              onClick={() => bunsRef.current.scrollIntoView()}>
+              onClick={() => {
+                baseRef.current.scroll(0, bunsRef.current.offsetTop);
+              }}>
               Булки
             </Tab>
             <Tab
               active={saucesInView && !bunsInView && !mainsInView}
               value='Соусы'
               onClick={() => {
-                saucesRef.current.scrollIntoView();
+                baseRef.current.scroll(0, saucesRef.current.offsetTop);
               }}>
               Соусы
             </Tab>
-            <Tab active={mainsInView} value='Начинки' onClick={() => (mainsRef.current.scrollIntoView())}>Начинки</Tab>
+            <Tab
+              active={mainsInView || (!saucesInView && !bunsInView)}
+              value='Начинки'
+              onClick={() => {
+                baseRef.current.scroll(0, mainsRef.current.offsetTop);
+              }}>
+              Начинки
+            </Tab>
           </nav>
           <ScrollArea ref={baseRef} contentClass={`${biStyles.scroll} custom-scroll`}>
             <div ref={bunsWatchRef}>

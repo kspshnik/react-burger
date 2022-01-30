@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import { Button, ConstructorElement, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import IngredientsContext from '../../contexts/ingredientsContext';
+import IngredientsContext from '../../services/ingredientsContext';
 
 import bcStyles from './burger-constructor.module.css';
 import ScrollArea from '../scroll-area/scroll-area';
@@ -18,12 +18,18 @@ const BurgerConstructor = ({
   const [isDataLoaded, setDataState] = useState(false);
   const [bun, setBun] = useState(null);
 
-  const calculateTotal = React.useMemo(() => ((!!ingredients && !!bun && order.length > 0)
-    ? order.reduce(
+  const calculateTotal = React.useMemo(() => {
+    if (!(!!ingredients && !!bun && order.length > 0 && !!ingredients[bun])) {
+      return 0;
+    }
+    const bunsPrice = ingredients[bun].price * 2;
+    return order.filter((item) => ingredients[item]?.type !== 'bun').reduce(
       (total, item) => total + ingredients[item].price,
-      ingredients[bun]?.price,
-    )
-    : 0), [order, bun, ingredients]);
+      bunsPrice,
+    );
+  }, [order, bun, ingredients]);
+
+  const handlePlaceOrderClick = () => detailsCallback(setBun);
 
   useEffect(() => {
     if (ingredients && order.length > 0) {
@@ -36,7 +42,7 @@ const BurgerConstructor = ({
   }, [ingredients, order, plusCallback]);
 
   useEffect(() => {
-    setDataState(!!ingredients);
+    setDataState(Object.keys(ingredients).length > 0);
   }, [ingredients]);
 
   return (
@@ -79,7 +85,7 @@ const BurgerConstructor = ({
             <Button
               type='primary'
               size='medium'
-              onClick={detailsCallback}>
+              onClick={handlePlaceOrderClick}>
               Оформить
               заказ
             </Button>

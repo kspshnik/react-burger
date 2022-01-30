@@ -9,14 +9,18 @@ import AppHeader from '../app-header/app-header';
 import '@ya.praktikum/react-developer-burger-ui-components';
 import appStyles from './app.module.css';
 
-import IngredientsContext from '../../contexts/ingredientsContext';
+import IngredientsContext from '../../services/ingredientsContext';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 
 import burgerAPI from '../../utils/api';
 import portalReducer from '../../reducers/portal-reducer';
 import {
-  ACTION_CLOSE, ACTION_OPEN_INGREDIENT, ACTION_OPEN_ORDER, ACTION_SHOW_ERROR,
+  ACTION_CLOSE,
+  ACTION_OPEN_INGREDIENT,
+  ACTION_OPEN_ORDER,
+  ACTION_SHOW_ERROR,
+  BAD_ORDER_NO,
 } from '../../utils/constants';
 import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
@@ -24,8 +28,9 @@ import OrderDetails from '../order-details/order-details';
 import ErrorPopup from '../error-popup/error-popup';
 
 const App = () => {
-  const [ingredients, setIngredients] = useState(null);
-  const [order, setOrder] = useState(null);
+  const [ingredients, setIngredients] = useState({});
+  const [order, setOrder] = useState([]);
+  const [confirmedOrder, setConfirmedOrder] = useState({});
   const [isModal, modalDispatch] = useReducer(portalReducer, {
     ingredient: false,
     order: false,
@@ -55,20 +60,27 @@ const App = () => {
     modalDispatch({ ...ACTION_OPEN_INGREDIENT, payload: id });
   };
   //  Позже будет добавлена работа с номером заказа
-  const handleOpenOrder = () => modalDispatch(ACTION_OPEN_ORDER);
+  const handlePlaceOrder = async (clearBunCallback) => {
+    try {
+      const orderPromise = burgerAPI.placeOrder(order);
+      const placedOrder = await orderPromise;
+      setConfirmedOrder(placedOrder);
+      modalDispatch({ ...ACTION_OPEN_ORDER });
+      setOrder([]);
+      clearBunCallback(null);
+    } catch (err) {
+      modalDispatch({ ...ACTION_SHOW_ERROR, payload: err.message });
+    }
+  };
   // const showError = () => modalDispatch(ACTION_SHOW_ERROR);
   useEffect(() => {
     async function getData() {
       try {
-        const [ingredientsData, orderData] = await Promise.all(
-          [burgerAPI.getIngredients(), burgerAPI.getOrder()],
-        );
-        const allIds = ingredientsData.data.reduce((acc, item) => [...acc, item._id], []);
+        const ingredientsData = await burgerAPI.getIngredients();
         setIngredients(ingredientsData.data.reduce((acc, ingredient) => {
           acc[ingredient._id] = ingredient;
           return acc;
         }, {}));
-        setOrder(orderData.filter((item) => allIds.includes(item)));
       } catch (err) {
         // TODO: Сделать нормальное модальное окно с ошибкой.
         modalDispatch({ ...ACTION_SHOW_ERROR, payload: err.message });
@@ -84,13 +96,13 @@ const App = () => {
         <div className={appStyles.wrapper}>
           <main className={appStyles.main}>
             <BurgerIngredients
-              order={order || []}
+              order={order}
               plusCallback={addIngredient}
               detailsCallback={handleOpenIngredient} />
             <BurgerConstructor
-              order={order || []}
+              order={order}
               minusCallback={removeIngredient}
-              detailsCallback={handleOpenOrder}
+              detailsCallback={handlePlaceOrder}
               plusCallback={addIngredient} />
           </main>
         </div>
@@ -101,7 +113,10 @@ const App = () => {
         )}
         {isModal.order && (
           <Modal onClose={handlePortalClose}>
-            <OrderDetails />
+            <OrderDetails
+              orderNumber={confirmedOrder.order.number
+                ? String(confirmedOrder.order.number)
+                : BAD_ORDER_NO} />
           </Modal>
         )}
         {isModal.error && (

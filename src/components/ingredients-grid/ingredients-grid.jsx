@@ -5,7 +5,7 @@ import icStyles from './ingredients-grid.module.css';
 
 import IngredientCard from '../ingredient-card/ingredient-card';
 
-import IngredientsContext from '../../contexts/ingredientsContext';
+import IngredientsContext from '../../services/ingredientsContext';
 
 const IngredientsGrid = ({
   order, plusCallback, detailsCallback, type,
