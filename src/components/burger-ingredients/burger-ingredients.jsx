@@ -1,7 +1,4 @@
-import React, {
-  useContext, useEffect, useRef, useState,
-} from 'react';
-import PropTypes from 'prop-types';
+import React, { useRef } from 'react';
 
 import { useInView } from 'react-intersection-observer';
 
@@ -9,18 +6,15 @@ import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import biStyles from './burger-ingredients.module.css';
 
 import ScrollArea from '../scroll-area/scroll-area';
-import Preloader from '../preloader/preloader';
 
-import IngredientsContext from '../../services/ingredientsContext';
 import IngredientsGrid from '../ingredients-grid/ingredients-grid';
 
-const BurgerIngredients = ({ order, plusCallback, detailsCallback }) => {
-  const ingredients = useContext(IngredientsContext);
+const BurgerIngredients = () => {
   const baseRef = useRef(null);
   const bunsRef = useRef(null);
   const saucesRef = useRef(null);
   const mainsRef = useRef(null);
-  // const scrollTopRef = useRef(null);
+
   const [bunsWatchRef, bunsInView] = useInView({
     threshold: 0.55,
     root: baseRef.current,
@@ -33,81 +27,54 @@ const BurgerIngredients = ({ order, plusCallback, detailsCallback }) => {
     threshold: 0.25,
     root: baseRef.current,
   });
-  const [isDataLoaded, setDataState] = useState(false);
-  //  const [scrollTop, setScrollTop] = useState(0);
 
-  useEffect(() => {
-    setDataState(!!ingredients);
-  }, [ingredients]);
-
-  /* useEffect(() => {
-      console.dir(baseRef);
-      const temp = baseRef.current?.offsetTop;
-      console.dir(temp);
-      setScrollTop(temp);
-    }, []); */
   return (
-    <>
-      {!isDataLoaded && <div className={biStyles.loading}><Preloader /></div>}
-      {isDataLoaded && (
-        <section className={biStyles.section}>
-          <header className={`${biStyles.header} pt-10 pb-5`}>
-            <h2 className={`${biStyles.title} text text_type_main-large`}>Соберите бургер</h2>
-          </header>
-          <nav className={biStyles.menu}>
-            <Tab
-              active={bunsInView}
-              value='Булки'
-              onClick={() => {
-                baseRef.current.scroll(0, bunsRef.current.offsetTop);
-              }}>
-              Булки
-            </Tab>
-            <Tab
-              active={saucesInView && !bunsInView && !mainsInView}
-              value='Соусы'
-              onClick={() => {
-                baseRef.current.scroll(0, saucesRef.current.offsetTop);
-              }}>
-              Соусы
-            </Tab>
-            <Tab
-              active={mainsInView || (!saucesInView && !bunsInView)}
-              value='Начинки'
-              onClick={() => {
-                baseRef.current.scroll(0, mainsRef.current.offsetTop);
-              }}>
-              Начинки
-            </Tab>
-          </nav>
-          <ScrollArea ref={baseRef} contentClass={`${biStyles.scroll} custom-scroll`}>
-            <div ref={bunsWatchRef}>
-              <h3 ref={bunsRef} className='{$biStyles.title} text text_type_main-medium mb-6 mt-10'>Булки</h3>
-              <IngredientsGrid order={order} plusCallback={plusCallback} detailsCallback={detailsCallback} type='bun' />
-            </div>
-            <div ref={saucesWatchRef}>
-              <h3 ref={saucesRef} className='{$biStyles.title} text text_type_main-medium mb-6 mt-10'>Соусы</h3>
-              <IngredientsGrid
-                order={order}
-                plusCallback={plusCallback}
-                detailsCallback={detailsCallback}
-                type='sauce' />
-            </div>
-            <div ref={mainsWatchRef}>
-              <h3 ref={mainsRef} className='{$biStyles.title} text text_type_main-medium mb-6 mt-10'>Начинки</h3>
-              <IngredientsGrid order={order} plusCallback={plusCallback} detailsCallback={detailsCallback} type='main' />
-            </div>
-          </ScrollArea>
-        </section>
-      )}
-    </>
+    <section className={biStyles.section}>
+      <header className={`${biStyles.header} pt-10 pb-5`}>
+        <h2 className={`${biStyles.title} text text_type_main-large`}>Соберите бургер</h2>
+      </header>
+      <nav className={biStyles.menu}>
+        <Tab
+          active={bunsInView}
+          value='Булки'
+          onClick={() => {
+            baseRef.current.scroll(0, bunsRef.current.offsetTop);
+          }}>
+          Булки
+        </Tab>
+        <Tab
+          active={saucesInView && !bunsInView && !mainsInView}
+          value='Соусы'
+          onClick={() => {
+            baseRef.current.scroll(0, saucesRef.current.offsetTop);
+          }}>
+          Соусы
+        </Tab>
+        <Tab
+          active={mainsInView || (!saucesInView && !bunsInView)}
+          value='Начинки'
+          onClick={() => {
+            baseRef.current.scroll(0, mainsRef.current.offsetTop);
+          }}>
+          Начинки
+        </Tab>
+      </nav>
+      <ScrollArea ref={baseRef} contentClass={`${biStyles.scroll} custom-scroll`}>
+        <div ref={bunsWatchRef}>
+          <h3 ref={bunsRef} className='{$biStyles.title} text text_type_main-medium mb-6 mt-10'>Булки</h3>
+          <IngredientsGrid type='bun' />
+        </div>
+        <div ref={saucesWatchRef}>
+          <h3 ref={saucesRef} className='{$biStyles.title} text text_type_main-medium mb-6 mt-10'>Соусы</h3>
+          <IngredientsGrid type='sauce' />
+        </div>
+        <div ref={mainsWatchRef}>
+          <h3 ref={mainsRef} className='{$biStyles.title} text text_type_main-medium mb-6 mt-10'>Начинки</h3>
+          <IngredientsGrid type='main' />
+        </div>
+      </ScrollArea>
+    </section>
   );
-};
-
-BurgerIngredients.propTypes = {
-  order: PropTypes.arrayOf(PropTypes.string).isRequired,
-  plusCallback: PropTypes.func.isRequired,
-  detailsCallback: PropTypes.func.isRequired,
 };
 
 export default BurgerIngredients;

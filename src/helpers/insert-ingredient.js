@@ -5,7 +5,7 @@ const insertIngredient = (ingrs, ingr, to) => {
     return ingrs;
   }
 
-  return [...ingrs.slice(0, to),
+  return to === 0 ? [{ ...ingr, bcid: nanoid() }, ...ingrs] : [...ingrs.slice(0, to),
     { ...ingr, bcid: nanoid() },
     ...ingrs.slice(to)];
 };

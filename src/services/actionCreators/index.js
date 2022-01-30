@@ -1,6 +1,6 @@
 import { setIngredients, selectIngredient, releaseIngredient } from './ingredients';
 import {
-  setBun, insertInterior, dropInterior, moveInterior, clearBurger, setOrder,
+  setBun, insertInterior, dropInterior, moveInterior, clearBurger, setOrder, archiveOrder,
 } from './orders';
 import {
   ingredientsRequested,
@@ -9,6 +9,7 @@ import {
   orderRequested,
   orderPlaced,
   orderFailed,
+  clearError,
 } from './API';
 
 export {
@@ -20,11 +21,13 @@ export {
   dropInterior,
   moveInterior,
   clearBurger,
+  archiveOrder,
   ingredientsRequested,
   ingredientsReceived,
   ingredientsFailed,
   orderRequested,
   orderPlaced,
   orderFailed,
+  clearError,
   setOrder,
 };

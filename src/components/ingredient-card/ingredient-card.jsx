@@ -1,23 +1,30 @@
 import React from 'react';
-
+import { useDispatch } from 'react-redux';
 import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import PropTypes from 'prop-types';
 import icStyles from './ingredient-card.module.css';
 
-const IngredientCard = ({
-  id, name, price, count, img, plusCallback, detailsCallback,
-}) => {
-  const handleNameClick = () => plusCallback(id);
+import { selectIngredient, insertInterior, setBun } from '../../services/actionCreators';
+import { BUN } from '../../constants';
+
+const IngredientCard = ({ data, count }) => {
+  const {
+    name, price, image, type,
+  } = data;
+  const dispatch = useDispatch();
+  const insertIngredient = type === BUN ? setBun : insertInterior;
+
+  const handleNameClick = () => dispatch(insertIngredient(data));
   const handleKeyPressOnName = (evt) => {
     if ((evt.target === evt.currentTarget) && (evt.key === 'Enter' || evt.key === 'Space')) {
-      plusCallback(id);
+      dispatch(insertIngredient(data));
     }
   };
-  const handleImgClick = () => detailsCallback(id);
+  const handleImgClick = () => dispatch(selectIngredient(data));
   const handleKeyPressOnImg = (evt) => {
     if ((evt.target === evt.currentTarget) && (evt.key === 'Enter' || evt.key === 'Space')) {
-      detailsCallback(id);
+      dispatch(selectIngredient(data));
     }
   };
   return (
@@ -30,7 +37,7 @@ const IngredientCard = ({
           onClick={handleImgClick}
           onKeyPress={handleKeyPressOnImg}>
           <img
-            src={img}
+            src={image}
             alt={name}
             className={icStyles.image} />
         </button>
@@ -56,12 +63,20 @@ IngredientCard.defaultProps = {
 };
 
 IngredientCard.propTypes = {
-  id: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  price: PropTypes.number.isRequired,
+  data: PropTypes.shape({
+    _id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    type: PropTypes.string.isRequired,
+    proteins: PropTypes.number.isRequired,
+    fat: PropTypes.number.isRequired,
+    carbonhydrates: PropTypes.number.isRequired,
+    calories: PropTypes.number.isRequired,
+    price: PropTypes.number.isRequired,
+    image: PropTypes.string.isRequired,
+    image_mobile: PropTypes.string.isRequired,
+    image_large: PropTypes.string.isRequired,
+  }).isRequired,
   count: PropTypes.number,
-  img: PropTypes.string.isRequired,
-  plusCallback: PropTypes.func.isRequired,
-  detailsCallback: PropTypes.func.isRequired,
+
 };
 export default IngredientCard;

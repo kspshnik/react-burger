@@ -1,4 +1,5 @@
 import {
+  DISMISS_ERROR,
   GET_INGREDIENTS_FAIL,
   GET_INGREDIENTS_REQUEST,
   GET_INGREDIENTS_SUCCEED, PLACE_ORDER_FAIL,
@@ -42,6 +43,11 @@ const APIReducer = (state = initialState, action) => {
     case PLACE_ORDER_FAIL: {
       return {
         ...state, isOrderSent: false, errorMessage: action.payload,
+      };
+    }
+    case DISMISS_ERROR: {
+      return {
+        ...state, errorMessage: '',
       };
     }
     default: return state;
