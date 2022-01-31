@@ -24,8 +24,6 @@ import {
   SET_ORDER,
 } from './orders';
 
-import { DND_START, DND_STOP } from './dnd';
-
 export {
   GET_INGREDIENTS_REQUEST,
   GET_INGREDIENTS_SUCCEED,
@@ -44,6 +42,4 @@ export {
   CLEAR_BURGER,
   ARCHIVE_ORDER,
   SET_ORDER,
-  DND_START,
-  DND_STOP,
 };
