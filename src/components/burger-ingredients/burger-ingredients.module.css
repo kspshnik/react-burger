@@ -52,3 +52,16 @@
   align-items: center;
 }
 
+.drop {
+  position: relative;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  overflow: hidden;
+  transition: outline 0.4s ease-in-out;
+}
+
+.drop_targeted {
+  outline: #f0f8ff ridge 3px;
+}

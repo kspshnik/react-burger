@@ -10,18 +10,3 @@
   padding-inline-start: 0;
   list-style: none outside;
 }
-
-.item {
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: flex-end;
-  align-items: center;
-  width: calc(100% - 16px);
-}
-
-.drag {
-  display: flex;
-  flex-flow: column nowrap;
-  justify-content: center;
-  align-items: flex-end;
-}

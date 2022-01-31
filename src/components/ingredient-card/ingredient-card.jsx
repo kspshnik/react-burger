@@ -12,16 +12,16 @@ import { BUN, INGREDIENT } from '../../constants';
 
 const IngredientCard = ({ data, count }) => {
   const {
-    _id, name, price, image, type,
+    name, price, image, type,
   } = data;
   const dispatch = useDispatch();
   const [{ isOnTheWay }, dragRef] = useDrag(() => ({
     type: INGREDIENT,
-    item: { _id, type },
+    item: { ...data },
     collect: (monitor) => ({
       isOnTheWay: monitor.isDragging(),
     }),
-  }), [name, type]);
+  }), [data]);
 
   const handleNameClick = () => {
     if (type === BUN) {

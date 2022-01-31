@@ -30,11 +30,10 @@ const BurgerConstructor = () => {
   });
 
   function handleDrop() {
-    const { _id, type } = dropItem;
-    if (type === BUN) {
-      dispatch(setBun(_id));
+    if (dropItem.type === BUN) {
+      dispatch(setBun(dropItem));
     } else {
-      dispatch(insertInterior(_id, 0));
+      dispatch(insertInterior(dropItem, 0));
     }
   }
   const calculateTotal = React.useMemo(() => {
