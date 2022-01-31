@@ -23,7 +23,8 @@ import getIngredients from '../../services/thunks/get-ingredients';
 const App = () => {
   const dispatch = useDispatch();
 
-  const { isIngredientsLoading } = useSelector((state) => state.API);
+  const { isIngredientsLoading } = useSelector((state) => state.api);
+  // useSelector((state) => state.API);
   const isIngredientsLoaded = useSelector((state) => !!state.ingredients.all);
   const selectedIngredient = useSelector((store) => store.ingredients.selected);
   const acceptedOrder = useSelector((state) => state.orders.accepted);
@@ -34,8 +35,8 @@ const App = () => {
   const handleErrorClose = () => dispatch(clearError());
 
   useEffect(() => {
-    getIngredients();
-  }, []);
+    dispatch(getIngredients());
+  }, [dispatch]);
   return (
     <>
       <AppHeader />

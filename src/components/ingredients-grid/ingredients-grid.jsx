@@ -9,24 +9,36 @@ import icStyles from './ingredients-grid.module.css';
 import IngredientCard from '../ingredient-card/ingredient-card';
 
 const IngredientsGrid = ({ type }) => {
-  const ingredients = useSelector(((state) => state.ingredients.all));
-  const order = useSelector((state) => [state.orders.bun, ...state.orders.choice]);
-  const ingredientsValues = ingredients ? Object.values(ingredients) : [];
+  const { all } = useSelector((state) => state.ingredients);
+  const { bun, choice } = useSelector((state) => state.orders);
+  const order = React.useMemo(() => {
+    if (bun) {
+      return [bun, ...choice];
+    }
+    return choice;
+  }, [bun, choice]);
+  const ingredientsValues = React.useMemo(() => {
+    if (!all) {
+      return [];
+    }
+    return Object.values(all);
+  }, [all]);
 
   const count = (id) => {
-    let preCount = order.filter((item) => item._id === id).length;
-    if (ingredients[id].type === 'bun' && order.map((item) => item._id).includes(id)) {
+    let preCount = order?.filter((item) => item?._id === id).length;
+    if (all[id].type === 'bun' && order?.map((item) => item?._id).includes(id)) {
       preCount += 1;
     }
     return preCount;
   };
+
   return (
     <ul className={icStyles.grid}>
-      {ingredientsValues.filter((el) => el.type === type).map((item) => (
+      {ingredientsValues.filter((el) => el?.type === type).map((item) => (
         <IngredientCard
           data={item}
-          count={count(item._id)}
-          key={item._id} />
+          count={count(item?._id)}
+          key={item?._id} />
       ))}
     </ul>
   );

@@ -10,9 +10,9 @@ export const insertInterior = (ingredient, to) => ({
 });
 export const dropInterior = (ingredient) => ({ type: DROP_INTERIOR, payload: ingredient });
 export const clearBurger = () => ({ type: CLEAR_BURGER });
-export const moveInterior = (ingredient, to) => ({
+export const moveInterior = (ingredient, pos) => ({
   type: MOVE_INTERIOR,
-  payload: { ingredient, to },
+  payload: { ingredient, pos },
 });
 export const archiveOrder = () => ({ type: ARCHIVE_ORDER });
 export const setOrder = (order) => ({ type: SET_ORDER, payload: order });

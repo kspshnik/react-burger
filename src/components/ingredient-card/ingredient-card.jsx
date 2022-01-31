@@ -13,12 +13,21 @@ const IngredientCard = ({ data, count }) => {
     name, price, image, type,
   } = data;
   const dispatch = useDispatch();
-  const insertIngredient = type === BUN ? setBun : insertInterior;
 
-  const handleNameClick = () => dispatch(insertIngredient(data));
+  const handleNameClick = () => {
+    if (type === BUN) {
+      dispatch(setBun(data));
+    } else {
+      dispatch(insertInterior(data, 0));
+    }
+  };
   const handleKeyPressOnName = (evt) => {
     if ((evt.target === evt.currentTarget) && (evt.key === 'Enter' || evt.key === 'Space')) {
-      dispatch(insertIngredient(data));
+      if (type === BUN) {
+        dispatch(setBun(data));
+      } else {
+        dispatch(insertInterior(data, 0));
+      }
     }
   };
   const handleImgClick = () => dispatch(selectIngredient(data));

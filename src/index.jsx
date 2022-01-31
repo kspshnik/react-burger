@@ -32,9 +32,7 @@ Sentry.init({
   // We recommend adjusting this value in production
   tracesSampleRate: 1.0,
 });
-const sentryReduxEnhancer = Sentry.createReduxEnhancer({
-  // Optionally pass options listed below
-});
+const sentryReduxEnhancer = Sentry.createReduxEnhancer({});
 
 const composeEnhancers = typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
   ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
@@ -46,13 +44,16 @@ const state = createStore(rootReducer, enhancer);
 
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={state}>
-      <Sentry.ErrorBoundary fallback={() => {
-        console.error('Something went wrong :(');
-      }}>
+    <Sentry.ErrorBoundary fallback={({ error, componentStack }) => {
+      // eslint-disable-next-line no-console
+      console.error(error);
+      // eslint-disable-next-line no-console
+      console.dir(componentStack);
+    }}>
+      <Provider store={state}>
         <App />
-      </Sentry.ErrorBoundary>
-    </Provider>
+      </Provider>
+    </Sentry.ErrorBoundary>
   </React.StrictMode>,
   document.getElementById('root'),
 );

@@ -11,28 +11,31 @@ import placeOrder from '../../services/thunks/place-order';
 import { setBun } from '../../services/actionCreators';
 
 const BurgerConstructor = () => {
-  const ingredients = useSelector((store) => store.ingredients.all);
+  const { all } = useSelector((store) => store.ingredients);
   const { bun, choice } = useSelector((state) => state.orders);
   const dispatch = useDispatch();
 
   const calculateTotal = React.useMemo(() => {
-    if (!(!!ingredients && !!bun && choice.length > 0 && !!ingredients[bun])) {
+    if (!(!!all && !!bun)) {
       return 0;
     }
     const bunsPrice = bun.price * 2;
-    return choice.filter((item) => ingredients[item]?.type !== 'bun').reduce(
-      (total, item) => total + ingredients[item].price,
+    return choice.filter((item) => item.type !== 'bun').reduce(
+      (total, item) => total + item.price,
       bunsPrice,
     );
-  }, [choice, bun, ingredients]);
+  }, [choice, bun, all]);
 
-  const handlePlaceOrderClick = () => dispatch(placeOrder([bun, ...[choice]]));
+  const handlePlaceOrderClick = () => {
+    const totalOrder = [bun, ...[choice]].map(((item) => item._id));
+    dispatch(placeOrder(totalOrder));
+  };
 
   useEffect(() => {
-    if (ingredients && !bun) {
-      dispatch(setBun(Object.values(ingredients).find((item) => ingredients[item]?.type === 'bun')));
+    if (all && !bun) {
+      dispatch(setBun(Object.values(all).find((item) => item?.type === 'bun')));
     }
-  }, [ingredients, bun, dispatch]);
+  }, [all, bun, dispatch]);
 
   return (
     <section className={`${bcStyles.section} mt-25 mb-10`}>
@@ -42,9 +45,9 @@ const BurgerConstructor = () => {
           <ConstructorElement
             type='top'
             isLocked
-            text={`${ingredients[bun]?.name} (верх)`}
-            thumbnail={ingredients[bun]?.image_mobile}
-            price={ingredients[bun]?.price} />
+            text={`${bun?.name} (верх)`}
+            thumbnail={bun?.image_mobile}
+            price={bun.price} />
         </div>
         )}
         <ScrollArea contentClass={`${bcStyles.scroll} custom-scroll`}>
@@ -55,9 +58,9 @@ const BurgerConstructor = () => {
           <ConstructorElement
             type='bottom'
             isLocked
-            text={`${ingredients[bun]?.name} (низ)`}
-            thumbnail={ingredients[bun]?.image_mobile}
-            price={ingredients[bun]?.price} />
+            text={`${bun?.name} (низ)`}
+            thumbnail={bun?.image_mobile}
+            price={bun?.price} />
         </div>
         )}
       </main>

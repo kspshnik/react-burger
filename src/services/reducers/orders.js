@@ -1,3 +1,4 @@
+import { nanoid } from 'nanoid';
 import {
   SET_BUN,
   INSERT_INTERIOR,
@@ -22,7 +23,7 @@ const ordersReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_BUN: {
       return {
-        ...state, bun: action.payload,
+        ...state, bun: { ...action.payload, bcid: nanoid() },
       };
     }
     case INSERT_INTERIOR: {
