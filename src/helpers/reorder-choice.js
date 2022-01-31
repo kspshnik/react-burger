@@ -1,19 +1,19 @@
 const reorderChoice = (ingrs, from, to) => {
-  let result;
+  const result = [];
+  const el = ingrs[from];
   if (from === to) {
     return ingrs;
-  } if (from < to) {
-    result = [
-      ...ingrs.slice(0, from),
-      ...ingrs.slice(from + 1, to),
-      ingrs[from],
-      ...ingrs.slice(to)];
-  } else {
-    result = [
-      ...ingrs.slice(0, to),
-      ingrs[from],
-      ...ingrs.slice(to + 1, from),
-      ...ingrs.slice(from + 1)];
+  }
+  for (let i = 0; i < ingrs.length; i += 1) {
+    if (i !== from) {
+      if ((to < from) && (i === to)) {
+        result.push(el);
+      }
+      result.push(ingrs[i]);
+      if ((to > from) && (i === to)) {
+        result.push(el);
+      }
+    }
   }
   return result;
 };
