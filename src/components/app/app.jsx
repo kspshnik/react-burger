@@ -2,6 +2,9 @@ import React, { useEffect } from 'react';
 
 import { useSelector, useDispatch } from 'react-redux';
 
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+
 import * as Sentry from '@sentry/react';
 
 import AppHeader from '../app-header/app-header';
@@ -46,8 +49,10 @@ const App = () => {
         {(!isIngredientsLoading && isIngredientsLoaded)
             && (
             <main className={appStyles.main}>
-              <BurgerIngredients />
-              <BurgerConstructor />
+              <DndProvider backend={HTML5Backend}>
+                <BurgerIngredients />
+                <BurgerConstructor />
+              </DndProvider>
             </main>
             )}
       </div>
