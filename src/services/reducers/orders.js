@@ -45,7 +45,12 @@ const ordersReducer = (state = initialState, action) => {
     case MOVE_INTERIOR: {
       const { ingredient, to } = action.payload;
       return {
-        ...state, choice: reorderChoice(state.choice, state.choice.indexOf(ingredient), to),
+        ...state,
+        choice: reorderChoice(
+          state.choice,
+          state.choice.findIndex((item) => item.bcid === ingredient.bcid),
+          to,
+        ),
       };
     }
     case ARCHIVE_ORDER: {
