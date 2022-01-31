@@ -1,18 +1,27 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
+import { useDrag } from 'react-dnd';
+
 import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import PropTypes from 'prop-types';
 import icStyles from './ingredient-card.module.css';
 
 import { selectIngredient, insertInterior, setBun } from '../../services/actionCreators';
-import { BUN } from '../../constants';
+import { BUN, INGREDIENT } from '../../constants';
 
 const IngredientCard = ({ data, count }) => {
   const {
-    name, price, image, type,
+    _id, name, price, image, type,
   } = data;
   const dispatch = useDispatch();
+  const [{ isOnTheWay }, dragRef] = useDrag(() => ({
+    type: INGREDIENT,
+    item: { _id, type },
+    collect: (monitor) => ({
+      isOnTheWay: monitor.isDragging(),
+    }),
+  }), [name, type]);
 
   const handleNameClick = () => {
     if (type === BUN) {
@@ -38,7 +47,7 @@ const IngredientCard = ({ data, count }) => {
   };
   return (
     <li className='list-item'>
-      <article className={`${icStyles.card} `}>
+      <article ref={dragRef} className={`${icStyles.card} ${isOnTheWay ? icStyles.card_dragged : ''}`}>
         {count > 0 ? (<Counter size='default' count={count} />) : ('')}
         <button
           className={icStyles.details}
