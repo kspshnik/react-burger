@@ -1,0 +1,35 @@
+.item {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-end;
+  align-items: center;
+  width: calc(100% - 16px);
+  transition: 0.4s ease-in-out;
+}
+
+.item_dragged {
+  opacity: 0.01;
+  transform: scale(0);
+  height: 0;
+}
+
+
+.drag {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+.drop {
+  width: 100%;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-end;
+  align-items: center;
+  transition: outline 0.4s ease-in-out;
+}
+
+.drop_targeted {
+  outline: #f0f8ff ridge 3px;
+}
