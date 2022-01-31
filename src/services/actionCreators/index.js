@@ -12,6 +12,8 @@ import {
   clearError,
 } from './API';
 
+import { onDragStart, onDragStop } from './dnd';
+
 export {
   setIngredients,
   selectIngredient,
@@ -30,4 +32,6 @@ export {
   orderFailed,
   clearError,
   setOrder,
+  onDragStart,
+  onDragStop,
 };
