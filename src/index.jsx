@@ -12,7 +12,7 @@ import setupLogRocketReact from 'logrocket-react';
 import App from './components/app/app';
 
 import './index.css';
-import ErrorBoundary from './components/error-boundary/error-boundary';
+// import ErrorBoundary from './components/error-boundary/error-boundary';
 import rootReducer from './services/reducers';
 
 LogRocket.init('owbpwl/react-burger');
@@ -47,9 +47,11 @@ const state = createStore(rootReducer, enhancer);
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={state}>
-      <ErrorBoundary>
+      <Sentry.ErrorBoundary fallback={() => {
+        console.error('Something went wrong :(');
+      }}>
         <App />
-      </ErrorBoundary>
+      </Sentry.ErrorBoundary>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root'),
