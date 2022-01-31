@@ -4,17 +4,39 @@ import { Button, ConstructorElement, CurrencyIcon } from '@ya.praktikum/react-de
 
 import { useSelector, useDispatch } from 'react-redux';
 
+import { useDrop } from 'react-dnd';
 import bcStyles from './burger-constructor.module.css';
 import ScrollArea from '../scroll-area/scroll-area';
 import ConstructorGrid from '../constructor-grid/constructor-grid';
 import placeOrder from '../../services/thunks/place-order';
-import { setBun } from '../../services/actionCreators';
+import { insertInterior, setBun } from '../../services/actionCreators';
+import { BUN, INGREDIENT } from '../../constants';
 
 const BurgerConstructor = () => {
   const { all } = useSelector((store) => store.ingredients);
   const { bun, choice } = useSelector((state) => state.orders);
   const dispatch = useDispatch();
 
+  // eslint-disable-next-line no-use-before-define
+  const onDrop = () => handleDrop();
+
+  const [{ isOver, dropItem }, dropRef] = useDrop({
+    accept: INGREDIENT,
+    collect: (monitor) => ({
+      isOver: monitor.isOver(),
+      dropItem: monitor.getItem(),
+    }),
+    drop: onDrop,
+  });
+
+  function handleDrop() {
+    const { _id, type } = dropItem;
+    if (type === BUN) {
+      dispatch(setBun(_id));
+    } else {
+      dispatch(insertInterior(_id, 0));
+    }
+  }
   const calculateTotal = React.useMemo(() => {
     if (!(!!all && !!bun)) {
       return 0;
@@ -39,7 +61,7 @@ const BurgerConstructor = () => {
 
   return (
     <section className={`${bcStyles.section} mt-25 mb-10`}>
-      <main className={bcStyles.wrapper}>
+      <main ref={dropRef} className={`${bcStyles.wrapper} ${isOver ? bcStyles.wrapper_engaged : ''}`}>
         {!!bun && (
         <div className='pb-2'>
           <ConstructorElement
