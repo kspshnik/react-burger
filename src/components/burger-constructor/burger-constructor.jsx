@@ -95,7 +95,8 @@ const BurgerConstructor = () => {
         <Button
           type='primary'
           size='medium'
-          onClick={handlePlaceOrderClick}>
+          onClick={handlePlaceOrderClick}
+          disabled={!bun || choice.length < 1}>
           Оформить
           заказ
         </Button>
