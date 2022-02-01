@@ -54,7 +54,7 @@
   justify-content: flex-start;
   align-items: center;
   width: 100%;
-  transition: 1s ease-in-out;
+  transition: 0.4s ease-in-out;
 }
 
 .drop_engaged {

@@ -59,9 +59,9 @@
   justify-content: flex-start;
   align-items: center;
   overflow: hidden;
-  transition: outline 0.4s ease-in-out;
+  transition: 0.4s ease-in-out;
 }
 
 .drop_targeted {
-  outline: #f0f8ff ridge 3px;
+  background-color: rgba(240,248,255,0.15);
 }
