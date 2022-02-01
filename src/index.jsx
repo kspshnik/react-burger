@@ -40,7 +40,7 @@ const composeEnhancers = typeof window === 'object' && window.__REDUX_DEVTOOLS_E
 
 const enhancer = composeEnhancers(applyMiddleware(thunk), sentryReduxEnhancer);
 
-const state = createStore(rootReducer, enhancer);
+const store = createStore(rootReducer, enhancer);
 
 ReactDOM.render(
   <React.StrictMode>
@@ -50,7 +50,7 @@ ReactDOM.render(
       // eslint-disable-next-line no-console
       console.dir(componentStack);
     }}>
-      <Provider store={state}>
+      <Provider store={store}>
         <App />
       </Provider>
     </Sentry.ErrorBoundary>
