@@ -40,7 +40,10 @@ DropZone.propTypes = {
   contentClass: PropTypes.string,
   hoverClass: PropTypes.string,
   handleDrop: PropTypes.func.isRequired,
-  children: PropTypes.arrayOf(PropTypes.element).isRequired,
+  children: PropTypes.oneOfType(
+    [PropTypes.arrayOf(PropTypes.element),
+      PropTypes.element],
+  ).isRequired,
   type: PropTypes.string.isRequired,
 };
 
