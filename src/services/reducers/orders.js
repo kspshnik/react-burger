@@ -1,4 +1,3 @@
-import { nanoid } from 'nanoid';
 import {
   SET_BUN,
   INSERT_INTERIOR,
@@ -10,7 +9,6 @@ import {
 } from '../actions';
 
 import reorderChoice from '../../helpers/reorder-choice';
-import insertIngredient from '../../helpers/insert-ingredient';
 
 const initialState = {
   bun: null,
@@ -23,13 +21,12 @@ const ordersReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_BUN: {
       return {
-        ...state, bun: { ...action.payload, bcid: nanoid() },
+        ...state, bun: { ...action.payload },
       };
     }
     case INSERT_INTERIOR: {
-      const { ingredient, to } = action.payload;
       return {
-        ...state, choice: insertIngredient(state.choice, ingredient, to),
+        ...state, choice: [{ ...action.payload }, ...state.choice],
       };
     }
     case DROP_INTERIOR: {
