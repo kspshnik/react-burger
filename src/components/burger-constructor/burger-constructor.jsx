@@ -1,106 +1,103 @@
-import React, { useContext, useEffect, useState } from 'react';
-
-import PropTypes from 'prop-types';
+import React from 'react';
 
 import { Button, ConstructorElement, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import IngredientsContext from '../../services/ingredientsContext';
+import { useSelector, useDispatch } from 'react-redux';
 
 import bcStyles from './burger-constructor.module.css';
 import ScrollArea from '../scroll-area/scroll-area';
-import Preloader from '../preloader/preloader';
 import ConstructorGrid from '../constructor-grid/constructor-grid';
+import placeOrder from '../../services/thunks/place-order';
+import { insertInterior, setBun } from '../../services/actionCreators';
+import { BUN, INGREDIENT } from '../../constants';
+import DropZone from '../drop-zone/drop-zone';
 
-const BurgerConstructor = ({
-  minusCallback, plusCallback, detailsCallback, order,
-}) => {
-  const ingredients = useContext(IngredientsContext);
-  const [isDataLoaded, setDataState] = useState(false);
-  const [bun, setBun] = useState(null);
+const BurgerConstructor = () => {
+  const { all } = useSelector((store) => store.ingredients);
+  const { bun, choice } = useSelector((state) => state.orders);
+  const dispatch = useDispatch();
+
+  const isEmpty = () => !(!!bun || choice.length > 0);
+
+  const handleDrop = (dropItem) => {
+    if (dropItem.type === BUN) {
+      dispatch(setBun(dropItem));
+    } else {
+      dispatch(insertInterior(dropItem));
+    }
+  };
 
   const calculateTotal = React.useMemo(() => {
-    if (!(!!ingredients && !!bun && order.length > 0 && !!ingredients[bun])) {
+    if (!(!!all && !!bun)) {
       return 0;
     }
-    const bunsPrice = ingredients[bun].price * 2;
-    return order.filter((item) => ingredients[item]?.type !== 'bun').reduce(
-      (total, item) => total + ingredients[item].price,
+    const bunsPrice = bun.price * 2;
+    return choice.filter((item) => item.type !== 'bun').reduce(
+      (total, item) => total + item.price,
       bunsPrice,
     );
-  }, [order, bun, ingredients]);
+  }, [choice, bun, all]);
 
-  const handlePlaceOrderClick = () => detailsCallback(setBun);
-
-  useEffect(() => {
-    if (ingredients && order.length > 0) {
-      if (order.some((item) => ingredients[item]?.type === 'bun')) {
-        setBun(order.find((item) => ingredients[item]?.type === 'bun'));
-      } else {
-        plusCallback(Object.values(ingredients).find((item) => item.type === 'bun')?._id);
-      }
-    }
-  }, [ingredients, order, plusCallback]);
-
-  useEffect(() => {
-    setDataState(Object.keys(ingredients).length > 0);
-  }, [ingredients]);
+  const handlePlaceOrderClick = () => {
+    const totalOrder = [bun, ...[choice]].map(((item) => item._id));
+    dispatch(placeOrder(totalOrder));
+  };
 
   return (
-    <>
-      {!isDataLoaded && <div className={bcStyles.loading}><Preloader /></div>}
-      {isDataLoaded && (
-        <section className={`${bcStyles.section} mt-25 mb-10`}>
+    <section className={`${bcStyles.section} mt-25 mb-10`}>
+      <DropZone
+        handleDrop={handleDrop}
+        type={INGREDIENT}
+        contentClass={bcStyles.drop}
+        hoverClass={bcStyles.drop_engaged}>
+        { isEmpty() ? (
+          <h2 className='pl-5 pr-5 pt-15 text text_type_main-large'>Пожалуйста, выберите булку, начинки и соусы</h2>
+        ) : (
           <main className={bcStyles.wrapper}>
             {!!bun && (
-              <div className='pb-2'>
-                <ConstructorElement
-                  type='top'
-                  isLocked
-                  text={`${ingredients[bun]?.name} (верх)`}
-                  thumbnail={ingredients[bun]?.image_mobile}
-                  price={ingredients[bun]?.price} />
-              </div>
+            <div className='pb-2'>
+              <ConstructorElement
+                type='top'
+                isLocked
+                text={`${bun?.name} (верх)`}
+                thumbnail={bun?.image_mobile}
+                price={bun.price} />
+            </div>
             )}
             <ScrollArea contentClass={`${bcStyles.scroll} custom-scroll`}>
-              <ConstructorGrid minusCallback={minusCallback} order={order} />
+              <ConstructorGrid />
             </ScrollArea>
             {!!bun && (
-              <div className='pt-2 pb-10'>
-                <ConstructorElement
-                  type='bottom'
-                  isLocked
-                  text={`${ingredients[bun]?.name} (низ)`}
-                  thumbnail={ingredients[bun]?.image_mobile}
-                  price={ingredients[bun]?.price} />
-              </div>
+            <div className='pt-2 pb-10'>
+              <ConstructorElement
+                type='bottom'
+                isLocked
+                text={`${bun?.name} (низ)`}
+                thumbnail={bun?.image_mobile}
+                price={bun?.price} />
+            </div>
             )}
           </main>
-          <footer className={`${bcStyles.footer} mb-3 mr-5`}>
-            <div className={`${bcStyles.price} mr-10`}>
-              <p className='text text_type_digits-medium pr-2'>
-                {calculateTotal}
-              </p>
-              <CurrencyIcon type='primary' />
-            </div>
-            <Button
-              type='primary'
-              size='medium'
-              onClick={handlePlaceOrderClick}>
-              Оформить
-              заказ
-            </Button>
-          </footer>
-        </section>
-      )}
-    </>
+        )}
+      </DropZone>
+      <footer className={`${bcStyles.footer} mb-3 mr-5`}>
+        <div className={`${bcStyles.price} mr-10`}>
+          <p className='text text_type_digits-medium pr-2'>
+            {calculateTotal}
+          </p>
+          <CurrencyIcon type='primary' />
+        </div>
+        <Button
+          type='primary'
+          size='medium'
+          onClick={handlePlaceOrderClick}
+          disabled={!bun || choice.length < 1}>
+          Оформить
+          заказ
+        </Button>
+      </footer>
+    </section>
   );
-};
-
-BurgerConstructor.propTypes = {
-  order: PropTypes.arrayOf(PropTypes.string).isRequired,
-  minusCallback: PropTypes.func.isRequired,
-  plusCallback: PropTypes.func.isRequired,
-  detailsCallback: PropTypes.func.isRequired,
 };
 
 export default BurgerConstructor;

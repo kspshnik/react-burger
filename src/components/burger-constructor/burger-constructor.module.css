@@ -14,12 +14,12 @@
 }
 
 .wrapper {
-  max-height: calc(100% - 212px);
   height: 100%;
   display: flex;
   flex-flow: column nowrap;
   justify-content: flex-start;
   align-items: center;
+  transition: outline 1s ease-in-out;
 }
 
 .price {
@@ -44,4 +44,20 @@
   flex-flow: column nowrap;
   justify-content: center;
   align-items: center;
+}
+
+.drop {
+  max-height: calc(100% - 212px);
+  height: 100%;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  transition: 0.4s ease-in-out;
+}
+
+.drop_engaged {
+  background-color: rgba(240,248,255,0.15);
+
 }

@@ -1,46 +1,50 @@
-import React, { useContext } from 'react';
+import React from 'react';
 
 import PropTypes from 'prop-types';
+
+import { useSelector } from 'react-redux';
+
 import icStyles from './ingredients-grid.module.css';
 
 import IngredientCard from '../ingredient-card/ingredient-card';
 
-import IngredientsContext from '../../services/ingredientsContext';
-
-const IngredientsGrid = ({
-  order, plusCallback, detailsCallback, type,
-}) => {
-  const ingredients = useContext(IngredientsContext);
-  const ingredientsValues = ingredients ? Object.values(ingredients) : [];
+const IngredientsGrid = ({ type }) => {
+  const { all } = useSelector((state) => state.ingredients);
+  const { bun, choice } = useSelector((state) => state.orders);
+  const order = React.useMemo(() => {
+    if (bun) {
+      return [bun, ...choice];
+    }
+    return choice;
+  }, [bun, choice]);
+  const ingredientsValues = React.useMemo(() => {
+    if (!all) {
+      return [];
+    }
+    return Object.values(all);
+  }, [all]);
 
   const count = (id) => {
-    let preCount = order.filter((val) => val === id).length;
-    if (ingredients[id].type === 'bun' && order.includes(id)) {
+    let preCount = order?.filter((item) => item?._id === id).length;
+    if (all[id].type === 'bun' && order?.map((item) => item?._id).includes(id)) {
       preCount += 1;
     }
     return preCount;
   };
+
   return (
     <ul className={icStyles.grid}>
-      {ingredientsValues.filter((el) => el.type === type).map((item) => (
+      {ingredientsValues.filter((el) => el?.type === type).map((item) => (
         <IngredientCard
-          id={item._id}
-          name={item.name}
-          price={item.price}
-          img={item.image}
-          count={count(item._id)}
-          plusCallback={plusCallback}
-          detailsCallback={detailsCallback}
-          key={item._id} />
+          data={item}
+          count={count(item?._id)}
+          key={item?._id} />
       ))}
     </ul>
   );
 };
 
 IngredientsGrid.propTypes = {
-  order: PropTypes.arrayOf(PropTypes.string).isRequired,
-  plusCallback: PropTypes.func.isRequired,
-  detailsCallback: PropTypes.func.isRequired,
   type: PropTypes.string.isRequired,
 };
 

@@ -36,6 +36,7 @@ module.exports = {
       {
         allow: [
           '_id',
+          '__REDUX_DEVTOOLS_EXTENSION_COMPOSE__',
         ],
         enforceInMethodNames: true,
         allowAfterThis: true,
@@ -60,6 +61,7 @@ module.exports = {
           classPropertiesAllowed: false,
         },
       ],
+    'default-param-last': 'off',
   },
 }
 ;

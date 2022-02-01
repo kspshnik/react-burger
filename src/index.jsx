@@ -1,5 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { createStore, compose, applyMiddleware } from 'redux';
+import { Provider } from 'react-redux';
+import thunk from 'redux-thunk';
 
 import * as Sentry from '@sentry/react';
 import { Integrations } from '@sentry/tracing';
@@ -9,7 +12,8 @@ import setupLogRocketReact from 'logrocket-react';
 import App from './components/app/app';
 
 import './index.css';
-import ErrorBoundary from './components/error-boundary/error-boundary';
+// import ErrorBoundary from './components/error-boundary/error-boundary';
+import rootReducer from './services/reducers';
 
 LogRocket.init('owbpwl/react-burger');
 // after calling LogRocket.init()
@@ -28,13 +32,28 @@ Sentry.init({
   // We recommend adjusting this value in production
   tracesSampleRate: 1.0,
 });
+const sentryReduxEnhancer = Sentry.createReduxEnhancer({});
+
+const composeEnhancers = typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+  ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({ trace: true, traceLimit: 25 })
+  : compose;
+
+const enhancer = composeEnhancers(applyMiddleware(thunk), sentryReduxEnhancer);
+
+const store = createStore(rootReducer, enhancer);
 
 ReactDOM.render(
   <React.StrictMode>
-    <ErrorBoundary>
-      <App />
-    </ErrorBoundary>
-
+    <Sentry.ErrorBoundary fallback={({ error, componentStack }) => {
+      // eslint-disable-next-line no-console
+      console.error(error);
+      // eslint-disable-next-line no-console
+      console.dir(componentStack);
+    }}>
+      <Provider store={store}>
+        <App />
+      </Provider>
+    </Sentry.ErrorBoundary>
   </React.StrictMode>,
   document.getElementById('root'),
 );
