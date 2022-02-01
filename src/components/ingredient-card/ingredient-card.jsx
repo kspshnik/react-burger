@@ -27,7 +27,7 @@ const IngredientCard = ({ data, count }) => {
     if (type === BUN) {
       dispatch(setBun(data));
     } else {
-      dispatch(insertInterior(data, 0));
+      dispatch(insertInterior(data));
     }
   };
   const handleKeyPressOnName = (evt) => {
@@ -35,7 +35,7 @@ const IngredientCard = ({ data, count }) => {
       if (type === BUN) {
         dispatch(setBun(data));
       } else {
-        dispatch(insertInterior(data, 0));
+        dispatch(insertInterior(data));
       }
     }
   };
@@ -45,6 +45,7 @@ const IngredientCard = ({ data, count }) => {
       dispatch(selectIngredient(data));
     }
   };
+
   return (
     <li className='list-item'>
       <article ref={dragRef} className={`${icStyles.card} ${isOnTheWay ? icStyles.card_dragged : ''}`}>
@@ -87,7 +88,7 @@ IngredientCard.propTypes = {
     type: PropTypes.string.isRequired,
     proteins: PropTypes.number.isRequired,
     fat: PropTypes.number.isRequired,
-    carbonhydrates: PropTypes.number.isRequired,
+    carbohydrates: PropTypes.number.isRequired,
     calories: PropTypes.number.isRequired,
     price: PropTypes.number.isRequired,
     image: PropTypes.string.isRequired,

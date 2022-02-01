@@ -55,7 +55,7 @@ ConstructorGridElement.propTypes = {
     type: PropTypes.string.isRequired,
     proteins: PropTypes.number.isRequired,
     fat: PropTypes.number.isRequired,
-    carbonhydrates: PropTypes.number.isRequired,
+    carbohydrates: PropTypes.number.isRequired,
     calories: PropTypes.number.isRequired,
     price: PropTypes.number.isRequired,
     image: PropTypes.string.isRequired,
