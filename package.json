@@ -1,7 +1,8 @@
 {
   "name": "react-burger",
-  "version": "0.1.0",
+  "version": "0.3.01",
   "private": true,
+  "homepage": "./",
   "dependencies": {
     "@sentry/react": "^6.17.2",
     "@sentry/tracing": "^6.17.2",
@@ -23,6 +24,7 @@
     "react-dom": "^16.8.6",
     "react-intersection-observer": "^8.33.0",
     "react-redux": "^7.2.6",
+    "react-router-dom": "^6.2.2",
     "react-scripts": "^5.0.0",
     "redux": "^4.1.2",
     "redux-thunk": "^2.4.1",
@@ -33,7 +35,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "browserslist": {
     "production": [
@@ -60,6 +64,7 @@
     "eslint-plugin-promise": "^5.2.0",
     "eslint-plugin-react": "^7.27.1",
     "eslint-plugin-react-hooks": "^4.3.0",
-    "eslint-plugin-ternary": "^2.0.0"
+    "eslint-plugin-ternary": "^2.0.0",
+    "gh-pages": "^3.2.3"
   }
 }
