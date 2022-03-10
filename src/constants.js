@@ -3,6 +3,11 @@ const BACKEND_ROUTES = {
   routes: {
     ingredients: '/ingredients',
     orders: '/orders',
+    login: '/auth/login',
+    logout: '/auth/logout',
+    register: '/auth/register',
+    refresh: '/auth/token',
+    user: '/auth/user',
   },
 
 };
