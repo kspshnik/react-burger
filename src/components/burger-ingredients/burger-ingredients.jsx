@@ -35,7 +35,7 @@ const BurgerIngredients = () => {
   });
   const handleDrop = (item) => dispatch(dropInterior(item));
   return (
-    <section className={biStyles.section}>
+    <section className={`${biStyles.section} mb-10`}>
       <header className={`${biStyles.header} pt-10 pb-5`}>
         <h2 className={`${biStyles.title} text text_type_main-large`}>Соберите бургер</h2>
       </header>
