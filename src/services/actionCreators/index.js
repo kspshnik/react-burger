@@ -12,6 +12,12 @@ import {
   clearError,
 } from './API';
 
+import {
+  userRequested,
+  userReceived,
+  userFailed,
+} from './user';
+
 export {
   setIngredients,
   selectIngredient,
@@ -30,4 +36,7 @@ export {
   orderFailed,
   clearError,
   setOrder,
+  userRequested,
+  userReceived,
+  userFailed,
 };
