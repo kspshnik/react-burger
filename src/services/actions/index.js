@@ -24,6 +24,12 @@ import {
   SET_ORDER,
 } from './orders';
 
+import {
+  GET_USER_REQUEST,
+  GET_USER_SUCCEED,
+  GET_USER_FAIL,
+} from './user';
+
 export {
   GET_INGREDIENTS_REQUEST,
   GET_INGREDIENTS_SUCCEED,
@@ -42,4 +48,7 @@ export {
   CLEAR_BURGER,
   ARCHIVE_ORDER,
   SET_ORDER,
+  GET_USER_REQUEST,
+  GET_USER_SUCCEED,
+  GET_USER_FAIL,
 };
