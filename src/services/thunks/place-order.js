@@ -1,11 +1,11 @@
-import burgerAPI from '../api';
+import { fetchOrder } from '../api';
 import {
   orderRequested, orderPlaced, orderFailed, setOrder, clearBurger,
 } from '../actionCreators';
 
 const placeOrder = (order) => (dispatch) => {
   dispatch(orderRequested());
-  return burgerAPI.placeOrder(order)
+  return fetchOrder(order)
   // eslint-disable-next-line promise/always-return
     .then((data) => {
       dispatch(setOrder(data));

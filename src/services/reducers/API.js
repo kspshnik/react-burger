@@ -2,9 +2,9 @@ import {
   DISMISS_ERROR,
   GET_INGREDIENTS_FAIL,
   GET_INGREDIENTS_REQUEST,
-  GET_INGREDIENTS_SUCCEED, PLACE_ORDER_FAIL,
+  GET_INGREDIENTS_SUCCEED, GET_USER_FAIL, PLACE_ORDER_FAIL,
   PLACE_ORDER_REQUEST,
-  PLACE_ORDER_SUCCEED,
+  PLACE_ORDER_SUCCEED, REFRESH_TOKEN_FAIL,
 } from '../actions';
 
 const initialState = {
@@ -48,6 +48,12 @@ const APIReducer = (state = initialState, action) => {
     case DISMISS_ERROR: {
       return {
         ...state, errorMessage: '',
+      };
+    }
+    case GET_USER_FAIL:
+    case REFRESH_TOKEN_FAIL: {
+      return {
+        ...state, errorMessage: action.payload,
       };
     }
     default: return state;

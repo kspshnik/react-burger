@@ -9,6 +9,8 @@ import {
   orderRequested,
   orderPlaced,
   orderFailed,
+  userFailed,
+  refreshFailed,
   clearError,
 } from './API';
 
@@ -34,4 +36,6 @@ export {
   setOrder,
   setUser,
   logoutUser,
+  userFailed,
+  refreshFailed,
 };

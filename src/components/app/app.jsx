@@ -14,9 +14,11 @@ import OrderDetails from '../order-details/order-details';
 import ErrorPopup from '../error-popup/error-popup';
 
 import { clearError, releaseIngredient, archiveOrder } from '../../services/actionCreators';
-import getIngredients from '../../services/thunks/get-ingredients';
+import { getIngredients, getUser } from '../../services/thunks';
 import { MainPage } from '../../pages';
 import appStyles from './app.module.css';
+import JsCookie from "js-cookie";
+import {JWT_TOKEN} from "../../constants";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -29,7 +31,9 @@ const App = () => {
   const handleErrorClose = () => dispatch(clearError());
 
   useEffect(() => {
+    JsCookie.set(JWT_TOKEN, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMjYxMmIxMjViOWE0MDAxYjZlMzFhYyIsImlhdCI6MTY0Njk1NDQxMSwiZXhwIjoxNjQ2OTU1NjExfQ.VflgnY-OaFOOL8OCxwtRYkOu9mUUwoNHCTEpTZprTt8');
     dispatch(getIngredients());
+    dispatch(getUser());
   }, [dispatch]);
   return (
     <>
