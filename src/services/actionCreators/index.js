@@ -12,11 +12,7 @@ import {
   clearError,
 } from './API';
 
-import {
-  userRequested,
-  userReceived,
-  userFailed,
-} from './user';
+import { setUser, logoutUser } from './user';
 
 export {
   setIngredients,
@@ -36,7 +32,6 @@ export {
   orderFailed,
   clearError,
   setOrder,
-  userRequested,
-  userReceived,
-  userFailed,
+  setUser,
+  logoutUser,
 };
