@@ -18,7 +18,7 @@ const ORDER = 'order';
 const EXPIRY_MESSAGE = 'jwt expired';
 const JWT_TOKEN = 'jwt-token';
 const REFRESH_TOKEN = 'refresh-token';
-const JWT_HEAD = 'Bearer '
+const JWT_HEAD = 'Bearer ';
 const JWT_POS = JWT_HEAD.length;
 
 export {

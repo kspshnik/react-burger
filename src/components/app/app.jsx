@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-
+import { Route, Switch } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
 import * as Sentry from '@sentry/react';
@@ -16,7 +16,7 @@ import ErrorPopup from '../error-popup/error-popup';
 
 import { clearError, releaseIngredient, archiveOrder } from '../../services/actionCreators';
 import { getIngredients, getUser } from '../../services/thunks';
-import { MainPage } from '../../pages';
+import { LoginPage, MainPage } from '../../pages';
 import appStyles from './app.module.css';
 import { JWT_TOKEN, REFRESH_TOKEN } from '../../constants';
 
@@ -40,7 +40,14 @@ const App = () => {
     <>
       <div className={appStyles.wrapper}>
         <AppHeader />
-        <MainPage />
+        <Switch>
+          <Route path='/login'>
+            <LoginPage />
+          </Route>
+          <Route path='/' exact>
+            <MainPage />
+          </Route>
+        </Switch>
       </div>
       {!!selectedIngredient && (
       <Modal title='Детали ингредиента' onClose={handleIngredientDetailsClose}>
