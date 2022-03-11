@@ -94,3 +94,17 @@ export const fetchToken = async () => {
   console.dir(tokenResponse);
   return tokenResponse.json();
 };
+
+export const loginUser = async (email, password) => {
+  const options = {
+    ...defaultOptions,
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      //    Authorization: auth,
+    },
+    body: JSON.stringify({ email, password }),
+  };
+  const login = await fetch(endpoint(BACKEND_ROUTES.login), options);
+  return login.json();
+};
