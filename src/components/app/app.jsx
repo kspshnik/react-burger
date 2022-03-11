@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import * as Sentry from '@sentry/react';
 
+import JsCookie from 'js-cookie';
 import AppHeader from '../app-header/app-header';
 
 import '@ya.praktikum/react-developer-burger-ui-components';
@@ -17,8 +18,7 @@ import { clearError, releaseIngredient, archiveOrder } from '../../services/acti
 import { getIngredients, getUser } from '../../services/thunks';
 import { MainPage } from '../../pages';
 import appStyles from './app.module.css';
-import JsCookie from "js-cookie";
-import {JWT_TOKEN} from "../../constants";
+import { JWT_TOKEN, REFRESH_TOKEN } from '../../constants';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -31,7 +31,8 @@ const App = () => {
   const handleErrorClose = () => dispatch(clearError());
 
   useEffect(() => {
-    JsCookie.set(JWT_TOKEN, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMjYxMmIxMjViOWE0MDAxYjZlMzFhYyIsImlhdCI6MTY0Njk1NDQxMSwiZXhwIjoxNjQ2OTU1NjExfQ.VflgnY-OaFOOL8OCxwtRYkOu9mUUwoNHCTEpTZprTt8');
+    JsCookie.set(JWT_TOKEN, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMjYxMmIxMjViOWE0MDAxYjZlMzFhYyIsImlhdCI6MTY0Njk3MzcyOSwiZXhwIjoxNjQ2OTc0OTI5fQ.AVCQmts-3DVz4-yfT9F1F1DtdQpLypUt654g-Dnzt7c');
+    localStorage.setItem(REFRESH_TOKEN, 'a134e3880e664f7ad6d1c535198159dd16de17e31d8d936e6f0f83acace6831d44fd9f0abd98fb5');
     dispatch(getIngredients());
     dispatch(getUser());
   }, [dispatch]);
