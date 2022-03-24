@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 
 import { useDispatch } from 'react-redux';
 
-import { EmailInput, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Button, EmailInput, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import FormWrapper from '../../components/form-wrapper/form-wrapper';
 import LinkBox from '../../components/link-box/link-box';
@@ -11,6 +11,7 @@ import LinkBox from '../../components/link-box/link-box';
 import { setUser } from '../../services/actionCreators';
 import { jwt, loginUser, token } from '../../services/api';
 import stripBearer from '../../helpers/strip-bearer';
+import lpStyles from './login-page.module.css';
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
@@ -50,18 +51,17 @@ const LoginPage = () => {
     setPassword(evt.target.value);
     setPasswordValidity(evt.target.validity.valid && password.length > 5);
   };
-
   return (
     <>
-      <FormWrapper
-        headingText='Вход'
-        buttonText='Войти'
-        extraClasses='pt-30 mt-15'
-        isValid={isEmailValid && isPasswordValid}
-        onSubmit={onSubmit}>
-        <EmailInput className='pb-6' name='email' value={email} onChange={onEmailChange} />
-        <PasswordInput value={password} name='password' onChange={onPasswordChange} className='pb-6' />
-      </FormWrapper>
+
+      <form className={`${lpStyles.form} pt-30 mt-15`} onSubmit={onSubmit}>
+        <h2 className={`${lpStyles.form__heading} text_type_main-medium mb-6`}>Вход</h2>
+        <fieldset className={`${lpStyles.form__fieldset} mb-6`}>
+          <EmailInput name='email' value={email} onChange={onEmailChange} />
+          <PasswordInput value={password} name='password' onChange={onPasswordChange} />
+        </fieldset>
+        <Button type='primary' htmlType='submit' size='medium' disabled={isEmailValid && isPasswordValid}>Войти</Button>
+      </form>
       <LinkBox linkName='Зарегистрироваться' linkTo='/register' extraClasses='pt-20' caption='Вы - новый пользователь?' />
       <LinkBox linkName='Забыли пароль?' linkTo='/forgot-password' extraClasses='pt-4' caption='Восстановить пароль' />
     </>

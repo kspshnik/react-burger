@@ -9,7 +9,7 @@ const FormWrapper = ({
   headingText, buttonText, extraClasses, onSubmit, isValid, children,
 }) => (
   <form className={`${formStyles.form} ${extraClasses}`} onSubmit={onSubmit}>
-    <h2 className={`${formStyles.form__heading} text_type_main - medium`}>{headingText}</h2>
+    <h2 className={`${formStyles.form__heading} text_type_main-medium mb-6`}>{headingText}</h2>
     <fieldset className={`${formStyles.form__fieldset} mb-6`}>
       {children}
     </fieldset>
