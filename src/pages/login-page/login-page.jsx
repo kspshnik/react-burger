@@ -5,7 +5,6 @@ import { useDispatch } from 'react-redux';
 
 import { Button, EmailInput, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import FormWrapper from '../../components/form-wrapper/form-wrapper';
 import LinkBox from '../../components/link-box/link-box';
 
 import { setUser } from '../../services/actionCreators';

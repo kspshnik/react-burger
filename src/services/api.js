@@ -38,27 +38,19 @@ export const fetchIngredients = async () => {
     method: 'GET',
     headers: { 'Content-Type': 'application/json' },
   };
-  const ingredientsPromise = fetch(endpoint(BACKEND_ROUTES.ingredients), options);
-  const ingredientsResponse = await ingredientsPromise;
-  if (!ingredientsResponse.ok) {
-    return Promise.reject(ingredientsResponse.status);
-  }
-  return ingredientsResponse.json();
+  const ingredients = await fetch(endpoint(BACKEND_ROUTES.ingredients), options);
+  return ingredients.json();
 };
 
-export const fetchOrder = async (order) => {
+export const postOrder = async (order) => {
   const options = {
     ...defaultOptions,
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ ingredients: order }),
   };
-  const orderPromise = fetch(endpoint(BACKEND_ROUTES.orders), options);
-  const orderResponse = await orderPromise;
-  if (!orderResponse.ok) {
-    return Promise.reject(new Error(orderResponse.status));
-  }
-  return orderResponse.json();
+  const ordered = await fetch(endpoint(BACKEND_ROUTES.orders), options);
+  return ordered.json();
 };
 
 export const fetchUser = async () => {
@@ -71,12 +63,8 @@ export const fetchUser = async () => {
 
     },
   };
-  console.dir(options);
-  const userPromise = fetch(endpoint(BACKEND_ROUTES.user), options);
-  const userResponse = await userPromise;
-  console.log('fetchUser response:');
-  console.dir(userResponse);
-  return userResponse.json();
+  const user = await fetch(endpoint(BACKEND_ROUTES.user), options);;
+  return user.json();
 };
 
 export const fetchToken = async () => {
@@ -85,14 +73,12 @@ export const fetchToken = async () => {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      //    Authorization: auth,
     },
     body: JSON.stringify({ token: token.get() }),
   };
-  const tokenPromise = fetch(endpoint(BACKEND_ROUTES.refresh), options);
-  const tokenResponse = await tokenPromise;
-  console.dir(tokenResponse);
-  return tokenResponse.json();
+
+  const refresh = await fetch(endpoint(BACKEND_ROUTES.refresh), options);
+  return refresh.json();
 };
 
 export const loginUser = async (email, password) => {
@@ -101,10 +87,22 @@ export const loginUser = async (email, password) => {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      //    Authorization: auth,
     },
     body: JSON.stringify({ email, password }),
   };
   const login = await fetch(endpoint(BACKEND_ROUTES.login), options);
   return login.json();
+};
+
+export const registerUser = async (name, email, password) => {
+  const options = {
+    ...defaultOptions,
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ name, email, password }),
+  };
+  const register = await fetch(endpoint(BACKEND_ROUTES.register), options);
+  return register.json();
 };
