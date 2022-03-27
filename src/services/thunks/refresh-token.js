@@ -10,7 +10,7 @@ const refreshToken = (thunk) => (dispatch) => fetchToken()
     if (res.success) {
       jwt.set(stripBearer(res.accessToken));
       token.set(res.refreshToken);
-      dispatch(thunk);
+      dispatch(thunk());
     }
   })
   .catch((err) => {
