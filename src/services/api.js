@@ -108,3 +108,17 @@ export const loginUser = async (email, password) => {
   const login = await fetch(endpoint(BACKEND_ROUTES.login), options);
   return login.json();
 };
+
+export const registerUser = async (name, email, password) => {
+  const options = {
+    ...defaultOptions,
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      //    Authorization: auth,
+    },
+    body: JSON.stringify({ name, email, password }),
+  };
+  const register = await fetch(endpoint(BACKEND_ROUTES.register), options);
+  return register.json();
+};

@@ -10,7 +10,7 @@ import {
 import LinkBox from '../../components/link-box/link-box';
 
 import { setUser } from '../../services/actionCreators';
-import { jwt, token,  } from '../../services/api';
+import { jwt, token, registerUser } from '../../services/api';
 import { stripBearer, nameValidity } from '../../helpers';
 import loginStyles from './register-page.module.css';
 
@@ -29,12 +29,13 @@ const RegisterPage = () => {
     try {
       const {
         success, user, accessToken, refreshToken,
-      } = await (name, email, password);
+      } = await registerUser(name, email, password);
       if (success) {
         jwt.set(stripBearer(accessToken));
         token.set(refreshToken);
         dispatch(setUser(user));
         history.push('/');
+        setName('');
         setEmail('');
         setPassword('');
       }
