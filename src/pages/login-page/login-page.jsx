@@ -9,7 +9,7 @@ import LinkBox from '../../components/link-box/link-box';
 
 import { setUser } from '../../services/actionCreators';
 import { jwt, loginUser, token } from '../../services/api';
-import stripBearer from '../../helpers/strip-bearer';
+import { stripBearer } from '../../helpers';
 import loginStyles from './login-page.module.css';
 
 const LoginPage = () => {
