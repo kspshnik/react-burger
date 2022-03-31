@@ -132,11 +132,19 @@ export const sendPasswordCode = async (email) => {
     },
     body: JSON.stringify({ email }),
   };
-  const forgot = await fetch(endpoint(BACKEND_ROUTES.forgot), options);
-  if (forgot.ok) {
-    return forgot.json();
+  try {
+    const forgot = await fetch(endpoint(BACKEND_ROUTES.forgot), options);
+    console.log('Try forgot!');
+    console.dir(forgot);
+    if (forgot.ok) {
+      return forgot.json();
+    }
+    return Promise.reject(forgot);
+  } catch (err) {
+    console.log('Catch forgot!');
+    console.dir(err);
+    return Promise.reject(err);
   }
-  return Promise.reject(forgot);
 };
 
 export const resetPassword = async (code, password) => {
