@@ -1,4 +1,4 @@
-import { React, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { useDispatch } from 'react-redux';
@@ -63,7 +63,7 @@ const RegisterPage = () => {
   return (
     <main className={loginStyles.wrapper}>
       <form className={`${loginStyles.form}`} onSubmit={onSubmit}>
-        <h2 className={`${loginStyles.form__heading} text_type_main - medium`}>Вход</h2>
+        <h2 className={`${loginStyles.form__heading} text_type_main - medium`}>Регистрация</h2>
         <fieldset className={`${loginStyles.form__fieldset} pt-3 pb-3 mb-6`}>
           <Input
             type='text'
@@ -84,12 +84,11 @@ const RegisterPage = () => {
           type='primary'
           htmlType='submit'
           size='medium'
-          disabled={(name.length < 3 || password.length < 6 || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))}>
-          Войти
+          disabled={(name.length < 3 || password.length < 6 || !(/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)))}>
+          Зарегистрироваться
         </Button>
       </form>
-      <LinkBox linkName='Зарегистрироваться' linkTo='/register' extraClasses='pt-20' caption='Вы - новый пользователь?' />
-      <LinkBox linkName='Забыли пароль?' linkTo='/forgot-password' extraClasses='pt-4' caption='Восстановить пароль' />
+      <LinkBox linkName='Войти!' linkTo='/login' extraClasses='pt-20' caption='Уже зарегистрированы?' />
     </main>
   );
 };
