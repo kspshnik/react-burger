@@ -8,7 +8,7 @@ import {
   SET_ORDER,
 } from '../actions';
 
-import reorderChoice from '../../helpers/reorder-choice';
+import { reorderChoice } from '../../helpers';
 
 const initialState = {
   bun: null,

@@ -93,6 +93,7 @@ export const loginUser = async (email, password) => {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
+      //    Authorization: auth,
     },
     body: JSON.stringify({ email, password }),
   };
@@ -111,4 +112,66 @@ export const registerUser = async (name, email, password) => {
   };
   const register = await fetch(endpoint(BACKEND_ROUTES.register), options);
   return register.json();
+};
+
+export const registerUser = async (name, email, password) => {
+  const options = {
+    ...defaultOptions,
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      //    Authorization: auth,
+    },
+    body: JSON.stringify({ name, email, password }),
+  };
+  const register = await fetch(endpoint(BACKEND_ROUTES.register), options);
+  return register.json();
+};
+
+export const sendPasswordCode = async (email) => {
+  const options = {
+    ...defaultOptions,
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ email }),
+  };
+  try {
+    const forgot = await fetch(endpoint(BACKEND_ROUTES.forgot), options);
+    console.log('Try forgot!');
+    console.dir(forgot);
+    if (forgot.ok) {
+      return forgot.json();
+    }
+    return Promise.reject(forgot);
+  } catch (err) {
+    console.log('Catch forgot!');
+    console.dir(err);
+    return Promise.reject(err);
+  }
+};
+
+export const resetPassword = async (code, password) => {
+  const options = {
+    ...defaultOptions,
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ token: code, password }),
+  };
+  try {
+    const reset = fetch(endpoint(BACKEND_ROUTES.reset), options);
+    console.log('Try reset!');
+    console.dir(reset);
+    if (reset.ok) {
+      return reset.json();
+    }
+    return Promise.reject(reset);
+  } catch (err) {
+    console.log('Catch reset!');
+    console.dir(err);
+    return Promise.reject(err);
+  }
 };
