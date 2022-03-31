@@ -63,8 +63,14 @@ export const fetchUser = async () => {
 
     },
   };
-  const user = await fetch(endpoint(BACKEND_ROUTES.user), options);;
-  return user.json();
+  try {
+    const user = await fetch(endpoint(BACKEND_ROUTES.user), options);
+
+    return user.json();
+  } catch (err) {
+    console.dir(err);
+    return Promise.reject(err);
+  }
 };
 
 export const fetchToken = async () => {
