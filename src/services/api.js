@@ -138,3 +138,27 @@ export const sendPasswordCode = async (email) => {
   }
   return Promise.reject(forgot);
 };
+
+export const resetPassword = async (code, password) => {
+  const options = {
+    ...defaultOptions,
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ token: code, password }),
+  };
+  try {
+    const reset = fetch(endpoint(BACKEND_ROUTES.reset), options);
+    console.log('Try reset!');
+    console.dir(reset);
+    if (reset.ok) {
+      return reset.json();
+    }
+    return Promise.reject(reset);
+  } catch (err) {
+    console.log('Catch reset!');
+    console.dir(err);
+    return Promise.reject(err);
+  }
+};
