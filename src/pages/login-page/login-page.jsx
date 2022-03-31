@@ -1,11 +1,10 @@
-import { React, useState } from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { useDispatch } from 'react-redux';
 
 import { Button, EmailInput, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import FormWrapper from '../../components/form-wrapper/form-wrapper';
 import LinkBox from '../../components/link-box/link-box';
 
 import { setUser } from '../../services/actionCreators';
@@ -38,7 +37,7 @@ const LoginPage = () => {
       }
     } catch (err) {
       console.dir(err);
-  // TODO: Сделать нормальную обработку ошибок здесь, с тултипом и баллалайками
+      // TODO: Сделать нормальную обработку ошибок здесь, с тултипом и баллалайками
     }
   };
 
@@ -63,7 +62,7 @@ const LoginPage = () => {
       </form>
       <LinkBox linkName='Зарегистрироваться' linkTo='/register' extraClasses='pt-20' caption='Вы - новый пользователь?' />
       <LinkBox linkName='Забыли пароль?' linkTo='/forgot-password' extraClasses='pt-4' caption='Восстановить пароль' />
-    </>
+    </main>
   );
 };
 
