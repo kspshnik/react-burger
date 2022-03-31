@@ -122,3 +122,19 @@ export const registerUser = async (name, email, password) => {
   const register = await fetch(endpoint(BACKEND_ROUTES.register), options);
   return register.json();
 };
+
+export const sendPasswordCode = async (email) => {
+  const options = {
+    ...defaultOptions,
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ email }),
+  };
+  const forgot = await fetch(endpoint(BACKEND_ROUTES.forgot), options);
+  if (forgot.ok) {
+    return forgot.json();
+  }
+  return Promise.reject(forgot);
+};

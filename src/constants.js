@@ -7,6 +7,8 @@ const BACKEND_ROUTES = {
   register: '/auth/register',
   refresh: '/auth/token',
   user: '/auth/user',
+  forgot: '/password-reset',
+  reset: '/password-reset/reset',
 };
 
 const BUN = 'bun';
