@@ -4,8 +4,6 @@ import { refreshFailed } from '../actionCreators';
 
 const refreshToken = (thunk) => (dispatch) => fetchToken()
   .then((res) => {
-    console.log('Got fetchToken response:');
-    console.dir(res);
     // eslint-disable-next-line promise/always-return
     if (res.success) {
       jwt.set(stripBearer(res.accessToken));
@@ -14,7 +12,6 @@ const refreshToken = (thunk) => (dispatch) => fetchToken()
     }
   })
   .catch((err) => {
-    console.dir(err);
     dispatch(refreshFailed(err.message));
   });
 
