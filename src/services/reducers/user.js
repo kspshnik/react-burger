@@ -1,6 +1,6 @@
 import {
   SET_USER,
-  LOGOUT_USER,
+  RESET_USER,
 } from '../actions';
 
 const initialState = {
@@ -17,7 +17,7 @@ const userReducer = (state = initialState, action) => {
         ...state, name, email, loggedIn: true,
       };
     }
-    case LOGOUT_USER: {
+    case RESET_USER: {
       return {
         ...state, name: '', email: '', loggedIn: false,
       };

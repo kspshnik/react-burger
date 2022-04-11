@@ -14,7 +14,7 @@ import {
   clearError,
 } from './API';
 
-import { setUser, logoutUser } from './user';
+import { setUser, resetUser } from './user';
 
 export {
   setIngredients,
@@ -35,7 +35,7 @@ export {
   clearError,
   setOrder,
   setUser,
-  logoutUser,
+  resetUser,
   userFailed,
   refreshFailed,
 };

@@ -26,7 +26,7 @@ import {
   SET_ORDER,
 } from './orders';
 
-import { SET_USER, LOGOUT_USER } from './user';
+import { SET_USER, RESET_USER } from './user';
 
 export {
   GET_INGREDIENTS_REQUEST,
@@ -49,5 +49,5 @@ export {
   ARCHIVE_ORDER,
   SET_ORDER,
   SET_USER,
-  LOGOUT_USER,
+  RESET_USER,
 };
