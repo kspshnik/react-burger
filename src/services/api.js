@@ -75,10 +75,7 @@ export const fetchUser = async () => {
   };
   try {
     const user = await fetch(endpoint(BACKEND_ROUTES.user), options);
-    if (user.ok) {
-      return user.json();
-    }
-    return Promise.reject(user);
+    return user.json();
   } catch (err) {
     return Promise.reject(err);
   }
@@ -95,10 +92,7 @@ export const fetchToken = async () => {
   };
   try {
     const refresh = await fetch(endpoint(BACKEND_ROUTES.refresh), options);
-    if (refresh.ok) {
-      return refresh.json();
-    }
-    return Promise.reject(refresh);
+    return refresh.json();
   } catch (err) {
     return Promise.reject(err);
   }
