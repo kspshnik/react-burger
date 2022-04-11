@@ -9,6 +9,8 @@ const refreshToken = (thunk) => (dispatch) => fetchToken()
       jwt.set(stripBearer(res.accessToken));
       token.set(res.refreshToken);
       dispatch(thunk());
+    } else {
+      dispatch(refreshFailed(res.message));
     }
   })
   .catch((err) => {
