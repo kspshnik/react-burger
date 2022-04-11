@@ -8,7 +8,7 @@ import { Button, EmailInput, PasswordInput } from '@ya.praktikum/react-developer
 import LinkBox from '../../components/link-box/link-box';
 
 import { setUser } from '../../services/actionCreators';
-import { jwt, loginUser, token } from '../../services/api';
+import { jwt, login, token } from '../../services/api';
 import { stripBearer } from '../../helpers';
 import loginStyles from './login-page.module.css';
 
@@ -26,7 +26,7 @@ const LoginPage = () => {
     try {
       const {
         success, user, accessToken, refreshToken,
-      } = await loginUser(email, password);
+      } = await login(email, password);
       if (success) {
         jwt.set(stripBearer(accessToken));
         token.set(refreshToken);
