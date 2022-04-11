@@ -7,7 +7,7 @@ const logoutUserThunk = () => (dispatch) => logout()
   .then((res) => {
     // eslint-disable-next-line promise/always-return
     if (res.success) {
-      dispatch(resetUser(res.user));
+      dispatch(resetUser());
     } else if (!res.success && res.message === EXPIRY_MESSAGE) {
       dispatch(refreshToken(logoutUserThunk));
     }

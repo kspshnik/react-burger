@@ -2,6 +2,19 @@ import JsCookie from 'js-cookie';
 import { BACKEND_ROUTES, JWT_TOKEN, REFRESH_TOKEN } from '../constants';
 
 const endpoint = (route) => (`${BACKEND_ROUTES.base}${route}`);
+export const makeUser = (name, email, password) => {
+  let res = {};
+  if (name) {
+    res = { ...res, name };
+  }
+  if (email) {
+    res = { ...res, email };
+  }
+  if (password) {
+    res = { ...res, password };
+  }
+  return res;
+};
 
 const defaultOptions = {
   mode: 'cors',
@@ -98,7 +111,7 @@ export const fetchToken = async () => {
   }
 };
 
-export const login = async ( email, password) => {
+export const login = async (email, password) => {
   const options = {
     ...defaultOptions,
     method: 'POST',
@@ -194,17 +207,18 @@ export const resetPassword = async (code, password) => {
   }
 };
 
-export const patchUser = async (name, email, password) => {
+export const patchUser = async (name = null, email = null, password = null) => {
   const options = {
     ...defaultOptions,
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${jwt.get()}`,
-
     },
+    body: JSON.stringify(makeUser(name, email, password)),
   };
   try {
+    console.dir(options);
     const user = await fetch(endpoint(BACKEND_ROUTES.user), options);
     return user.json();
   } catch (err) {

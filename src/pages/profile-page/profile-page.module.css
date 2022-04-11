@@ -1,9 +1,10 @@
 .main {
   display: grid;
-  grid-template-columns: repeat(2, 600px);
-  gap: 0 40px;
+  grid-template-columns: 320px  860px;
+  gap: 0 60px;
   overflow: hidden;
   height: 100vh;
+  padding: 40px 340px;
   }
 
 .form {
@@ -12,6 +13,7 @@
   justify-content: flex-start;
   align-items: center;
   width: 480px;
+  padding-top: 120px;
   }
 
 .form__heading {
@@ -33,6 +35,7 @@
 
 .form__fieldset > div > div  {
   width: 480px;
+  height: 64px;
   }
 
 .form__stub {

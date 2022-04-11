@@ -1,5 +1,5 @@
 import reorderChoice from './reorder-choice';
 import stripBearer  from './strip-bearer';
-import nameValidity from './validate';
+import { nameValidity, emailValidity } from './validate';
 
-export { reorderChoice, stripBearer, nameValidity };
+export { reorderChoice, stripBearer, nameValidity, emailValidity };

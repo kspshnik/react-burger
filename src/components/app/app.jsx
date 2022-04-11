@@ -17,7 +17,7 @@ import ErrorPopup from '../error-popup/error-popup';
 import { clearError, releaseIngredient, archiveOrder } from '../../services/actionCreators';
 import { getIngredients, getUser } from '../../services/thunks';
 import {
-  ForgotPage, LoginPage, MainPage, RegisterPage, ResetPage,
+  ForgotPage, LoginPage, MainPage, RegisterPage, ResetPage, ProfilePage,
 } from '../../pages';
 import appStyles from './app.module.css';
 import { JWT_TOKEN, REFRESH_TOKEN } from '../../constants';
@@ -54,6 +54,9 @@ const App = () => {
           </Route>
           <Route path='/reset-password'>
             <ResetPage />
+          </Route>
+          <Route path='/profile'>
+            <ProfilePage />
           </Route>
           <Route path='/' exact>
             <MainPage />
