@@ -39,7 +39,10 @@ export const fetchIngredients = async () => {
     headers: { 'Content-Type': 'application/json' },
   };
   const ingredients = await fetch(endpoint(BACKEND_ROUTES.ingredients), options);
-  return ingredients.json();
+  if (ingredients.ok) {
+    return ingredients.json();
+  }
+  return Promise.reject(ingredients);
 };
 
 export const postOrder = async (order) => {
@@ -49,8 +52,15 @@ export const postOrder = async (order) => {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ ingredients: order }),
   };
-  const ordered = await fetch(endpoint(BACKEND_ROUTES.orders), options);
-  return ordered.json();
+  try {
+    const ordered = await fetch(endpoint(BACKEND_ROUTES.orders), options);
+    if (ordered.ok) {
+      return ordered.json();
+    }
+    return Promise.reject(ordered);
+  } catch (err) {
+    return Promise.reject(err);
+  }
 };
 
 export const fetchUser = async () => {
@@ -65,10 +75,11 @@ export const fetchUser = async () => {
   };
   try {
     const user = await fetch(endpoint(BACKEND_ROUTES.user), options);
-
-    return user.json();
+    if (user.ok) {
+      return user.json();
+    }
+    return Promise.reject(user);
   } catch (err) {
-    console.dir(err);
     return Promise.reject(err);
   }
 };
@@ -82,9 +93,15 @@ export const fetchToken = async () => {
     },
     body: JSON.stringify({ token: token.get() }),
   };
-
-  const refresh = await fetch(endpoint(BACKEND_ROUTES.refresh), options);
-  return refresh.json();
+  try {
+    const refresh = await fetch(endpoint(BACKEND_ROUTES.refresh), options);
+    if (refresh.ok) {
+      return refresh.json();
+    }
+    return Promise.reject(refresh);
+  } catch (err) {
+    return Promise.reject(err);
+  }
 };
 
 export const loginUser = async (email, password) => {
@@ -93,12 +110,18 @@ export const loginUser = async (email, password) => {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      //    Authorization: auth,
     },
     body: JSON.stringify({ email, password }),
   };
-  const login = await fetch(endpoint(BACKEND_ROUTES.login), options);
-  return login.json();
+  try {
+    const login = await fetch(endpoint(BACKEND_ROUTES.login), options);
+    if (login.ok) {
+      return login.json();
+    }
+    return Promise.reject(login);
+  } catch (err) {
+    return Promise.reject(err);
+  }
 };
 
 export const registerUser = async (name, email, password) => {
@@ -133,15 +156,11 @@ export const sendPasswordCode = async (email) => {
   };
   try {
     const forgot = await fetch(endpoint(BACKEND_ROUTES.forgot), options);
-    console.log('Try forgot!');
-    console.dir(forgot);
     if (forgot.ok) {
       return forgot.json();
     }
     return Promise.reject(forgot);
   } catch (err) {
-    console.log('Catch forgot!');
-    console.dir(err);
     return Promise.reject(err);
   }
 };
@@ -157,15 +176,12 @@ export const resetPassword = async (code, password) => {
   };
   try {
     const reset = fetch(endpoint(BACKEND_ROUTES.reset), options);
-    console.log('Try reset!');
-    console.dir(reset);
+
     if (reset.ok) {
       return reset.json();
     }
     return Promise.reject(reset);
   } catch (err) {
-    console.log('Catch reset!');
-    console.dir(err);
     return Promise.reject(err);
   }
 };
