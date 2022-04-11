@@ -98,7 +98,7 @@ export const fetchToken = async () => {
   }
 };
 
-export const loginUser = async (email, password) => {
+export const login = async ( email, password) => {
   const options = {
     ...defaultOptions,
     method: 'POST',
@@ -109,10 +109,24 @@ export const loginUser = async (email, password) => {
   };
   try {
     const login = await fetch(endpoint(BACKEND_ROUTES.login), options);
-    if (login.ok) {
-      return login.json();
-    }
-    return Promise.reject(login);
+    return login.json();
+  } catch (err) {
+    return Promise.reject(err);
+  }
+};
+
+export const logout = async () => {
+  const options = {
+    ...defaultOptions,
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ token: token.get() }),
+  };
+  try {
+    const logoutResponse = await fetch(endpoint(BACKEND_ROUTES.logout), options);
+    return logoutResponse.json();
   } catch (err) {
     return Promise.reject(err);
   }
@@ -175,6 +189,24 @@ export const resetPassword = async (code, password) => {
       return reset.json();
     }
     return Promise.reject(reset);
+  } catch (err) {
+    return Promise.reject(err);
+  }
+};
+
+export const patchUser = async (name, email, password) => {
+  const options = {
+    ...defaultOptions,
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${jwt.get()}`,
+
+    },
+  };
+  try {
+    const user = await fetch(endpoint(BACKEND_ROUTES.user), options);
+    return user.json();
   } catch (err) {
     return Promise.reject(err);
   }
