@@ -4,6 +4,7 @@ import getUser from './get-user';
 import refreshToken from './refresh-token';
 import logoutUserThunk from './logout-user-thunk';
 import patchUserThunk from './patch-user-thunk';
+import resetProfileForm from './reset-profile-form';
 
 export {
   getIngredients,
@@ -12,4 +13,5 @@ export {
   refreshToken,
   logoutUserThunk,
   patchUserThunk,
+  resetProfileForm,
 };

@@ -62,7 +62,7 @@ const ProfilePage = () => {
     <main className={ppStyles.main}>
       <nav className={ppStyles.menu} />
       <form className={`${ppStyles.form}`} onSubmit={onSubmit} onReset={onReset}>
-        <h2 className={`${ppStyles.form__heading} text_type_main - medium`}>Восстановление пароля</h2>
+        <h2 className={`${ppStyles.form__heading} text_type_main - medium`}>  </h2>
         <fieldset className={`${ppStyles.form__fieldset} pt-3 pb-3`}>
           <Input type='text' name='name' value={newName} placeholder='Имя' onChange={onNameChange} />
           <Input type='email' value={newEmail} name='email' onChange={onEmailChange} placeholder='Логин' />

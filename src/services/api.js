@@ -104,9 +104,16 @@ export const fetchToken = async () => {
     body: JSON.stringify({ token: token.get() }),
   };
   try {
+    console.log('fetchToken options!');
+    console.dir(options);
     const refresh = await fetch(endpoint(BACKEND_ROUTES.refresh), options);
-    return refresh.json();
+    const res = await refresh.json();
+    console.log('Result fetchToken:');
+    console.dir(res);
+    return res;
   } catch (err) {
+    console.log('fetchToken Error!:');
+    console.dir(err);
     return Promise.reject(err);
   }
 };
@@ -121,8 +128,8 @@ export const login = async (email, password) => {
     body: JSON.stringify({ email, password }),
   };
   try {
-    const login = await fetch(endpoint(BACKEND_ROUTES.login), options);
-    return login.json();
+    const loginResponse = await fetch(endpoint(BACKEND_ROUTES.login), options);
+    return loginResponse.json();
   } catch (err) {
     return Promise.reject(err);
   }

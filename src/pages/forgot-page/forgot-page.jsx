@@ -1,16 +1,18 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { Button, EmailInput } from '@ya.praktikum/react-developer-burger-ui-components';
 
+import { useDispatch, useSelector } from 'react-redux';
 import LinkBox from '../../components/link-box/link-box';
 
 import { sendPasswordCode } from '../../services/api';
 import forgotStyles from './forgot-page.module.css';
+import { resetForgotForm, setForgotEmail } from '../../services/actionCreators';
 
 const ForgotPage = () => {
-  const [email, setEmail] = useState('');
-
+  const { email } = useSelector((state) => state.forms.forgot);
+  const dispatch = useDispatch();
   const history = useHistory();
 
   const onSubmit = async (evt) => {
@@ -18,8 +20,8 @@ const ForgotPage = () => {
     try {
       const { success } = await sendPasswordCode(email);
       if (success) {
+        dispatch(resetForgotForm());
         history.push('/reset-password');
-        setEmail('');
       }
     } catch (err) {
       console.dir(err);
@@ -28,8 +30,13 @@ const ForgotPage = () => {
   };
 
   const onEmailChange = (evt) => {
-    setEmail(evt.target.value);
+    dispatch(setForgotEmail(evt.target.value));
   };
+
+  React.useEffect(() => {
+    dispatch(resetForgotForm());
+    return () => resetForgotForm();
+  }, [dispatch]);
 
   return (
     <main className={forgotStyles.wrapper}>

@@ -24,16 +24,20 @@ const LoginPage = () => {
   const onSubmit = async (evt) => {
     evt.preventDefault();
     try {
+      const res = await login(email, password);
+      console.dir(res);
       const {
         success, user, accessToken, refreshToken,
-      } = await login(email, password);
+      } = res;
       if (success) {
         jwt.set(stripBearer(accessToken));
+        console.log(`Actual jwt: '${jwt.get()}'.`);
         token.set(refreshToken);
+        console.log(`Actual token: '${token.get()}'.`);
         dispatch(setUser(user));
+        //       setEmail('');
+        //       setPassword('');
         history.push('/');
-        setEmail('');
-        setPassword('');
       }
     } catch (err) {
       console.dir(err);
