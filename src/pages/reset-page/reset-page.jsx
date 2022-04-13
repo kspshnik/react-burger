@@ -1,47 +1,42 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+// import { useHistory } from 'react-router-dom';
 
 import {
   Button, Input, PasswordInput,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import { resetPassword } from '../../services/api';
-
+import { useDispatch, useSelector } from 'react-redux';
 import LinkBox from '../../components/link-box/link-box';
 
 import resetStyles from './reset-page.module.css';
+import { resetResetForm, setResetCode, setResetPass } from '../../services/actionCreators';
+import { passwordValidity } from '../../helpers';
+import resetPasswordThunk from '../../services/thunks/reset-password-thunk';
 
 const ResetPage = () => {
-  const [code, setCode] = useState('');
-  const [password, setPassword] = useState('');
+  const dispatch = useDispatch();
+  const { code, password } = useSelector((store) => store.forms.reset);
   const [isPasswordValid, setPasswordValidity] = useState(false);
-  const history = useHistory();
+  // const history = useHistory();
 
   const onSubmit = async (evt) => {
     evt.preventDefault();
-    try {
-      const {
-        success,
-      } = await resetPassword(code, password);
-      if (success) {
-        history.push('/');
-        setCode('');
-        setPassword('');
-        setPasswordValidity(false);
-      }
-    } catch (err) {
-      console.dir(err);
-      // TODO: Сделать нормальную обработку ошибок здесь, с тултипом и баллалайками
-    }
+    dispatch(resetPasswordThunk());
   };
 
   const onCodeChange = (evt) => {
-    setCode(evt.target.value);
+    const { value } = evt.target;
+    setResetCode(value);
   };
   const onPasswordChange = (evt) => {
-    setPassword(evt.target.value);
-    setPasswordValidity(evt.target.validity.valid && password.length > 5);
+    const { value, validity: { valid } } = evt.target;
+    setResetPass(value);
+    setPasswordValidity(valid && passwordValidity(value));
   };
+  React.useEffect(() => {
+    dispatch(resetResetForm());
+    return () => resetResetForm();
+  }, [dispatch]);
 
   return (
     <main className={resetStyles.wrapper}>

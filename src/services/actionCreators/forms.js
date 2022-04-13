@@ -14,6 +14,7 @@ import {
   LOGIN_FORM_RESET,
   FORGOT_FORM_RESET,
   RESET_FORM_RESET,
+  PROFILE_FORM_RESET,
 } from '../actions';
 
 export const setRegisterName = (name) => ({ type: REGISTER_SET_NAME, payload: name });
@@ -36,3 +37,4 @@ export const resetRegisterForm = () => ({ type: REGISTER_FORM_RESET });
 export const resetLoginForm = () => ({ type: LOGIN_FORM_RESET });
 export const resetForgotForm = () => ({ type: FORGOT_FORM_RESET });
 export const resetResetForm = () => ({ type: RESET_FORM_RESET });
+export const resetProfileForm = () => ({ type: PROFILE_FORM_RESET });

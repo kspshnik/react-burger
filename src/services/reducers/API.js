@@ -8,6 +8,10 @@ import {
   PLACE_ORDER_REQUEST,
   PLACE_ORDER_SUCCEED,
   REFRESH_TOKEN_FAIL,
+  LOGIN_SUCCEED,
+  LOGIN_FAILED,
+  LOGOUT_SUCCEED,
+  LOGOUT_FAILED,
   REQUEST_CODE_SUCCEED,
   REQUEST_CODE_FAILED,
   RESET_PASSWORD_SUCCEED,
@@ -15,6 +19,9 @@ import {
   UPDATE_PROFILE_SUCCEED,
   UPDATE_PROFILE_FAILED,
   CLOSE_SUCCESS,
+  ERROR_500,
+  REGISTER_SUCCEED,
+  REGISTER_FAILED,
 } from '../actions';
 
 const initialState = {
@@ -66,24 +73,27 @@ const APIReducer = (state = initialState, action) => {
         ...state, successMessage: '',
       };
     }
-    case GET_USER_FAIL:
-    case REFRESH_TOKEN_FAIL: {
-      return {
-        ...state, errorMessage: action.payload,
-      };
-    }
     case REQUEST_CODE_SUCCEED:
     case RESET_PASSWORD_SUCCEED:
-    case UPDATE_PROFILE_SUCCEED: {
+    case UPDATE_PROFILE_SUCCEED:
+    case REGISTER_SUCCEED:
+    case LOGIN_SUCCEED:
+    case LOGOUT_SUCCEED: {
       return {
-        ...state, successMessage: action.payload,
+        ...state, successMessage: action.payload, errorMessage: '',
       };
     }
+    case GET_USER_FAIL:
+    case REFRESH_TOKEN_FAIL:
     case REQUEST_CODE_FAILED:
     case RESET_PASSWORD_FAILED:
-    case UPDATE_PROFILE_FAILED: {
+    case UPDATE_PROFILE_FAILED:
+    case REGISTER_FAILED:
+    case LOGIN_FAILED:
+    case LOGOUT_FAILED:
+    case ERROR_500: {
       return {
-        ...state, errorMessage: action.payload,
+        ...state, errorMessage: action.payload, successMessage: '',
       };
     }
     default: return state;

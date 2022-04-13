@@ -1,7 +1,8 @@
 import {
   REGISTER_SET_NAME,
   REGISTER_SET_EMAIL,
-  REGISTER_SET_PASS, REGISTER_FORM_RESET,
+  REGISTER_SET_PASS,
+  REGISTER_FORM_RESET,
 } from '../actions';
 
 const initialState = {

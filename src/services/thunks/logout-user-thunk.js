@@ -1,21 +1,24 @@
 import { jwt, logout, token } from '../api';
-import { resetUser, userFailed } from '../actionCreators';
+import { generalAPIError, resetProfileForm, resetUser } from '../actionCreators';
 import { EXPIRY_MESSAGE } from '../../constants';
 import refreshToken from './refresh-token';
 
-const logoutUserThunk = () => (dispatch) => logout()
-  .then((res) => {
-    // eslint-disable-next-line promise/always-return
-    if (res.success) {
+const logoutUserThunk = () => async (dispatch) => {
+  const { success, message = 'Неизвестная ошибка!' } = await logout();
+  try {
+    if (success) {
       jwt.set('');
       token.set('');
       dispatch(resetUser());
-    } else if (!res.success && res.message === EXPIRY_MESSAGE) {
+      dispatch(resetProfileForm());
+    } else if (!success && message === EXPIRY_MESSAGE) {
       dispatch(refreshToken(logoutUserThunk));
+    } else {
+      dispatch(generalAPIError(message));
     }
-  })
-  .catch((err) => {
-    dispatch(userFailed(err.message));
-  });
+  } catch (err) {
+    dispatch(generalAPIError(err.message));
+  }
+};
 
 export default logoutUserThunk;

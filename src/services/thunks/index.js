@@ -1,17 +1,21 @@
 import getIngredients from './get-ingredients';
 import placeOrder from './place-order';
-import getUser from './get-user';
+import getUserThunk from './get-user-thunk';
 import refreshToken from './refresh-token';
+import loginUserThunk from './login-user-thunk';
 import logoutUserThunk from './logout-user-thunk';
 import patchUserThunk from './patch-user-thunk';
-import resetProfileForm from './reset-profile-form';
+import setProfileForm from './set-profile-form';
+import requestCodeThunk from './request-code-thunk';
 
 export {
   getIngredients,
   placeOrder,
-  getUser,
+  getUserThunk,
   refreshToken,
+  loginUserThunk,
   logoutUserThunk,
   patchUserThunk,
-  resetProfileForm,
+  setProfileForm,
+  requestCodeThunk,
 };

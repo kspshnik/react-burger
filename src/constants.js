@@ -23,6 +23,10 @@ const REFRESH_TOKEN = 'refresh-token';
 const JWT_HEAD = 'Bearer ';
 const JWT_POS = JWT_HEAD.length;
 
+const INFO = 'INFO';
+const ERROR = 'ERROR';
+const OK = 'OK';
+
 export {
   BUN,
   SAUCE,
@@ -35,4 +39,7 @@ export {
   REFRESH_TOKEN,
   JWT_HEAD,
   JWT_POS,
+  INFO,
+  ERROR,
+  OK,
 };

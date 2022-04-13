@@ -13,12 +13,19 @@ import {
   refreshFailed,
   clearError,
   clearSuccess,
+  loginSucceed,
+  loginFailed,
+  logoutSucceed,
+  logoutFailed,
+  registerSucceed,
+  registerFailed,
   codeRequestSucceed,
   codeRequestFailed,
   passwordResetSucceed,
   passwordResetFailed,
   profileUpdateSucceed,
   profileUpdateFailed,
+  generalAPIError,
 } from './API';
 
 import { setUser, resetUser } from './user';
@@ -39,6 +46,7 @@ import {
   resetLoginForm,
   resetForgotForm,
   resetResetForm,
+  resetProfileForm,
 } from './forms';
 
 export {
@@ -59,12 +67,19 @@ export {
   orderFailed,
   clearError,
   clearSuccess,
+  loginSucceed,
+  loginFailed,
+  logoutSucceed,
+  logoutFailed,
+  registerSucceed,
+  registerFailed,
   codeRequestSucceed,
   codeRequestFailed,
   passwordResetSucceed,
   passwordResetFailed,
   profileUpdateSucceed,
   profileUpdateFailed,
+  generalAPIError,
   setOrder,
   setUser,
   resetUser,
@@ -85,4 +100,5 @@ export {
   resetLoginForm,
   resetForgotForm,
   resetResetForm,
+  resetProfileForm,
 };

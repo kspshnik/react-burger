@@ -1,8 +1,9 @@
 import { setProfileEmail, setProfileName, setProfilePass } from '../actionCreators';
 
-const resetProfileForm = (name, email) => (dispatch) => {
+const setProfileForm = () => (dispatch, getState) => {
+  const { user: { name, email } } = getState();
   dispatch(setProfileName(name));
   dispatch(setProfileEmail(email));
   dispatch(setProfilePass(''));
 };
-export default resetProfileForm;
+export default setProfileForm;

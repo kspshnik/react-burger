@@ -11,20 +11,20 @@ import '@ya.praktikum/react-developer-burger-ui-components';
 import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import OrderDetails from '../order-details/order-details';
-import ErrorPopup from '../error-popup/error-popup';
-import SuccessPopup from '../succeed-popup/success-popup';
 
 import {
   clearError, releaseIngredient, archiveOrder, clearSuccess,
 } from '../../services/actionCreators';
 
-import { getIngredients, getUser } from '../../services/thunks';
+import { getIngredients, getUserThunk } from '../../services/thunks';
 
 import {
   ForgotPage, LoginPage, MainPage, RegisterPage, ResetPage, ProfilePage,
 } from '../../pages';
 
 import appStyles from './app.module.css';
+import ToolTip from '../tooltip/tooltip';
+import { ERROR, OK } from '../../constants';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -36,9 +36,10 @@ const App = () => {
   const handleOrderDetailsClose = () => dispatch(archiveOrder());
   const handleErrorClose = () => dispatch(clearError());
   const handleSuccessClose = () => dispatch(clearSuccess());
+
   useEffect(() => {
     dispatch(getIngredients());
-    dispatch(getUser());
+    dispatch(getUserThunk());
   }, [dispatch]);
   return (
     <>
@@ -77,12 +78,12 @@ const App = () => {
       )}
       {!!errorMessage && (
       <Modal title='К сожалению, произошла ошибка!' onClose={handleErrorClose}>
-        <ErrorPopup message={errorMessage} />
+        <ToolTip type={ERROR} message={errorMessage} />
       </Modal>
       )}
       {!!successMessage && (
         <Modal title='Поздравляем!' onClose={handleSuccessClose}>
-          <SuccessPopup message={successMessage} />
+          <ToolTip type={OK} message={successMessage} />
         </Modal>
       )}
     </>

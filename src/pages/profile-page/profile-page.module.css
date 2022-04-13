@@ -41,3 +41,11 @@
 .form__stub {
   min-height: 24px;
   }
+
+.profile__buttons {
+  width: 480px;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-evenly;
+  align-items: center;
+}

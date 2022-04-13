@@ -1,58 +1,43 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
 
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { Button, EmailInput, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import LinkBox from '../../components/link-box/link-box';
 
-import { setUser } from '../../services/actionCreators';
-import { jwt, login, token } from '../../services/api';
-import { stripBearer } from '../../helpers';
 import loginStyles from './login-page.module.css';
+import { loginUserThunk } from '../../services/thunks';
+import { resetLoginForm, setLoginEmail, setLoginPass } from '../../services/actionCreators';
+import { emailValidity, passwordValidity } from '../../helpers';
 
 const LoginPage = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const { email, password } = useSelector((state) => state.forms.login);
   const [isEmailValid, setEmailValidity] = useState(false);
   const [isPasswordValid, setPasswordValidity] = useState(false);
 
-  const history = useHistory();
   const dispatch = useDispatch();
 
   const onSubmit = async (evt) => {
     evt.preventDefault();
-    try {
-      const res = await login(email, password);
-      console.dir(res);
-      const {
-        success, user, accessToken, refreshToken,
-      } = res;
-      if (success) {
-        jwt.set(stripBearer(accessToken));
-        console.log(`Actual jwt: '${jwt.get()}'.`);
-        token.set(refreshToken);
-        console.log(`Actual token: '${token.get()}'.`);
-        dispatch(setUser(user));
-        //       setEmail('');
-        //       setPassword('');
-        history.push('/');
-      }
-    } catch (err) {
-      console.dir(err);
-      // TODO: Сделать нормальную обработку ошибок здесь, с тултипом и баллалайками
-    }
+    dispatch(loginUserThunk());
   };
 
   const onEmailChange = (evt) => {
-    setEmail(evt.target.value);
-    setEmailValidity(evt.target.validity.valid);
+    const { value, validity: { valid } } = evt.target;
+    dispatch(setLoginEmail(value));
+    setEmailValidity(valid && emailValidity(value));
   };
   const onPasswordChange = (evt) => {
-    setPassword(evt.target.value);
-    setPasswordValidity(evt.target.validity.valid && password.length > 5);
+    const { value, validity: { valid } } = evt.target;
+    dispatch(setLoginPass(value));
+    setPasswordValidity(valid && passwordValidity(value));
   };
+
+  React.useEffect(() => {
+    dispatch(resetLoginForm());
+    return () => dispatch(resetLoginForm());
+  }, [dispatch]);
 
   return (
     <main className={loginStyles.wrapper}>

@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+// import { useHistory } from 'react-router-dom';
 
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import {
   Button, EmailInput, Input, PasswordInput,
@@ -9,57 +9,54 @@ import {
 
 import LinkBox from '../../components/link-box/link-box';
 
-import { setUser } from '../../services/actionCreators';
-import { jwt, token, registerUser } from '../../services/api';
-import { stripBearer, nameValidity } from '../../helpers';
+import {
+  resetRegisterForm, setRegisterEmail, setRegisterName, setRegisterPass,
+} from '../../services/actionCreators';
+
+import { nameValidity, emailValidity, passwordValidity } from '../../helpers';
 import loginStyles from './register-page.module.css';
+import registerUserThunk from '../../services/thunks/register-user-thunk';
 
 const RegisterPage = () => {
-  const [name, setName] = useState('');
+  const { name, email, password } = useSelector((store) => store.forms.register);
   const [isNameValid, setNameValidity] = useState(false);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [isEmailValid, setEmailValidity] = useState(false);
+  const [isPasswordValid, setPasswordValidity] = useState(false);
 
-  const history = useHistory();
+  //  const history = useHistory();
   const dispatch = useDispatch();
   const inputRef = useRef(null);
 
   const onSubmit = async (evt) => {
     evt.preventDefault();
-    try {
-      const {
-        success, user, accessToken, refreshToken,
-      } = await registerUser(name, email, password);
-      if (success) {
-        jwt.set(stripBearer(accessToken));
-        token.set(refreshToken);
-        dispatch(setUser(user));
-        history.push('/');
-        setName('');
-        setEmail('');
-        setPassword('');
-      }
-    } catch (err) {
-      console.dir(err);
-      // TODO: Сделать нормальную обработку ошибок здесь, с тултипом и баллалайками
-    }
+    dispatch(registerUserThunk());
   };
 
   const onNameChange = (evt) => {
-    const { value } = evt.target;
-    setName(value);
-    setNameValidity(nameValidity(value));
+    const { value, validity: { valid } } = evt.target;
+    setRegisterName(value);
+    setNameValidity(valid && nameValidity(value));
   };
 
   const onEmailChange = (evt) => {
-    setEmail(evt.target.value);
+    const { value, validity: { valid } } = evt.target;
+    setRegisterEmail(value);
+    setEmailValidity(valid && emailValidity(value));
   };
   const onPasswordChange = (evt) => {
-    setPassword(evt.target.value);
+    const { value, validity: { valid } } = evt.target;
+    setRegisterPass(value);
+    setPasswordValidity(valid && passwordValidity(value));
   };
   const onIconClick = () => {
     setTimeout(() => inputRef.current.focus(), 0);
   };
+
+  React.useEffect(() => {
+    dispatch(resetRegisterForm());
+    return () => resetRegisterForm();
+  }, [dispatch]);
+
   return (
     <main className={loginStyles.wrapper}>
       <form className={`${loginStyles.form}`} onSubmit={onSubmit}>
@@ -84,7 +81,7 @@ const RegisterPage = () => {
           type='primary'
           htmlType='submit'
           size='medium'
-          disabled={(name.length < 3 || password.length < 6 || !(/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)))}>
+          disabled={isNameValid && isEmailValid && isPasswordValid}>
           Зарегистрироваться
         </Button>
       </form>

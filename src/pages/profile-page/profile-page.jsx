@@ -2,71 +2,95 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Button, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
+import { NavLink, useHistory } from 'react-router-dom';
 import ppStyles from './profile-page.module.css';
 
-import { nameValidity, emailValidity } from '../../helpers';
-import { patchUserThunk } from '../../services/thunks';
+import { nameValidity, emailValidity, passwordValidity } from '../../helpers';
+import { logoutUserThunk, patchUserThunk, setProfileForm } from '../../services/thunks';
+import { setProfileEmail, setProfileName, setProfilePass } from '../../services/actionCreators';
 
 const ProfilePage = () => {
   const dispatch = useDispatch();
-  const { name, email } = useSelector((state) => state.user);
-  const [newName, setNewName] = useState(name);
-  const [newEmail, setNewEmail] = useState(email);
-  const [newPassword, setNewPassword] = useState('');
+  const history = useHistory();
+  // const { name, email } = useSelector((state) => state.user);
+  const { name, email, password } = useSelector((store) => store.forms.profile);
+  const user = useSelector((store) => store.user);
 
-  const [isNewNameValid, setNewNameValidity] = useState(false);
-  const [isNewEmailValid, setNewEmailValidity] = useState(false);
-  const [isNewPasswordValid, setNewPasswordValidity] = useState(false);
+  const [isNameValid, setNameValidity] = useState(false);
+  const [isEmailValid, setEmailValidity] = useState(false);
+  const [isPasswordValid, setPasswordValidity] = useState(false);
 
-  const isFormValid = () => (isNewNameValid || name === newName)
-                           && (isNewPasswordValid || newPassword === '')
-                           && (isNewEmailValid || email === newEmail);
-  const isFormChanged = () => (newName !== name && newName !== '')
-    || (newEmail !== email && newEmail !== '')
-    || newPassword !== '';
+  const isFormValid = () => (isNameValid || name === user?.name)
+                           && (isPasswordValid || password === '')
+                           && (isEmailValid || email === user?.email);
+  const isFormChanged = () => (user?.name !== name && name !== '')
+    || (user?.email !== email && email !== '')
+    || password !== '';
   const isProfileReady = () => isFormValid() && isFormChanged;
-  const nameToGo = () => ((!!newName && newName !== name && isNewNameValid) ? newName : null);
-  const emailToGo = () => ((!!newEmail && newEmail !== email && isNewEmailValid) ? newEmail : null);
-  const passwordToGo = () => ((!!newPassword && isNewPasswordValid) ? newPassword : null);
+  const nameToGo = () => ((!!name && name !== user.name && isNameValid) ? name : null);
+  const emailToGo = () => ((!!email && email !== user.email && isEmailValid) ? email : null);
+  const passwordToGo = () => ((!!password && isPasswordValid) ? password : null);
 
   const onNameChange = (evt) => {
-    const { value } = evt.target;
-    setNewName(value);
-    setNewNameValidity(nameValidity(value));
+    const { value, validity: { valid } } = evt.target;
+    dispatch(setProfileName)(value);
+    setNameValidity(valid && nameValidity(value));
   };
   const onEmailChange = (evt) => {
-    const { value } = evt.target;
-    setNewEmail(value);
-    setNewEmailValidity(emailValidity(value));
+    const { value, validity: { valid } } = evt.target;
+    dispatch(setProfileEmail(value));
+    setEmailValidity(valid && emailValidity(value));
   };
 
   const onPasswordChange = (evt) => {
-    const { value } = evt.target;
-    setNewPassword(value);
-    setNewPasswordValidity(value.length > 5);
+    const { value, validity: { valid } } = evt.target;
+    dispatch(setProfilePass(value));
+    setPasswordValidity(valid && passwordValidity(value));
   };
 
   const onSubmit = (evt) => {
     evt.preventDefault();
-    console.log(`Name to go: '${nameToGo()}',\nEmail to go: '${emailToGo()}',\nPasswprd to go: '${passwordToGo()}'.`);
     dispatch(patchUserThunk(nameToGo(), emailToGo(), passwordToGo()));
   };
 
   const onReset = (evt) => {
     evt.preventDefault();
-    setNewName(name);
-    setNewEmail(email);
-    setNewPassword('');
+    dispatch(setProfileForm());
   };
+
+  const onLogout = () => {
+    dispatch(logoutUserThunk());
+    history.replace({ pathname: '/login' });
+  };
+  React.useEffect(() => {
+    dispatch(setProfileForm());
+    return () => dispatch(setProfileForm());
+  }, [dispatch]);
+
   return (
     <main className={ppStyles.main}>
-      <nav className={ppStyles.menu} />
+      <nav className={ppStyles.menu}>
+        <NavLink
+          to={{ pathname: '/profile' }}
+          className='text text_type_main-medium text_color_inactive'
+          activeClassName='text text_type_main-medium'>
+          Профиль
+        </NavLink>
+        <NavLink
+          to={{ pathname: '/profile/orders' }}
+          className='text text_type_main-medium text_color_inactive'
+          activeClassName='text text_type_main-medium'>
+          Лента заказов
+        </NavLink>
+        <button type='button' className={`${ppStyles.menu__button} `} onClick={onLogout}>Выход</button>
+      </nav>
+
       <form className={`${ppStyles.form}`} onSubmit={onSubmit} onReset={onReset}>
         <h2 className={`${ppStyles.form__heading} text_type_main - medium`}>  </h2>
         <fieldset className={`${ppStyles.form__fieldset} pt-3 pb-3`}>
-          <Input type='text' name='name' value={newName} placeholder='Имя' onChange={onNameChange} />
-          <Input type='email' value={newEmail} name='email' onChange={onEmailChange} placeholder='Логин' />
-          <PasswordInput value={newPassword} name='password' onChange={onPasswordChange} />
+          <Input type='text' name='name' value={name} placeholder='Имя' onChange={onNameChange} icon='EditIcon' />
+          <Input type='email' value={email} name='email' onChange={onEmailChange} placeholder='Логин' icon='EditIcon' />
+          <PasswordInput value={password} name='password' onChange={onPasswordChange} />
         </fieldset>
         {isFormChanged
           && (
@@ -75,6 +99,7 @@ const ProfilePage = () => {
             <Button type='primary' htmlType='reset' size='medium' disabled={false}>Отмена</Button>
           </div>
           )}
+        /
       </form>
     </main>
   );

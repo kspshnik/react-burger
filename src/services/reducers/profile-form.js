@@ -1,6 +1,8 @@
 import {
+  PROFILE_FORM_RESET,
   PROFILE_SET_EMAIL,
-  PROFILE_SET_NAME, PROFILE_SET_PASS,
+  PROFILE_SET_NAME,
+  PROFILE_SET_PASS,
 } from '../actions';
 
 const initialState = {
@@ -26,6 +28,7 @@ const profileFormReducer = (state = initialState, action) => {
         ...state, password: action.payload,
       };
     }
+    case PROFILE_FORM_RESET: return initialState;
     default: return state;
   }
 };
