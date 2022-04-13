@@ -104,16 +104,10 @@ export const fetchToken = async () => {
     body: JSON.stringify({ token: token.get() }),
   };
   try {
-    console.log('fetchToken options!');
-    console.dir(options);
     const refresh = await fetch(endpoint(BACKEND_ROUTES.refresh), options);
     const res = await refresh.json();
-    console.log('Result fetchToken:');
-    console.dir(res);
     return res;
   } catch (err) {
-    console.log('fetchToken Error!:');
-    console.dir(err);
     return Promise.reject(err);
   }
 };
@@ -225,7 +219,6 @@ export const patchUser = async (name = null, email = null, password = null) => {
     body: JSON.stringify(makeUser(name, email, password)),
   };
   try {
-    console.dir(options);
     const user = await fetch(endpoint(BACKEND_ROUTES.user), options);
     return user.json();
   } catch (err) {
