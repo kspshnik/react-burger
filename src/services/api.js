@@ -33,6 +33,7 @@ export const jwt = {
     }
   },
   get: () => JsCookie.get(JWT_TOKEN),
+  test: () => !!JsCookie.get(JWT_TOKEN),
 };
 export const token = {
   set: (value) => {
@@ -43,6 +44,7 @@ export const token = {
     }
   },
   get: () => localStorage.getItem(REFRESH_TOKEN),
+  test: () => !!localStorage.getItem(REFRESH_TOKEN),
 };
 
 export const fetchIngredients = async () => {
@@ -62,7 +64,10 @@ export const postOrder = async (order) => {
   const options = {
     ...defaultOptions,
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${jwt.get()}`,
+    },
     body: JSON.stringify({ ingredients: order }),
   };
   try {

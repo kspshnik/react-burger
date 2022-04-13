@@ -1,15 +1,15 @@
 import { fetchUser } from '../api';
 import { setUser, userFailed } from '../actionCreators';
 import { EXPIRY_MESSAGE } from '../../constants';
-import refreshToken from './refresh-token';
+import refreshTokenThunk from './refresh-token-thunk';
 
 const getUserThunk = () => async (dispatch) => {
   try {
-    const { success, user = null, message = '' } = fetchUser();
+    const { success, user = null, message = '' } = await fetchUser();
     if (success && !!user) {
       dispatch(setUser(user));
-    } else if (success && (message === EXPIRY_MESSAGE)) {
-      dispatch(refreshToken(getUserThunk));
+    } else if (!success && (message === EXPIRY_MESSAGE)) {
+      dispatch(refreshTokenThunk(getUserThunk));
     } else {
       dispatch(userFailed(message));
     }

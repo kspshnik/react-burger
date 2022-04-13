@@ -1,7 +1,7 @@
 import getIngredients from './get-ingredients';
 import placeOrder from './place-order';
 import getUserThunk from './get-user-thunk';
-import refreshToken from './refresh-token';
+import refreshTokenThunk from './refresh-token-thunk';
 import loginUserThunk from './login-user-thunk';
 import logoutUserThunk from './logout-user-thunk';
 import patchUserThunk from './patch-user-thunk';
@@ -12,7 +12,7 @@ export {
   getIngredients,
   placeOrder,
   getUserThunk,
-  refreshToken,
+  refreshTokenThunk,
   loginUserThunk,
   logoutUserThunk,
   patchUserThunk,

@@ -16,7 +16,7 @@ import {
   clearError, releaseIngredient, archiveOrder, clearSuccess,
 } from '../../services/actionCreators';
 
-import { getIngredients, getUserThunk } from '../../services/thunks';
+import { getIngredients, getUserThunk, refreshTokenThunk } from '../../services/thunks';
 
 import {
   ForgotPage, LoginPage, MainPage, RegisterPage, ResetPage, ProfilePage,
@@ -25,6 +25,7 @@ import {
 import appStyles from './app.module.css';
 import ToolTip from '../tooltip/tooltip';
 import { ERROR, OK } from '../../constants';
+import { jwt, token } from '../../services/api';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -39,7 +40,11 @@ const App = () => {
 
   useEffect(() => {
     dispatch(getIngredients());
-    dispatch(getUserThunk());
+    if (jwt.test()) {
+      dispatch(getUserThunk());
+    } else if (token.test()) {
+      dispatch(refreshTokenThunk(getUserThunk));
+    }
   }, [dispatch]);
   return (
     <>

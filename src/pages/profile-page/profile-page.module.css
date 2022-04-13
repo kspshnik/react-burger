@@ -7,6 +7,29 @@
   padding: 40px 340px;
   }
 
+.menu {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+
+  }
+.menu__item {
+  width:  320px;
+  height: 64px;
+  text-decoration: none;
+  color: inherit;
+  vertical-align: center;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  }
+.menu__item_type_button {
+  background-color: transparent;
+  border: none;
+  text-align: left;
+  }
+
 .form {
   display: flex;
   flex-flow: column nowrap;

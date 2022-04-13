@@ -1,7 +1,7 @@
 import { jwt, logout, token } from '../api';
 import { generalAPIError, resetProfileForm, resetUser } from '../actionCreators';
 import { EXPIRY_MESSAGE } from '../../constants';
-import refreshToken from './refresh-token';
+import refreshTokenThunk from './refresh-token-thunk';
 
 const logoutUserThunk = () => async (dispatch) => {
   const { success, message = 'Неизвестная ошибка!' } = await logout();
@@ -12,7 +12,7 @@ const logoutUserThunk = () => async (dispatch) => {
       dispatch(resetUser());
       dispatch(resetProfileForm());
     } else if (!success && message === EXPIRY_MESSAGE) {
-      dispatch(refreshToken(logoutUserThunk));
+      dispatch(refreshTokenThunk(logoutUserThunk));
     } else {
       dispatch(generalAPIError(message));
     }
