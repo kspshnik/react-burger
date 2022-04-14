@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react';
-import { Route, Switch, useHistory } from 'react-router-dom';
+import {
+  Route, Switch, useHistory, useLocation,
+} from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
 import * as Sentry from '@sentry/react';
@@ -28,14 +30,21 @@ import { ERROR, OK } from '../../constants';
 import { jwt, token } from '../../services/api';
 import ProtectedRoute from '../protected-route/protected-route';
 import NotLoggedRoute from '../not-logged-route/not-logged-route';
+import IngredientPage from '../../pages/ingredient-page/ingredient-page';
 
 const App = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
+  const location = useLocation();
+  const background = location.state && location.state.background;
   const selectedIngredient = useSelector((store) => store.ingredients.selected);
   const acceptedOrder = useSelector((state) => state.orders.accepted);
   const { errorMessage, successMessage } = useSelector((state) => state.api);
 
-  const handleIngredientDetailsClose = () => dispatch(releaseIngredient());
+  const handleIngredientDetailsClose = () => {
+    dispatch(releaseIngredient());
+    history.push({ pathname: '/', state: { background: null } });
+  };
   const handleOrderDetailsClose = () => dispatch(archiveOrder());
   const handleErrorClose = () => dispatch(clearError());
   const handleSuccessClose = () => dispatch(clearSuccess());
@@ -52,7 +61,7 @@ const App = () => {
     <>
       <div className={appStyles.wrapper}>
         <AppHeader />
-        <Switch>
+        <Switch location={background || location}>
           <NotLoggedRoute path='/login'>
             <LoginPage />
           </NotLoggedRoute>
@@ -68,12 +77,15 @@ const App = () => {
           <ProtectedRoute path='/profile'>
             <ProfilePage />
           </ProtectedRoute>
+          <Route path='/ingredients/:id'>
+            <IngredientPage />
+          </Route>
           <Route path='/' exact>
             <MainPage />
           </Route>
         </Switch>
       </div>
-      {!!selectedIngredient && (
+      {(!!background && !!selectedIngredient) && (
       <Modal title='Детали ингредиента' onClose={handleIngredientDetailsClose}>
         <IngredientDetails />
       </Modal>

@@ -1,20 +1,23 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { useHistory, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+
 import { useDrag } from 'react-dnd';
 
 import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-
-import PropTypes from 'prop-types';
-import icStyles from './ingredient-card.module.css';
-
 import { selectIngredient, insertInterior, setBun } from '../../services/actionCreators';
 import { BUN, INGREDIENT } from '../../constants';
 
+import icStyles from './ingredient-card.module.css';
+
 const IngredientCard = ({ data, count }) => {
   const {
-    name, price, image, type,
+    name, price, image, type, _id,
   } = data;
   const dispatch = useDispatch();
+  const location = useLocation();
+  const history = useHistory();
   const [{ isOnTheWay }, dragRef] = useDrag(() => ({
     type: INGREDIENT,
     item: { ...data },
@@ -39,7 +42,10 @@ const IngredientCard = ({ data, count }) => {
       }
     }
   };
-  const handleImgClick = () => dispatch(selectIngredient(data));
+  const handleImgClick = () => {
+    dispatch(selectIngredient(data));
+    history.push({ pathname: `/ingredients/${_id}`, state: { background: location } });
+  };
   const handleKeyPressOnImg = (evt) => {
     if ((evt.target === evt.currentTarget) && (evt.key === 'Enter' || evt.key === 'Space')) {
       dispatch(selectIngredient(data));
