@@ -41,7 +41,6 @@ const App = () => {
   const selectedIngredient = useSelector((store) => store.ingredients.selected);
   const acceptedOrder = useSelector((state) => state.orders.accepted);
   const { errorMessage, successMessage } = useSelector((state) => state.api);
-
   const handleIngredientDetailsClose = () => {
     dispatch(releaseIngredient());
     history.push({ pathname: '/', state: { background: null } });
@@ -51,6 +50,12 @@ const App = () => {
   const handleSuccessClose = () => dispatch(clearSuccess());
 
   useEffect(() => {
+    if (background && !selectedIngredient) {
+      history.push({ pathname: location.pathname, state: { background: null } });
+    }
+  }, [background, selectedIngredient, history, location]);
+
+  useEffect(() => {
     dispatch(getIngredients());
     if (jwt.test()) {
       dispatch(getUserThunk());
@@ -58,6 +63,7 @@ const App = () => {
       dispatch(refreshTokenThunk(getUserThunk));
     }
   }, [dispatch]);
+
   return (
     <>
       <div className={appStyles.wrapper}>
