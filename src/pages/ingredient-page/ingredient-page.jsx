@@ -1,26 +1,27 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import ipStyles from './ingredient-page.module.css';
-import IngredientDetails from '../../components/ingredient-details/ingredient-details';
 import { selectIngredient } from '../../services/actionCreators';
 
+import ipStyles from './ingredient-page.module.css';
+import IngredientDetails from '../../components/ingredient-details/ingredient-details';
+
 const IngredientPage = () => {
+  const history = useHistory();
   const { id } = useParams();
-  const chosen = useSelector((state) => {
-    if (state && state?.ingredients && state?.ingredients?.all) {
-      return state.ingredients.all[id];
-    }
-    return null;
-  });
-  const selected = useSelector((state) => state?.ingredients?.selected);
   const dispatch = useDispatch();
 
+  const selected = useSelector((store) => store.ingredients.selected);
+  const all = useSelector((store) => store.ingredients.all);
+
   React.useEffect(() => {
-    if (chosen) {
-      dispatch(selectIngredient(chosen));
+    if (all && all[id]) {
+      dispatch(selectIngredient(all[id]));
+    } else if (all && !all[id]) {
+      history.push({ pathname: '/404', state: { ingredient: true } });
     }
-  }, [dispatch, chosen]);
+  }, [all, selected, id, history, dispatch]);
+
   return (
     <main className={ipStyles.main}>
       {selected && (<IngredientDetails />)}

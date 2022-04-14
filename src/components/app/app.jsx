@@ -31,6 +31,7 @@ import { jwt, token } from '../../services/api';
 import ProtectedRoute from '../protected-route/protected-route';
 import NotLoggedRoute from '../not-logged-route/not-logged-route';
 import IngredientPage from '../../pages/ingredient-page/ingredient-page';
+import NotFoundPage from '../../pages/not-found-page/not-found-page';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -82,6 +83,12 @@ const App = () => {
           </Route>
           <Route path='/' exact>
             <MainPage />
+          </Route>
+          <Route path='/404'>
+            <NotFoundPage />
+          </Route>
+          <Route path='*'>
+            <NotFoundPage />
           </Route>
         </Switch>
       </div>

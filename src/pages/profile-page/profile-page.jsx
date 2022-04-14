@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Route, Switch } from 'react-router-dom';
+import { Redirect, Route, Switch } from 'react-router-dom';
 
 import ProfileOrders from '../../components/profile-orders/profile-orders';
 import ProfileForm from '../../components/profile-form/profile-form';
@@ -18,6 +18,9 @@ const ProfilePage = () => (
       </Route>
       <Route exact path='/profile'>
         <ProfileForm />
+      </Route>
+      <Route path='*'>
+        <Redirect to={{ pathname: '/404' }} />
       </Route>
     </Switch>
   </main>
