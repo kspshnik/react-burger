@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { Button, EmailInput, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import { Redirect } from 'react-router-dom';
 import LinkBox from '../../components/link-box/link-box';
 
 import loginStyles from './login-page.module.css';
@@ -16,7 +15,6 @@ const LoginPage = () => {
   const { email, password } = useSelector((state) => state.forms.login);
   const [isEmailValid, setEmailValidity] = useState(false);
   const [isPasswordValid, setPasswordValidity] = useState(false);
-  const { loggedIn } = useSelector((state) => state.user);
 
   const dispatch = useDispatch();
 
@@ -40,15 +38,6 @@ const LoginPage = () => {
     dispatch(resetLoginForm());
     return () => dispatch(resetLoginForm());
   }, [dispatch]);
-
-  if (loggedIn) {
-    return (
-      <Redirect
-        to={{
-          pathname: '/',
-        }} />
-    );
-  }
 
   return (
     <main className={loginStyles.wrapper}>

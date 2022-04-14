@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import { useHistory, useLocation, useRouteMatch } from 'react-router-dom';
+import {
+  Redirect, useLocation,
+} from 'react-router-dom';
 
 import {
   Button, Input, PasswordInput,
@@ -17,10 +19,7 @@ const ResetPage = () => {
   const dispatch = useDispatch();
   const { code, password } = useSelector((store) => store.forms.reset);
   const [isPasswordValid, setPasswordValidity] = useState(false);
-  const history = useHistory();
   const location = useLocation();
-  const match = useRouteMatch();
-
   const onSubmit = async (evt) => {
     evt.preventDefault();
     dispatch(resetPasswordThunk());
@@ -39,10 +38,16 @@ const ResetPage = () => {
     dispatch(resetResetForm());
     return () => resetResetForm();
   }, [dispatch]);
-  console.log('Location object:');
-  console.dir(location);
-  console.log('routeMatch object:');
-  console.dir(match);
+
+  if (!location?.state?.from || location?.state?.from !== '/forgot-password') {
+    return (
+      <Redirect
+        to={{
+          pathname: '/forgot-password',
+        }} />
+    );
+  }
+
   return (
     <main className={resetStyles.wrapper}>
       <form className={`${resetStyles.form}`} onSubmit={onSubmit}>
