@@ -4,6 +4,7 @@ import React from 'react';
 import { Button, EmailInput } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import { useDispatch, useSelector } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import LinkBox from '../../components/link-box/link-box';
 
 import forgotStyles from './forgot-page.module.css';
@@ -12,6 +13,7 @@ import { requestCodeThunk } from '../../services/thunks';
 
 const ForgotPage = () => {
   const { email } = useSelector((state) => state.forms.forgot);
+  const { loggedIn } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   //  const history = useHistory();
 
@@ -30,6 +32,14 @@ const ForgotPage = () => {
     return () => resetForgotForm();
   }, [dispatch]);
 
+  if (loggedIn) {
+    return (
+      <Redirect
+        to={{
+          pathname: '/',
+        }} />
+    );
+  }
   return (
     <main className={forgotStyles.wrapper}>
       <form className={`${forgotStyles.form}`} onSubmit={onSubmit}>

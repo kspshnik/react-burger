@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
 import * as Sentry from '@sentry/react';
@@ -26,6 +26,8 @@ import appStyles from './app.module.css';
 import ToolTip from '../tooltip/tooltip';
 import { ERROR, OK } from '../../constants';
 import { jwt, token } from '../../services/api';
+import ProtectedRoute from '../protected-route/protected-route';
+import NotLoggedRoute from '../not-logged-route/not-logged-route';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -51,21 +53,21 @@ const App = () => {
       <div className={appStyles.wrapper}>
         <AppHeader />
         <Switch>
-          <Route path='/login'>
+          <NotLoggedRoute path='/login'>
             <LoginPage />
-          </Route>
-          <Route path='/register'>
+          </NotLoggedRoute>
+          <NotLoggedRoute path='/register'>
             <RegisterPage />
-          </Route>
-          <Route path='/forgot-password'>
+          </NotLoggedRoute>
+          <NotLoggedRoute path='/forgot-password'>
             <ForgotPage />
-          </Route>
-          <Route path='/reset-password'>
+          </NotLoggedRoute>
+          <NotLoggedRoute path='/reset-password'>
             <ResetPage />
-          </Route>
-          <Route path='/profile'>
+          </NotLoggedRoute>
+          <ProtectedRoute path='/profile'>
             <ProfilePage />
-          </Route>
+          </ProtectedRoute>
           <Route path='/' exact>
             <MainPage />
           </Route>
