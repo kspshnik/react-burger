@@ -18,7 +18,7 @@ import {
   clearError, releaseIngredient, archiveOrder, clearSuccess,
 } from '../../services/actionCreators';
 
-import { getIngredients, getUserThunk, refreshTokenThunk } from '../../services/thunks';
+import { getIngredientsThunk, getUserThunk, refreshTokenThunk } from '../../services/thunks';
 
 import {
   ForgotPage, LoginPage, MainPage, RegisterPage, ResetPage, ProfilePage,
@@ -57,7 +57,7 @@ const App = () => {
   }, [background, selectedIngredient, history, location]);
 
   useEffect(() => {
-    dispatch(getIngredients());
+    dispatch(getIngredientsThunk());
     if (jwt.test()) {
       dispatch(getUserThunk());
     } else if (token.test()) {
