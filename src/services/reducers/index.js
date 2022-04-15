@@ -5,6 +5,7 @@ import ordersReducer from './orders';
 import APIReducer from './API';
 import userReducer from './user';
 import formsReducer from './forms';
+import feedReducer from './feed';
 
 const rootReducer = combineReducers({
   ingredients: ingredientsReducer,
@@ -12,6 +13,7 @@ const rootReducer = combineReducers({
   api: APIReducer,
   user: userReducer,
   forms: formsReducer,
+  feed: feedReducer,
 });
 
 export default rootReducer;
