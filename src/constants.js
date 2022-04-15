@@ -1,6 +1,5 @@
 const BACKEND_ROUTES = {
   base: 'https://norma.nomoreparties.space/api',
-  baseWS: 'wss://norma.nomoreparties.space',
   ingredients: '/ingredients',
   orders: '/orders',
   login: '/auth/login',
@@ -10,8 +9,6 @@ const BACKEND_ROUTES = {
   user: '/auth/user',
   forgot: '/password-reset',
   reset: '/password-reset/reset',
-  publicFeed: '/orders/all',
-  privateFeed: '/orders',
 };
 
 const BUN = 'bun';
