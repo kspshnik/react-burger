@@ -1,4 +1,4 @@
-import getIngredients from './get-ingredients';
+import getIngredientsThunk from './get-ingredients-thunk';
 import placeOrder from './place-order';
 import getUserThunk from './get-user-thunk';
 import refreshTokenThunk from './refresh-token-thunk';
@@ -9,7 +9,7 @@ import setProfileForm from './set-profile-form';
 import requestCodeThunk from './request-code-thunk';
 
 export {
-  getIngredients,
+  getIngredientsThunk,
   placeOrder,
   getUserThunk,
   refreshTokenThunk,
