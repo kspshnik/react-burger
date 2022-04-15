@@ -21,7 +21,7 @@ import {
   CLOSE_SUCCESS,
   ERROR_500,
   REGISTER_SUCCEED,
-  REGISTER_FAILED,
+  REGISTER_FAILED, WS_ERROR,
 } from '../actions';
 
 const initialState = {
@@ -91,6 +91,7 @@ const APIReducer = (state = initialState, action) => {
     case REGISTER_FAILED:
     case LOGIN_FAILED:
     case LOGOUT_FAILED:
+    case WS_ERROR:
     case ERROR_500: {
       return {
         ...state, errorMessage: action.payload, successMessage: '',

@@ -22,6 +22,7 @@ import {
   UPDATE_PROFILE_FAILED,
   CLOSE_SUCCESS,
   ERROR_500,
+  WS_ERROR,
 } from '../actions';
 
 export const ingredientsRequested = () => ({ type: GET_INGREDIENTS_REQUEST });
@@ -60,5 +61,7 @@ export const profileUpdateFailed = (message) => ({ type: UPDATE_PROFILE_FAILED, 
 
 export const clearSuccess = () => ({ type: CLOSE_SUCCESS });
 export const clearError = () => ({ type: DISMISS_ERROR });
+
+export const wsError = (message) => ({ type: WS_ERROR, payload: message });
 
 export const generalAPIError = (message) => ({ type: ERROR_500, payload: message });

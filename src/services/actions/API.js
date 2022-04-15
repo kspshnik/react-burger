@@ -30,4 +30,6 @@ export const UPDATE_PROFILE_FAILED = 'UPDATE_PROFILE_FAILED';
 export const DISMISS_ERROR = 'DISMISS_ERROR';
 export const CLOSE_SUCCESS = 'CLOSE_SUCCESS';
 
+export const WS_ERROR = 'WS_ERROR';
+
 export const ERROR_500 = 'ERROR_500';
