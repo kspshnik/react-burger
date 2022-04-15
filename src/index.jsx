@@ -17,13 +17,22 @@ import './index.css';
 import rootReducer from './services/reducers';
 import { BACKEND_ROUTES } from './constants';
 import {
+  PRIVATE_FEED_START,
+  PRIVATE_FEED_STOP,
   PUBLIC_FEED_START,
   PUBLIC_FEED_STOP,
 } from './services/actions';
 import { socketMiddleware } from './services/middlewares/socket-middleware';
 import {
-  onPublicFeedMessage, setPublicFeedClosed, setPublicFeedOpened, wsError,
+  onPrivateFeedMessage,
+  onPublicFeedMessage,
+  setPrivateFeedClosed,
+  setPrivateFeedOpened,
+  setPublicFeedClosed,
+  setPublicFeedOpened,
+  wsError,
 } from './services/actionCreators';
+import { jwt } from './services/api';
 
 LogRocket.init('owbpwl/react-burger');
 
@@ -58,9 +67,20 @@ const publicFeedActions = {
   onMessage: onPublicFeedMessage,
 };
 
+const privateFeedUrl = `${BACKEND_ROUTES.baseWS}${BACKEND_ROUTES.privateFeed}?token=${jwt.get()}`;
+const privateFeedActions = {
+  wsStart: PRIVATE_FEED_START,
+  wsStop: PRIVATE_FEED_STOP,
+  onOpen: setPrivateFeedOpened,
+  onClose: setPrivateFeedClosed,
+  onError: wsError,
+  onMessage: onPrivateFeedMessage,
+};
+
 const enhancer = composeEnhancers(
   applyMiddleware(thunk),
   applyMiddleware(socketMiddleware(publicFeedUrl, publicFeedActions)),
+  applyMiddleware(socketMiddleware(privateFeedUrl, privateFeedActions)),
   sentryReduxEnhancer,
 );
 
