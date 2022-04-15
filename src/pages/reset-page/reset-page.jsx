@@ -27,11 +27,11 @@ const ResetPage = () => {
 
   const onCodeChange = (evt) => {
     const { value } = evt.target;
-    dispatch(setResetCode(value));
+    setResetCode(value);
   };
   const onPasswordChange = (evt) => {
     const { value, validity: { valid } } = evt.target;
-    dispatch(setResetPass(value));
+    setResetPass(value);
     setPasswordValidity(valid && passwordValidity(value));
   };
   React.useEffect(() => {
