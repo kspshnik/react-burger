@@ -10,6 +10,8 @@ const BACKEND_ROUTES = {
   user: '/auth/user',
   forgot: '/password-reset',
   reset: '/password-reset/reset',
+  publicFeed: '/orders/all',
+  privateFeed: '/orders',
 };
 
 const BUN = 'bun';
