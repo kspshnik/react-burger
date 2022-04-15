@@ -32,6 +32,7 @@ import ProtectedRoute from '../protected-route/protected-route';
 import NotLoggedRoute from '../not-logged-route/not-logged-route';
 import IngredientPage from '../../pages/ingredient-page/ingredient-page';
 import NotFoundPage from '../../pages/not-found-page/not-found-page';
+import FeedPage from '../../pages/feed-page/feed-page';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -86,6 +87,9 @@ const App = () => {
           </ProtectedRoute>
           <Route path='/ingredients/:id'>
             <IngredientPage />
+          </Route>
+          <Route exact path='/feed'>
+            <FeedPage />
           </Route>
           <Route path='/' exact>
             <MainPage />

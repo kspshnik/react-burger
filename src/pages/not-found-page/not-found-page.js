@@ -8,7 +8,10 @@ const NotFoundPage = () => {
   const history = useHistory();
   const location = useLocation();
 
-  const isIngredient = location.state && location.state.ingredient;
+  const isIngredient = React.useMemo(
+    () => location.state && location.state.ingredient,
+    [location.state],
+  );
 
   const onClickBack = () => {
     history.goBack();

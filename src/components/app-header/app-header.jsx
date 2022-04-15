@@ -1,3 +1,4 @@
+/* eslint-disable ternary/no-unreachable */
 import React from 'react';
 
 import {
@@ -9,6 +10,9 @@ import headerStyles from './app-header.module.css';
 
 const AppHeader = () => {
   const { pathname } = useLocation();
+  const isMain = () => pathname === '/' || pathname.startsWith('/ingredients');
+  const isProfile = () => pathname.startsWith('/profile');
+  const isFeed = () => pathname.startsWith('/feed');
   return (
     <header className={headerStyles.header}>
       <ul className={headerStyles.content}>
@@ -20,14 +24,15 @@ const AppHeader = () => {
                   to='/'
                   className={headerStyles.menu__link}>
                   <BurgerIcon
-                    type={pathname.endsWith('/') ? 'primary' : 'secondary'} />
-                  {/* eslint-disable-next-line ternary/no-unreachable */}
-                  <p className={`text text_type_main-default ${pathname === '/' ? '' : 'text_color_inactive'}  ml-2`}>Конструктор</p>
+                    type={isMain() ? 'primary' : 'secondary'} />
+                  <p className={`text text_type_main-default ${isMain() ? '' : 'text_color_inactive'}  ml-2`}>Конструктор</p>
                 </Link>
               </li>
               <li className={`${headerStyles.menu__item} pl-5 pr-5`}>
-                <ListIcon type='secondary' />
-                <p className='text text_type_main-default text_color_inactive ml-2'>Лента заказов</p>
+                <Link to='/feed' className={headerStyles.menu__link}>
+                  <ListIcon type={`${isFeed() ? 'primary' : 'secondary'}`} />
+                  <p className={`text text_type_main-default ${isFeed() ? '' : 'text_color_inactive'} ml-2`}>Лента заказов</p>
+                </Link>
               </li>
             </ul>
           </nav>
@@ -39,10 +44,8 @@ const AppHeader = () => {
           <Link
             to='/profile'
             className={`${headerStyles.menu__link}`}>
-            {/* eslint-disable-next-line ternary/no-unreachable */}
             <ProfileIcon type={pathname.startsWith('/profile') ? 'primary' : 'secondary'} />
-            {/* eslint-disable-next-line ternary/no-unreachable */}
-            <p className={`text text_type_main-default ${pathname.startsWith('/profile') ? '' : 'text_color_inactive'}  ml-2`}>Личный кабинет</p>
+            <p className={`text text_type_main-default ${isProfile() ? '' : 'text_color_inactive'}  ml-2`}>Личный кабинет</p>
           </Link>
         </li>
       </ul>

@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Redirect, Route, Switch } from 'react-router-dom';
 
-import ProfileOrders from '../../components/profile-orders/profile-orders';
+import UnderConstruction from '../../components/under-construction/under-construction';
 import ProfileForm from '../../components/profile-form/profile-form';
 import ProfileSidebar from '../../components/profile-sidebar/profile-sidebar';
 
@@ -14,7 +14,7 @@ const ProfilePage = () => (
     <ProfileSidebar />
     <Switch>
       <Route exact path='/profile/orders'>
-        <ProfileOrders />
+        <UnderConstruction />
       </Route>
       <Route exact path='/profile'>
         <ProfileForm />
