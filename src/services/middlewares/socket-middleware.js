@@ -1,3 +1,5 @@
+import { prepareFeed } from '../../helpers';
+
 export const socketMiddleware = (wsUrl, wsActions) => (store) => {
   let socket = null;
 
@@ -10,7 +12,7 @@ export const socketMiddleware = (wsUrl, wsActions) => (store) => {
     if (type === wsStart) {
       socket = new WebSocket(`${wsUrl}`);
     } else if (socket && type === wsStop) {
-      socket.close(1001);
+      socket.close(1000);
     }
 
     if (socket) {
@@ -24,8 +26,7 @@ export const socketMiddleware = (wsUrl, wsActions) => (store) => {
       };
 
       socket.onmessage = (event) => {
-        const { orders, total, totalToday } = JSON.parse(event.data);
-        dispatch(onMessage({ orders, total, totalToday }));
+        dispatch(onMessage(prepareFeed(JSON.parse(event.data))));
       };
 
       socket.onclose = (event) => {
