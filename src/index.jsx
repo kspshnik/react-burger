@@ -13,11 +13,20 @@ import setupLogRocketReact from 'logrocket-react';
 import App from './components/app/app';
 
 import './index.css';
-// import ErrorBoundary from './components/error-boundary/error-boundary';
+
 import rootReducer from './services/reducers';
+import { BACKEND_ROUTES } from './constants';
+import {
+  PUBLIC_FEED_START,
+  PUBLIC_FEED_STOP,
+} from './services/actions';
+import { socketMiddleware } from './services/middlewares/socket-middleware';
+import {
+  onPublicFeedMessage, setPublicFeedClosed, setPublicFeedOpened, wsError,
+} from './services/actionCreators';
 
 LogRocket.init('owbpwl/react-burger');
-// after calling LogRocket.init()
+
 setupLogRocketReact(LogRocket);
 LogRocket.getSessionURL((sessionURL) => {
   Sentry.configureScope((scope) => {
@@ -39,7 +48,21 @@ const composeEnhancers = typeof window === 'object' && window.__REDUX_DEVTOOLS_E
   ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({ trace: true, traceLimit: 25 })
   : compose;
 
-const enhancer = composeEnhancers(applyMiddleware(thunk), sentryReduxEnhancer);
+const publicFeedUrl = `${BACKEND_ROUTES.baseWS}${BACKEND_ROUTES.publicFeed}`;
+const publicFeedActions = {
+  wsStart: PUBLIC_FEED_START,
+  wsStop: PUBLIC_FEED_STOP,
+  onOpen: setPublicFeedOpened,
+  onClose: setPublicFeedClosed,
+  onError: wsError,
+  onMessage: onPublicFeedMessage,
+};
+
+const enhancer = composeEnhancers(
+  applyMiddleware(thunk),
+  applyMiddleware(socketMiddleware(publicFeedUrl, publicFeedActions)),
+  sentryReduxEnhancer,
+);
 
 const store = createStore(rootReducer, enhancer);
 
