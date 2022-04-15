@@ -13,7 +13,6 @@ const getIngredientsThunk = () => async (dispatch) => {
     } = await fetchIngredients();
     if (success && !!data) {
       dispatch(ingredientsReceived());
-      console.dir(data);
       dispatch(setIngredients(data.reduce((acc, ingredient) => {
         acc[ingredient._id] = ingredient;
         return acc;
