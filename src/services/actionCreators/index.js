@@ -25,6 +25,7 @@ import {
   passwordResetFailed,
   profileUpdateSucceed,
   profileUpdateFailed,
+  wsError,
   generalAPIError,
 } from './API';
 
@@ -48,6 +49,22 @@ import {
   resetResetForm,
   resetProfileForm,
 } from './forms';
+
+import {
+  startPublicFeed,
+  stopPublicFeed,
+  setPublicFeedOpened,
+  setPublicFeedClosed,
+  onPublicFeedMessage,
+} from './public-feed';
+
+import {
+  startPrivateFeed,
+  stopPrivateFeed,
+  setPrivateFeedOpened,
+  setPrivateFeedClosed,
+  onPrivateFeedMessage,
+} from './private-feed';
 
 export {
   setIngredients,
@@ -79,6 +96,7 @@ export {
   passwordResetFailed,
   profileUpdateSucceed,
   profileUpdateFailed,
+  wsError,
   generalAPIError,
   setOrder,
   setUser,
@@ -101,4 +119,14 @@ export {
   resetForgotForm,
   resetResetForm,
   resetProfileForm,
+  startPublicFeed,
+  stopPublicFeed,
+  setPublicFeedOpened,
+  setPublicFeedClosed,
+  onPublicFeedMessage,
+  startPrivateFeed,
+  stopPrivateFeed,
+  setPrivateFeedOpened,
+  setPrivateFeedClosed,
+  onPrivateFeedMessage,
 };
