@@ -32,6 +32,11 @@ const OK = 'OK';
 
 const PENDING = 'pending';
 const DONE = 'done';
+const CREATED = 'created';
+
+const PUBLIC = 'public';
+const PRIVATE = 'private';
+
 export {
   BUN,
   SAUCE,
@@ -47,6 +52,9 @@ export {
   INFO,
   ERROR,
   OK,
+  CREATED,
   PENDING,
   DONE,
+  PUBLIC,
+  PRIVATE,
 };

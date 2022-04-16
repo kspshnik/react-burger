@@ -1,13 +1,18 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import UnderConstruction from '../../components/under-construction/under-construction';
+
 import { startPublicFeed, stopPublicFeed } from '../../services/actionCreators';
 import TwoColumns from '../../components/two-columns/two-columns';
 import FeedInfo from '../../components/feed-info/feed-info';
+import OrderRibbon from '../../components/order-ribbon/order-ribbon';
+import { PUBLIC } from '../../constants';
+
+import fpStyles from './feed-page.module.css';
 
 const FeedPage = () => {
   const dispatch = useDispatch();
   const isFeedLoaded = useSelector((state) => !!state?.feed?.public?.orders);
+  const isIngredientsLoaded = useSelector((state) => !!state?.ingredients?.all);
   React.useEffect(() => {
     dispatch(startPublicFeed());
     return () => {
@@ -15,8 +20,10 @@ const FeedPage = () => {
     };
   }, [dispatch]);
   return (
-    <TwoColumns isLoaded={isFeedLoaded}>
-      <UnderConstruction />
+    <TwoColumns isLoaded={isFeedLoaded && isIngredientsLoaded}>
+      <div className={fpStyles.wrapper}>
+        <OrderRibbon feedType={PUBLIC} />
+      </div>
       <FeedInfo />
     </TwoColumns>
   );
