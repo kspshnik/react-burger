@@ -1,0 +1,45 @@
+.wrapper {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  }
+
+.form {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  width: 480px;
+  }
+
+.form__heading {
+  margin-block-start: 0;
+  margin-block-end: 0;
+  margin-inline-start: 0;
+  margin-inline-end: 0;
+  }
+
+.form__fieldset {
+  border: none;
+  width: 100%;
+  height: 152px;
+  align-items: center;
+  margin-inline-start: 0;
+  margin-inline-end: 0;
+  padding-inline-start: 0;
+  padding-inline-end: 0;
+  }
+.form__fieldset > div {
+  padding: 12px 0;
+  }
+
+.form__fieldset > div > div  {
+  width: 480px;
+  }
+
+.form__stub {
+  min-height: 24px;
+  }

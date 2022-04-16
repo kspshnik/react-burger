@@ -1,62 +1,108 @@
 import React, { useEffect } from 'react';
-
+import {
+  Route, Switch, useHistory, useLocation,
+} from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-
-import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
 
 import * as Sentry from '@sentry/react';
 
 import AppHeader from '../app-header/app-header';
 
 import '@ya.praktikum/react-developer-burger-ui-components';
-import appStyles from './app.module.css';
 
-import BurgerIngredients from '../burger-ingredients/burger-ingredients';
-import BurgerConstructor from '../burger-constructor/burger-constructor';
 import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import OrderDetails from '../order-details/order-details';
-import ErrorPopup from '../error-popup/error-popup';
-import biStyles from '../burger-ingredients/burger-ingredients.module.css';
-import Preloader from '../preloader/preloader';
-import { clearError, releaseIngredient, archiveOrder } from '../../services/actionCreators';
-import getIngredients from '../../services/thunks/get-ingredients';
+
+import {
+  clearError, releaseIngredient, archiveOrder, clearSuccess,
+} from '../../services/actionCreators';
+
+import { getIngredients, getUserThunk, refreshTokenThunk } from '../../services/thunks';
+
+import {
+  ForgotPage, LoginPage, MainPage, RegisterPage, ResetPage, ProfilePage,
+} from '../../pages';
+
+import appStyles from './app.module.css';
+import ToolTip from '../tooltip/tooltip';
+import { ERROR, OK } from '../../constants';
+import { jwt, token } from '../../services/api';
+import ProtectedRoute from '../protected-route/protected-route';
+import NotLoggedRoute from '../not-logged-route/not-logged-route';
+import IngredientPage from '../../pages/ingredient-page/ingredient-page';
+import NotFoundPage from '../../pages/not-found-page/not-found-page';
+import FeedPage from '../../pages/feed-page/feed-page';
 
 const App = () => {
   const dispatch = useDispatch();
-
-  const { isIngredientsLoading } = useSelector((state) => state.api);
-  // useSelector((state) => state.API);
-  const isIngredientsLoaded = useSelector((state) => !!state.ingredients.all);
+  const history = useHistory();
+  const location = useLocation();
+  const background = location.state && location.state.background;
   const selectedIngredient = useSelector((store) => store.ingredients.selected);
   const acceptedOrder = useSelector((state) => state.orders.accepted);
-  const errorMessage = useSelector((state) => state.API);
-
-  const handleIngredientDetailsClose = () => dispatch(releaseIngredient());
+  const { errorMessage, successMessage } = useSelector((state) => state.api);
+  const handleIngredientDetailsClose = () => {
+    dispatch(releaseIngredient());
+    history.push({ pathname: '/', state: { background: null } });
+  };
   const handleOrderDetailsClose = () => dispatch(archiveOrder());
   const handleErrorClose = () => dispatch(clearError());
+  const handleSuccessClose = () => dispatch(clearSuccess());
+
+  useEffect(() => {
+    if (background && !selectedIngredient) {
+      history.push({ pathname: location.pathname, state: { background: null } });
+    }
+  }, [background, selectedIngredient, history, location]);
 
   useEffect(() => {
     dispatch(getIngredients());
+    if (jwt.test()) {
+      dispatch(getUserThunk());
+    } else if (token.test()) {
+      dispatch(refreshTokenThunk(getUserThunk));
+    }
   }, [dispatch]);
+
   return (
     <>
-      <AppHeader />
       <div className={appStyles.wrapper}>
-        {(isIngredientsLoading || !isIngredientsLoaded)
-            && <div className={biStyles.loading}><Preloader /></div>}
-        {(!isIngredientsLoading && isIngredientsLoaded)
-            && (
-            <main className={appStyles.main}>
-              <DndProvider backend={HTML5Backend}>
-                <BurgerIngredients />
-                <BurgerConstructor />
-              </DndProvider>
-            </main>
-            )}
+        <AppHeader />
+        <Switch location={background || location}>
+          <NotLoggedRoute path='/login'>
+            <LoginPage />
+          </NotLoggedRoute>
+          <NotLoggedRoute path='/register'>
+            <RegisterPage />
+          </NotLoggedRoute>
+          <NotLoggedRoute path='/forgot-password'>
+            <ForgotPage />
+          </NotLoggedRoute>
+          <NotLoggedRoute path='/reset-password'>
+            <ResetPage />
+          </NotLoggedRoute>
+          <ProtectedRoute path='/profile'>
+            <ProfilePage />
+          </ProtectedRoute>
+          <Route path='/ingredients/:id'>
+            <IngredientPage />
+          </Route>
+          <Route exact path='/feed'>
+            <FeedPage />
+          </Route>
+          <Route path='/' exact>
+            <MainPage />
+          </Route>
+          <Route path='/404'>
+            <NotFoundPage />
+          </Route>
+          <Route path='*'>
+            <NotFoundPage />
+          </Route>
+        </Switch>
       </div>
-      {!!selectedIngredient && (
+      {(!!background && !!selectedIngredient) && (
       <Modal title='Детали ингредиента' onClose={handleIngredientDetailsClose}>
         <IngredientDetails />
       </Modal>
@@ -67,9 +113,14 @@ const App = () => {
       </Modal>
       )}
       {!!errorMessage && (
-      <Modal onClose={handleErrorClose}>
-        <ErrorPopup message={errorMessage} />
+      <Modal title='К сожалению, произошла ошибка!' onClose={handleErrorClose}>
+        <ToolTip type={ERROR} message={errorMessage} />
       </Modal>
+      )}
+      {!!successMessage && (
+        <Modal title='Поздравляем!' onClose={handleSuccessClose}>
+          <ToolTip type={OK} message={successMessage} />
+        </Modal>
       )}
     </>
   );

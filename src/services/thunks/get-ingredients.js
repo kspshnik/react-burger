@@ -1,4 +1,4 @@
-import burgerAPI from '../api';
+import { fetchIngredients } from '../api';
 import {
   ingredientsRequested, ingredientsReceived, ingredientsFailed, setIngredients,
 } from '../actionCreators';
@@ -6,7 +6,7 @@ import {
 const getIngredients = () => (dispatch) => {
   dispatch(ingredientsRequested());
   // eslint-disable-next-line promise/always-return
-  return burgerAPI.getIngredients().then((data) => {
+  return fetchIngredients().then((data) => {
     dispatch(ingredientsReceived());
     dispatch(setIngredients(data.data.reduce((acc, ingredient) => {
       acc[ingredient._id] = ingredient;

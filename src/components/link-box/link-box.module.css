@@ -1,0 +1,12 @@
+.linkbox {
+  width: 480px;
+  height: 24px;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+  }
+
+.linkbox__link {
+  color: #4C4CFF;
+  }

@@ -45,6 +45,15 @@
   justify-content: flex-start;
   }
 
+.menu__link {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  text-decoration: none;
+  color: var(--text-primary-color);
+  }
+
 .menu__profile {
   composes: menu__item;
   justify-self: end;

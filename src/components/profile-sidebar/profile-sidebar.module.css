@@ -1,0 +1,39 @@
+.sidebar {
+  width: 320px;
+  height: 320px;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  }
+
+.sidebar__info {
+  margin: 0;
+  padding: 0;
+  }
+
+.menu {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+
+  }
+.menu__item {
+  width:  320px;
+  height: 64px;
+  text-decoration: none;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  color: var(--text-inactive-color);
+  }
+
+.menu__item_active {
+  color: var(--text-primary-color);
+  }
+.menu__item_type_button {
+  background-color: transparent;
+  border: none;
+  text-align: left;
+  }

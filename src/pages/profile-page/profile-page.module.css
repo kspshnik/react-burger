@@ -1,0 +1,7 @@
+.main {
+  display: grid;
+  grid-template-columns: 320px  860px;
+  gap: 0 60px;
+  overflow: hidden;
+  height: 100vh;
+  }

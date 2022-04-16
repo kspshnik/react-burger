@@ -4,6 +4,7 @@ import { Button, ConstructorElement, CurrencyIcon } from '@ya.praktikum/react-de
 
 import { useSelector, useDispatch } from 'react-redux';
 
+import { useHistory, useLocation } from 'react-router-dom';
 import bcStyles from './burger-constructor.module.css';
 import ScrollArea from '../scroll-area/scroll-area';
 import ConstructorGrid from '../constructor-grid/constructor-grid';
@@ -15,7 +16,10 @@ import DropZone from '../drop-zone/drop-zone';
 const BurgerConstructor = () => {
   const { all } = useSelector((store) => store.ingredients);
   const { bun, choice } = useSelector((state) => state.orders);
+  const { loggedIn } = useSelector((state) => state.user);
   const dispatch = useDispatch();
+  const history = useHistory();
+  const location = useLocation();
 
   const isEmpty = () => !(!!bun || choice.length > 0);
 
@@ -39,8 +43,12 @@ const BurgerConstructor = () => {
   }, [choice, bun, all]);
 
   const handlePlaceOrderClick = () => {
-    const totalOrder = [bun, ...[choice]].map(((item) => item._id));
-    dispatch(placeOrder(totalOrder));
+    if (loggedIn) {
+      const totalOrder = [bun, ...[choice]].map(((item) => item._id));
+      dispatch(placeOrder(totalOrder));
+    } else {
+      history.push({ pathname: '/login', state: { from: location } });
+    }
   };
 
   return (
