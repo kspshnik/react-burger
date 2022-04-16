@@ -8,7 +8,7 @@ import { useHistory, useLocation } from 'react-router-dom';
 import bcStyles from './burger-constructor.module.css';
 import ScrollArea from '../scroll-area/scroll-area';
 import ConstructorGrid from '../constructor-grid/constructor-grid';
-import placeOrder from '../../services/thunks/place-order';
+import placeOrderThunk from '../../services/thunks/place-order-thunk';
 import { insertInterior, setBun } from '../../services/actionCreators';
 import { BUN, INGREDIENT } from '../../constants';
 import DropZone from '../drop-zone/drop-zone';
@@ -44,8 +44,8 @@ const BurgerConstructor = () => {
 
   const handlePlaceOrderClick = () => {
     if (loggedIn) {
-      const totalOrder = [bun, ...[choice]].map(((item) => item._id));
-      dispatch(placeOrder(totalOrder));
+      const totalOrder = [bun, ...choice].map(((item) => item._id));
+      dispatch(placeOrderThunk(totalOrder));
     } else {
       history.push({ pathname: '/login', state: { from: location } });
     }
