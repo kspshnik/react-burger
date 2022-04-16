@@ -1,5 +1,3 @@
-import { prepareFeed } from '../../helpers';
-
 export const socketMiddleware = (wsUrl, wsActions) => (store) => {
   let socket = null;
 
@@ -26,7 +24,18 @@ export const socketMiddleware = (wsUrl, wsActions) => (store) => {
       };
 
       socket.onmessage = (event) => {
-        dispatch(onMessage(prepareFeed(JSON.parse(event.data))));
+        const {
+          success,
+          orders,
+          total,
+          totalToday,
+          message = 'При получении заказов произошла ошибка :(',
+        } = JSON.parse(event.data);
+        if (success) {
+          dispatch(onMessage({ orders, total, totalToday }));
+        } else {
+          dispatch(onError(message));
+        }
       };
 
       socket.onclose = (event) => {
