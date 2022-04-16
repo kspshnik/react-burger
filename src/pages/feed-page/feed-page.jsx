@@ -1,11 +1,13 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import UnderConstruction from '../../components/under-construction/under-construction';
 import { startPublicFeed, stopPublicFeed } from '../../services/actionCreators';
 import TwoColumns from '../../components/two-columns/two-columns';
+import FeedInfo from '../../components/feed-info/feed-info';
 
 const FeedPage = () => {
   const dispatch = useDispatch();
+  const isFeedLoaded = useSelector((state) => !!state?.feed?.public?.orders);
   React.useEffect(() => {
     dispatch(startPublicFeed());
     return () => {
@@ -13,9 +15,9 @@ const FeedPage = () => {
     };
   }, [dispatch]);
   return (
-    <TwoColumns>
+    <TwoColumns isLoaded={isFeedLoaded}>
       <UnderConstruction />
-      <UnderConstruction />
+      <FeedInfo />
     </TwoColumns>
   );
 };

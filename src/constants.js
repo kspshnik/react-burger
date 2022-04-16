@@ -30,6 +30,8 @@ const INFO = 'INFO';
 const ERROR = 'ERROR';
 const OK = 'OK';
 
+const PENDING = 'pending';
+const DONE = 'done';
 export {
   BUN,
   SAUCE,
@@ -45,4 +47,6 @@ export {
   INFO,
   ERROR,
   OK,
+  PENDING,
+  DONE,
 };
