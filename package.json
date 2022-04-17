@@ -4,7 +4,7 @@
   "private": true,
   "homepage": "./",
   "dependencies": {
-    "@sentry/react": "^6.17.2",
+    "@sentry/react": "^6.19.2",
     "@sentry/tracing": "^6.17.2",
     "@testing-library/jest-dom": "^5.16.2",
     "@testing-library/react": "^11.2.7",
