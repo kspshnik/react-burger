@@ -6,7 +6,7 @@ import crStyles from './content-ribbon.module.css';
 
 const ContentRibbon = ({ content }) => {
   const ingredients = useSelector((state) => state?.ingredients?.all);
-  const showContent = content.filter((item) => !!item).slice(0, 7).reverse();
+  const showContent = content.filter((item) => !!item).slice(0, 6).reverse();
   const goFurther = content.length > 6;
   const moreIngredients = content.length - 6;
 
@@ -22,7 +22,7 @@ const ContentRibbon = ({ content }) => {
         </li>
       ))}
       {goFurther ? (
-        <li key={8} className={crStyles.ribbon__item}>
+        <li key={7} className={crStyles.ribbon__item}>
           <p className='text text_type_main-default'>{`+${moreIngredients}`}</p>
         </li>
       ) : null }
