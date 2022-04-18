@@ -32,7 +32,7 @@ const publicFeedReducer = (state = initialState, action) => {
     }
     case PUBLIC_FEED_SELECT: {
       return {
-        ...state, selected: state.orders[action.payload],
+        ...state, selected: state.orders.find((order) => order._id === action.payload),
       };
     }
     case PUBLIC_FEED_DESELECT: {
