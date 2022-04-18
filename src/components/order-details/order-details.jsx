@@ -64,3 +64,5 @@ OrderDetails.propTypes = {
     ingredients: PropTypes.arrayOf(PropTypes.string).isRequired,
   }).isRequired,
 };
+
+export default OrderDetails;

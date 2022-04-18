@@ -15,7 +15,7 @@ import IngredientDetails from '../ingredient-details/ingredient-details';
 import OrderAccept from '../order-accept/order-accept';
 
 import {
-  clearError, releaseIngredient, archiveOrder, clearSuccess,
+  clearError, releaseIngredient, archiveOrder, clearSuccess, publicFeedDeselect,
 } from '../../services/actionCreators';
 
 import { getIngredientsThunk, getUserThunk, refreshTokenThunk } from '../../services/thunks';
@@ -26,13 +26,15 @@ import {
 
 import appStyles from './app.module.css';
 import ToolTip from '../tooltip/tooltip';
-import { ERROR, OK } from '../../constants';
+import { ERROR, OK, PUBLIC } from '../../constants';
 import { jwt, token } from '../../services/api';
 import ProtectedRoute from '../protected-route/protected-route';
 import NotLoggedRoute from '../not-logged-route/not-logged-route';
 import IngredientPage from '../../pages/ingredient-page/ingredient-page';
 import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import FeedPage from '../../pages/feed-page/feed-page';
+import OrderPage from '../../pages/order-page/order-page';
+import OrderDetails from '../order-details/order-details';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -41,10 +43,16 @@ const App = () => {
   const background = location.state && location.state.background;
   const selectedIngredient = useSelector((store) => store.ingredients.selected);
   const acceptedOrder = useSelector((state) => state.orders.accepted);
+  const publicFeedSelected = useSelector((state) => state.feed.public.selected);
+  //  const privateFeedSelected = useSelector((state) => state.feed.private.selected);
   const { errorMessage, successMessage } = useSelector((state) => state.api);
   const handleIngredientDetailsClose = () => {
     dispatch(releaseIngredient());
     history.push({ pathname: '/', state: { background: null } });
+  };
+  const handlePublicFeedOrderDetailsClose = () => {
+    dispatch(publicFeedDeselect());
+    history.push({ pathname: '/feed', state: { background: null } });
   };
   const handleOrderAcceptClose = () => dispatch(archiveOrder());
   const handleErrorClose = () => dispatch(clearError());
@@ -91,6 +99,9 @@ const App = () => {
           <Route exact path='/feed'>
             <FeedPage />
           </Route>
+          <Route path='/feed/:id'>
+            <OrderPage feedType={PUBLIC} />
+          </Route>
           <Route path='/' exact>
             <MainPage />
           </Route>
@@ -106,6 +117,11 @@ const App = () => {
       <Modal title='Детали ингредиента' onClose={handleIngredientDetailsClose}>
         <IngredientDetails />
       </Modal>
+      )}
+      {(!!background && !!publicFeedSelected) && (
+        <Modal title='' onClose={handlePublicFeedOrderDetailsClose}>
+          <OrderDetails order={publicFeedSelected} />
+        </Modal>
       )}
       {!!acceptedOrder && (
       <Modal onClose={handleOrderAcceptClose}>

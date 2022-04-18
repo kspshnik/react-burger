@@ -3,28 +3,39 @@ import React from 'react';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory, useLocation } from 'react-router-dom';
 import opStyles from './order-plate.module.css';
 import {
   DONE, PRIVATE,
 } from '../../constants';
 import ContentRibbon from '../content-ribbon/content-ribbon';
 import { calculateTotal, prepareDateTime, statusName } from '../../helpers';
+// import { useHistory, useLocation }                     from "react-router-dom";
+import { publicFeedSelect } from '../../services/actionCreators';
 
 const OrderPlate = ({ order, feedType }) => {
+  const dispatch = useDispatch();
+  const location = useLocation();
+  const history = useHistory();
+
   const {
-    createdAt, name, number, status, ingredients,
+    createdAt, name, number, status, ingredients, _id,
   } = order;
-  /*   _id, */
   const { all } = useSelector((state) => state.ingredients);
 
   const isDone = () => status === DONE;
   const total = calculateTotal(all, ingredients);
 
+  const onClick = () => {
+    dispatch(publicFeedSelect(_id));
+    history.push({ pathname: `/feed/${_id}`, state: { background: location } });
+  };
+
   return (
-    <div className={`${opStyles.order} p-6 mb-4`}>
+    <button type='button' className={`${opStyles.order} p-6 mb-4`} onClick={onClick}>
       <div className={`${opStyles.order__line} mb-6`}>
-        <p className='text text_type_digits-default'>
+        <p className='text text_type_digits-default text_color_primary'>
           {`#${number}`}
         </p>
         <p className='text text_type_main-default text_color_inactive'>
@@ -32,11 +43,11 @@ const OrderPlate = ({ order, feedType }) => {
         </p>
       </div>
       <div className={`${opStyles.order__line} mb-6`}>
-        <h3 className={`${opStyles.order__caption} text text_type_main-medium`}>
+        <h3 className={`${opStyles.order__caption} text text_type_main-medium text_color_primary`}>
           {name}
         </h3>
         {feedType === PRIVATE && (
-          <p className={`text text_type_main-default ${isDone() ? 'text_color_success' : ''} mb-2`}>
+          <p className={`text text_type_main-default ${isDone() ? 'text_color_success' : 'text_color_primary'} mb-2`}>
             {statusName(status)}
           </p>
         )}
@@ -44,11 +55,11 @@ const OrderPlate = ({ order, feedType }) => {
       <div className={opStyles.order__line}>
         <ContentRibbon content={ingredients} />
         <div className={opStyles.order__price}>
-          <p className='text text_type_digits-default mr-2'>{total}</p>
+          <p className='text text_type_digits-default text_color_primary mr-2'>{total}</p>
           <CurrencyIcon type='primary' />
         </div>
       </div>
-    </div>
+    </button>
 
   );
 };

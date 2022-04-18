@@ -26,6 +26,6 @@ const prepareDateTime = (createdAt) => {
   const delta = now - timestamp;
   const deltaHours = Math.trunc(delta / msecsInHour);
   const burgerTZ = timestamp.getTimezoneOffset() / -60;
-  return `${prepareDays(deltaHours)} ${timestamp.getHours()}:${timestamp.getMinutes()} i-GMT${(burgerTZ < 0) ? '-' : '+'}${burgerTZ}`;
+  return `${prepareDays(deltaHours)}, ${timestamp.getHours()}:${timestamp.getMinutes()} i-GMT${(burgerTZ < 0) ? '-' : '+'}${burgerTZ}`;
 };
 export default prepareDateTime;
