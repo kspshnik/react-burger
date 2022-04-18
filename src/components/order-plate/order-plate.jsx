@@ -10,6 +10,7 @@ import {
   CREATED, DONE, PENDING, PRIVATE,
 } from '../../constants';
 import ContentRibbon from '../content-ribbon/content-ribbon';
+import { prepareDateTime } from '../../helpers';
 
 const OrderPlate = ({ order, feedType }) => {
   const {
@@ -54,7 +55,7 @@ const OrderPlate = ({ order, feedType }) => {
           {`#${number}`}
         </p>
         <p className='text text_type_main-default text_color_inactive'>
-          {createdAt}
+          {prepareDateTime(createdAt)}
         </p>
       </div>
       <div className={`${opStyles.order__line} mb-6`}>
