@@ -46,7 +46,7 @@ const App = () => {
     dispatch(releaseIngredient());
     history.push({ pathname: '/', state: { background: null } });
   };
-  const handleOrderDetailsClose = () => dispatch(archiveOrder());
+  const handleOrderAcceptClose = () => dispatch(archiveOrder());
   const handleErrorClose = () => dispatch(clearError());
   const handleSuccessClose = () => dispatch(clearSuccess());
 
@@ -108,7 +108,7 @@ const App = () => {
       </Modal>
       )}
       {!!acceptedOrder && (
-      <Modal onClose={handleOrderDetailsClose}>
+      <Modal onClose={handleOrderAcceptClose}>
         <OrderAccept />
       </Modal>
       )}
