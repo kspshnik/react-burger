@@ -12,7 +12,7 @@ import '@ya.praktikum/react-developer-burger-ui-components';
 
 import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
-import OrderDetails from '../order-details/order-details';
+import OrderAccept from '../order-accept/order-accept';
 
 import {
   clearError, releaseIngredient, archiveOrder, clearSuccess,
@@ -109,7 +109,7 @@ const App = () => {
       )}
       {!!acceptedOrder && (
       <Modal onClose={handleOrderDetailsClose}>
-        <OrderDetails />
+        <OrderAccept />
       </Modal>
       )}
       {!!errorMessage && (
