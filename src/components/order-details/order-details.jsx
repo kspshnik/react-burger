@@ -1,23 +1,66 @@
 import React from 'react';
-
+import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
-import odStyles from './order-details.module.css';
-import AcceptedImg from '../../assets/images/order-accepted.png';
 
-const OrderDetails = () => {
-  const orderNumber = useSelector((state) => state.orders.accepted.order.number);
+import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { calculateTotal, prepareDateTime, statusName } from '../../helpers';
+import IngredientPlate from '../ingredient-plate/ingredient-plate';
+
+import odStyles from './order-details.module.css';
+
+const OrderDetails = ({ order }) => {
+  const {
+    createdAt, name, number, status, ingredients,
+  } = order;
+  const { all } = useSelector((state) => state.ingredients);
+  const uniqueContent = Array.from(new Set(ingredients));
+  const total = calculateTotal(all, ingredients);
   return (
-    <div className={`${odStyles.content} pl-25 pr-25`}>
-      <h3 className={`${odStyles.order} text text_type_digits-large pt-4 pb-4`}>{orderNumber}</h3>
-      <p className={`${odStyles.caption} text text_type_main-medium pt-4 pb-15`}>Идентификатор заказа</p>
-      <img src={AcceptedImg} alt='Заказ принят!' />
-      <p className={`${odStyles.message} text text_type_main-default pt-15 pb-1`}>Ваш заказ начали готовить</p>
-      <p className={`${odStyles.cutline} text text_type_main-default text_color_inactive pt-1 pb-20`}>
-        Дождитесь готовности на
-        орбитальной станции
-      </p>
+    <div className={odStyles.order__wrapper}>
+      <section className={odStyles.order}>
+        <p className='text text_type_digits-default mb-10'>
+          #
+          {number}
+        </p>
+        <p className='text text_type_main-medium mb-3'>{name}</p>
+        <p className='text text_type_main-default text_color_success mb-10'>
+          {statusName(status)}
+        </p>
+        <p className='text text_type_digits-default mb-6'>Состав:</p>
+        <ul className={`${odStyles.order__scroll} mb-10`}>
+          {uniqueContent.map((item) => (
+            <IngredientPlate
+              price={all[item].price}
+              img={all[item].image_mobile}
+              qty={ingredients.filter((ing) => ing === item).length}
+              name={all[item].name}
+              key={item} />
+          ))}
+        </ul>
+        <div className={odStyles.order__info}>
+          <p className='text text_type_main-default text_color_inactive'>
+            {prepareDateTime(createdAt)}
+          </p>
+          <div className={odStyles.order_price}>
+            <p className='text text_type_digits-default'>{total}</p>
+            <CurrencyIcon type='primary' />
+          </div>
+
+        </div>
+
+      </section>
     </div>
   );
 };
 
-export default OrderDetails;
+OrderDetails.propTypes = {
+  order: PropTypes.shape({
+    _id: PropTypes.string.isRequired,
+    createdAt: PropTypes.string.isRequired,
+    updatedAt: PropTypes.string,
+    name: PropTypes.string.isRequired,
+    number: PropTypes.number.isRequired,
+    status: PropTypes.string.isRequired,
+    ingredients: PropTypes.arrayOf(PropTypes.string).isRequired,
+  }).isRequired,
+};

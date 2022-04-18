@@ -1,5 +1,4 @@
 .ribbon {
-  position: relative;
   overflow-y: scroll;
   display: flex;
   flex-flow: column nowrap;

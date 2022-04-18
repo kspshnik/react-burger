@@ -6,11 +6,10 @@ import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import opStyles from './order-plate.module.css';
 import {
-  BUN,
-  CREATED, DONE, PENDING, PRIVATE,
+  DONE, PRIVATE,
 } from '../../constants';
 import ContentRibbon from '../content-ribbon/content-ribbon';
-import { prepareDateTime } from '../../helpers';
+import { calculateTotal, prepareDateTime, statusName } from '../../helpers';
 
 const OrderPlate = ({ order, feedType }) => {
   const {
@@ -19,34 +18,8 @@ const OrderPlate = ({ order, feedType }) => {
   /*   _id, */
   const { all } = useSelector((state) => state.ingredients);
 
-  const statusName = (stage) => {
-    switch (stage) {
-      case CREATED: {
-        return 'Создан';
-      }
-      case PENDING: {
-        return 'Готовится';
-      }
-      case DONE: {
-        return 'Выполнен';
-      }
-      default: {
-        throw new TypeError('Неверная стадия приготовления!');
-      }
-    }
-  };
   const isDone = () => status === DONE;
-  const calculateTotal = () => {
-    const bun = ingredients.find((item) => all[item]?.type === BUN);
-    const total = ingredients.reduce((acc, item) => {
-      if (!item || !all[item] || !all[item]?.price) {
-        return acc;
-      }
-      return acc + all[item].price;
-    }, 0);
-    const extra = (!!bun && !!all[bun].price) ? all[bun].price : 0;
-    return total + extra;
-  };
+  const total = calculateTotal(all, ingredients);
 
   return (
     <div className={`${opStyles.order} p-6 mb-4`}>
@@ -71,7 +44,7 @@ const OrderPlate = ({ order, feedType }) => {
       <div className={opStyles.order__line}>
         <ContentRibbon content={ingredients} />
         <div className={opStyles.order__price}>
-          <p className='text text_type_digits-default mr-2'>{calculateTotal()}</p>
+          <p className='text text_type_digits-default mr-2'>{total}</p>
           <CurrencyIcon type='primary' />
         </div>
       </div>

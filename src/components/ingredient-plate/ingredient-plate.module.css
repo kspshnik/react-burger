@@ -1,0 +1,41 @@
+.plate {
+  height: 64px;
+  width: 100%;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  list-style: none outside;
+  margin-block-start: 0;
+  margin-block-end: 0;
+  padding-inline-start: 0;
+  padding-inline-end: 0;
+  }
+
+.plate__info {
+  height: 100%;
+  max-width: 480px;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  }
+
+.plate__image {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  }
+
+.plate__text {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  }
+
+.plate__price {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-end;
+  align-items: center;
+  }
