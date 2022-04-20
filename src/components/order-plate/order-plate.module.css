@@ -11,7 +11,15 @@
   box-sizing: border-box;
   position: relative;
   border: transparent;
+  transition: 0.5s ease-in-out;
 }
+
+.order:hover {
+  transform: scaleY(1.05);
+  cursor: pointer;
+  outline: 3px ridge rgba(245, 245, 245, 0.15) ;
+
+  }
 
 .order__line {
   width: 100%;
