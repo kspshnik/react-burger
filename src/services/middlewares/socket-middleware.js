@@ -43,6 +43,7 @@ export const socketMiddleware = (wsUrl, wsActions) => (store) => {
           dispatch(onClose());
         } else {
           dispatch(onError('Соединение было разорвано сервером :('));
+          dispatch(onClose());
         }
       };
     }
