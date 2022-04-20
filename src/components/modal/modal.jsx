@@ -23,6 +23,7 @@ const Modal = ({
     };
   }, [onClose, portalRoot]);
   console.log('Открытие модалки!');
+  console.dir(children);
   return ReactDOM.createPortal((
     <>
       <ModalOverlay onClose={onClose} />

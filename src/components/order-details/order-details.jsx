@@ -9,6 +9,7 @@ import IngredientPlate from '../ingredient-plate/ingredient-plate';
 import odStyles from './order-details.module.css';
 
 const OrderDetails = ({ order }) => {
+  console.dir(order);
   const {
     createdAt, name, number, status, ingredients,
   } = order;

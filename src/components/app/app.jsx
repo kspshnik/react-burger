@@ -43,25 +43,28 @@ const App = () => {
   const background = location.state && location.state.background;
   const selectedIngredient = useSelector((store) => store.ingredients.selected);
   const acceptedOrder = useSelector((state) => state.orders.accepted);
-  const orderSelected = useSelector((state) => state.feed.select);
+  const orderSelected = useSelector((state) => state.feed.select.order);
   const { errorMessage, successMessage } = useSelector((state) => state.api);
   const handleIngredientDetailsClose = () => {
+    console.log('Закрытие ингредиента!');
     dispatch(releaseIngredient());
     history.push({ pathname: '/', state: { background: null } });
   };
   const orderDetailsClose = () => {
+    console.log('Закрытие заказа!');
     dispatch(releaseOrder());
     history.push({ ...location.state.background, state: { background: null } });
   };
   const handleOrderAcceptClose = () => dispatch(archiveOrder());
   const handleErrorClose = () => dispatch(clearError());
   const handleSuccessClose = () => dispatch(clearSuccess());
-
+  useEffect(() => console.dir(location), [location]);
   useEffect(() => {
-    if (background && !selectedIngredient) {
+    console.log(`background = ${background}\n!!selectedIngredient && !orderSelected = ${!selectedIngredient && !orderSelected}`);
+    if (background && (!selectedIngredient && !orderSelected)) {
       history.push({ pathname: location.pathname, state: { background: null } });
     }
-  }, [background, selectedIngredient, history, location]);
+  }, [background, selectedIngredient, orderSelected, history, location]);
 
   useEffect(() => {
     dispatch(getIngredientsThunk());

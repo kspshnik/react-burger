@@ -29,6 +29,8 @@ const OrderPlate = ({ order, feedType }) => {
   const onClick = () => {
     dispatch(captureOrder(order));
     const pathToGo = feedType === PUBLIC ? `/feed/${_id}` : `/profile/orders/${_id}`;
+    console.log(pathToGo);
+    console.dir(location);
     history.push({ pathname: `${pathToGo}`, state: { background: location } });
   };
 

@@ -15,25 +15,30 @@ const OrderPage = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const latestOrders = useSelector((state) => state?.feed?.public?.orders);
-  const selectedOrder = useSelector((state) => state?.feed?.select);
+  const selectedOrder = useSelector((state) => state?.feed?.select.order);
   const { isOpen } = useSelector((store) => store.feed.public);
+  const isOrderNonExist = React.useMemo(
+    () => (latestOrders
+      ? !latestOrders?.find((item) => item._id === id)
+      : false),
+    [id, latestOrders],
+  );
   const foundOrder = React.useMemo(
     () => latestOrders?.find((item) => item._id === id),
     [latestOrders, id],
   );
   const order = React.useMemo(() => selectedOrder || foundOrder, [selectedOrder, foundOrder]);
   console.dir(order);
-  console.log('--------');
-  console.dir(selectedOrder);
 
   React.useEffect(() => {
-    if (!!latestOrders && !foundOrder) {
+    if (!!latestOrders && isOrderNonExist) {
       history.push({ pathname: '/404', state: { order: true } });
     }
-  }, [history, foundOrder, latestOrders]);
+  }, [history, isOrderNonExist, latestOrders]);
 
   React.useEffect(() => {
-    if (!order && !!latestOrders && !isOpen) {
+    if (!order && !latestOrders && !isOpen) {
+      console.dir('Запрос публичного фида из /feed:id!');
       dispatch(startPublicFeed());
     }
     return () => {
