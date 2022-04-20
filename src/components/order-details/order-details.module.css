@@ -22,7 +22,7 @@
   flex-flow: column nowrap;
   justify-content: flex-start;
   align-items: center;
-  height: 100%;
+  height: 288px;
   width: 100%;
   list-style: none outside;
   margin-block-start: 0;
@@ -30,6 +30,10 @@
   padding-inline-start: 0;
   padding-inline-end: 0;
   }
+
+.order__align {
+  align-self: flex-start;
+}
 
 .order__info
 {

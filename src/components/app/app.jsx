@@ -15,18 +15,31 @@ import IngredientDetails from '../ingredient-details/ingredient-details';
 import OrderAccept from '../order-accept/order-accept';
 
 import {
-  clearError, releaseIngredient, archiveOrder, clearSuccess, releaseOrder,
+  clearError,
+  releaseIngredient,
+  archiveOrder,
+  clearSuccess,
+  releaseOrder,
+  startPublicFeed,
+  stopPublicFeed,
+  startPrivateFeed,
+  stopPrivateFeed,
 } from '../../services/actionCreators';
 
 import { getIngredientsThunk, getUserThunk, refreshTokenThunk } from '../../services/thunks';
 
 import {
-  ForgotPage, LoginPage, MainPage, RegisterPage, ResetPage, ProfilePage,
+  ForgotPage, LoginPage, MainPage, RegisterPage, ResetPage,
 } from '../../pages';
 
 import appStyles from './app.module.css';
 import ToolTip from '../tooltip/tooltip';
-import { ERROR, OK, PUBLIC } from '../../constants';
+import {
+  ERROR,
+  OK,
+  PRIVATE,
+  PUBLIC,
+} from '../../constants';
 import { jwt, token } from '../../services/api';
 import ProtectedRoute from '../protected-route/protected-route';
 import NotLoggedRoute from '../not-logged-route/not-logged-route';
@@ -35,6 +48,10 @@ import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import FeedPage from '../../pages/feed-page/feed-page';
 import OrderPage from '../../pages/order-page/order-page';
 import OrderDetails from '../order-details/order-details';
+import ppStyles from '../../pages/profile-page/profile-page.module.css';
+import ProfileSidebar from '../profile-sidebar/profile-sidebar';
+import OrdersFeed from '../orders-feed/orders-feed';
+import ProfileForm from '../profile-form/profile-form';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -44,14 +61,14 @@ const App = () => {
   const selectedIngredient = useSelector((store) => store.ingredients.selected);
   const acceptedOrder = useSelector((state) => state.orders.accepted);
   const orderSelected = useSelector((state) => state.feed.select.order);
+  const isPublicFeedOpen = useSelector((state) => state.feed.public.isOpen);
+  const isPrivateFeedOpen = useSelector((state) => state.feed.private.isOpen);
   const { errorMessage, successMessage } = useSelector((state) => state.api);
   const handleIngredientDetailsClose = () => {
-    console.log('Закрытие ингредиента!');
     dispatch(releaseIngredient());
-    history.push({ pathname: '/', state: { background: null } });
+    history.push({ ...location.state.background, state: { background: null } });
   };
   const orderDetailsClose = () => {
-    console.log('Закрытие заказа!');
     dispatch(releaseOrder());
     history.push({ ...location.state.background, state: { background: null } });
   };
@@ -59,12 +76,12 @@ const App = () => {
   const handleErrorClose = () => dispatch(clearError());
   const handleSuccessClose = () => dispatch(clearSuccess());
   useEffect(() => console.dir(location), [location]);
-  useEffect(() => {
-    console.log(`background = ${background}\n!!selectedIngredient && !orderSelected = ${!selectedIngredient && !orderSelected}`);
-    if (background && (!selectedIngredient && !orderSelected)) {
-      history.push({ pathname: location.pathname, state: { background: null } });
+
+  React.useEffect(() => {
+    if (!(orderSelected || selectedIngredient) && location?.state?.background) {
+      history.push({ ...location, state: { background: null } });
     }
-  }, [background, selectedIngredient, orderSelected, history, location]);
+  }, [orderSelected, selectedIngredient, location, history]);
 
   useEffect(() => {
     dispatch(getIngredientsThunk());
@@ -74,6 +91,22 @@ const App = () => {
       dispatch(refreshTokenThunk(getUserThunk));
     }
   }, [dispatch]);
+
+  React.useEffect(() => {
+    if (location.pathname.includes('/feed') && !isPublicFeedOpen) {
+      dispatch(startPublicFeed());
+    } else if (!location.pathname.includes('/feed') && isPublicFeedOpen) {
+      dispatch(stopPublicFeed());
+    }
+  }, [dispatch, location.pathname, isPublicFeedOpen]);
+
+  React.useEffect(() => {
+    if (location.pathname.includes('/profile/orders') && !isPrivateFeedOpen) {
+      dispatch(startPrivateFeed());
+    } else if (!location.pathname.includes('/profile/orders') && isPrivateFeedOpen) {
+      dispatch(stopPrivateFeed());
+    }
+  }, [dispatch, location.pathname, isPrivateFeedOpen]);
 
   return (
     <>
@@ -92,17 +125,29 @@ const App = () => {
           <NotLoggedRoute path='/reset-password'>
             <ResetPage />
           </NotLoggedRoute>
-          <ProtectedRoute path='/profile'>
-            <ProfilePage />
+          <ProtectedRoute exact path='/profile'>
+            <main className={`${ppStyles.main} pt-30`}>
+              <ProfileSidebar />
+              <ProfileForm />
+            </main>
+          </ProtectedRoute>
+          <ProtectedRoute exact path='/profile/orders'>
+            <main className={`${ppStyles.main} pt-30`}>
+              <ProfileSidebar />
+              <OrdersFeed />
+            </main>
+          </ProtectedRoute>
+          <ProtectedRoute path='/profile/orders/:id'>
+            <OrderPage feedType={PRIVATE} />
           </ProtectedRoute>
           <Route path='/ingredients/:id'>
             <IngredientPage />
           </Route>
-          <Route exact path='/feed'>
-            <FeedPage />
-          </Route>
           <Route exact path='/feed/:id'>
             <OrderPage feedType={PUBLIC} />
+          </Route>
+          <Route exact path='/feed'>
+            <FeedPage />
           </Route>
           <Route path='/' exact>
             <MainPage />
@@ -121,7 +166,7 @@ const App = () => {
       </Modal>
       )}
       {(!!background && !!orderSelected) && (
-        <Modal title='' onClose={orderDetailsClose}>
+        <Modal onClose={orderDetailsClose}>
           <OrderDetails order={orderSelected} />
         </Modal>
       )}

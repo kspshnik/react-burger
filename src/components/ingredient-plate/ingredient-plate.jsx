@@ -7,7 +7,7 @@ import inpStyles from './ingredient-plate.module.css';
 const IngredientPlate = ({
   img, name, qty, price,
 }) => (
-  <li className={inpStyles.plate}>
+  <li className={`${inpStyles.plate} mb-4`}>
     <div className={inpStyles.plate__info}>
       <img className={inpStyles.plate__image} src={img} alt={name} />
       <p className={`${inpStyles.plate__text} text text_type_main-default pl-4`}>

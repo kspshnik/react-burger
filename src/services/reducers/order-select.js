@@ -17,7 +17,6 @@ const initialState = {
 const orderSelectReducer = (state = initialState, action) => {
   switch (action.type) {
     case FEED_ORDER_CAPTURE: {
-      console.dir(action);
       return {
         ...state, order: { ...action.payload },
       };

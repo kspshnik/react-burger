@@ -3,20 +3,27 @@ import React from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
+import PropTypes from 'prop-types';
 import LoaderProtector from '../../components/loader-protector/loader-protector';
 import CenterInfo from '../../components/center-info/center-info';
 import OrderDetails from '../../components/order-details/order-details';
 import {
   startPublicFeed, stopPublicFeed,
 } from '../../services/actionCreators';
+import { PRIVATE, PUBLIC } from '../../constants';
 
-const OrderPage = () => {
+const OrderPage = ({ feedType }) => {
   const { id } = useParams();
+  console.log(feedType);
   const history = useHistory();
   const dispatch = useDispatch();
-  const latestOrders = useSelector((state) => state?.feed?.public?.orders);
+  const latestPublicOrders = useSelector((state) => state?.feed.public?.orders);
+  const latestPrivateOrders = useSelector((state) => state?.feed.private?.orders);
   const selectedOrder = useSelector((state) => state?.feed?.select.order);
-  const { isOpen } = useSelector((store) => store.feed.public);
+  const isPublicFeedOpen = useSelector((store) => store?.feed?.public?.isOpen);
+  const isPrivateFeedOpen = useSelector((store) => store?.feed?.private?.isOpen);
+  const latestOrders = feedType === PUBLIC ? latestPublicOrders : latestPrivateOrders;
+  const isOpen = feedType === PRIVATE ? isPrivateFeedOpen : isPublicFeedOpen;
   const isOrderNonExist = React.useMemo(
     () => (latestOrders
       ? !latestOrders?.find((item) => item._id === id)
@@ -28,7 +35,6 @@ const OrderPage = () => {
     [latestOrders, id],
   );
   const order = React.useMemo(() => selectedOrder || foundOrder, [selectedOrder, foundOrder]);
-  console.dir(order);
 
   React.useEffect(() => {
     if (!!latestOrders && isOrderNonExist) {
@@ -38,7 +44,6 @@ const OrderPage = () => {
 
   React.useEffect(() => {
     if (!order && !latestOrders && !isOpen) {
-      console.dir('Запрос публичного фида из /feed:id!');
       dispatch(startPublicFeed());
     }
     return () => {
@@ -55,6 +60,10 @@ const OrderPage = () => {
       </CenterInfo>
     </LoaderProtector>
   );
+};
+
+OrderPage.propTypes = {
+  feedType: PropTypes.string.isRequired,
 };
 
 export default OrderPage;

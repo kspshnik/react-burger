@@ -9,34 +9,39 @@ import IngredientPlate from '../ingredient-plate/ingredient-plate';
 import odStyles from './order-details.module.css';
 
 const OrderDetails = ({ order }) => {
-  console.dir(order);
   const {
     createdAt, name, number, status, ingredients,
   } = order;
   const { all } = useSelector((state) => state.ingredients);
   const uniqueContent = Array.from(new Set(ingredients));
   const total = calculateTotal(all, ingredients);
+  const makeIngredient = (itm) => {
+    if (itm) {
+      return (
+        <IngredientPlate
+          price={all[itm].price}
+          img={all[itm].image_mobile}
+          qty={ingredients.filter((ing) => ing === itm).length}
+          name={all[itm].name}
+          key={itm} />
+      );
+    }
+    return null;
+  };
   return (
     <div className={odStyles.order__wrapper}>
       <section className={odStyles.order}>
-        <p className='text text_type_digits-default mb-10'>
+        <p className={`${odStyles.order__align} text text_type_digits-default mb-10 mt-30`}>
           #
           {number}
         </p>
-        <p className='text text_type_main-medium mb-3'>{name}</p>
-        <p className='text text_type_main-default text_color_success mb-10'>
+        <p className={`${odStyles.order__align} text text_type_main-medium mb-3`}>{name}</p>
+        <p className={`${odStyles.order__align} text text_type_main-default text_color_success mb-10`}>
           {statusName(status)}
         </p>
-        <p className='text text_type_digits-default mb-6'>Состав:</p>
+        <p className={`${odStyles.order__align} text text_type_digits-default mb-6`}>Состав:</p>
         <ul className={`${odStyles.order__scroll} mb-10`}>
-          {uniqueContent.map((item) => (
-            <IngredientPlate
-              price={all[item].price}
-              img={all[item].image_mobile}
-              qty={ingredients.filter((ing) => ing === item).length}
-              name={all[item].name}
-              key={item} />
-          ))}
+          {uniqueContent.map((item) => makeIngredient(item))}
         </ul>
         <div className={odStyles.order__info}>
           <p className='text text_type_main-default text_color_inactive'>

@@ -5,7 +5,6 @@ import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import orStyles from './order-ribbon.module.css';
 import OrderPlate from '../order-plate/order-plate';
-import { PUBLIC } from '../../constants';
 
 const OrderRibbon = ({ feedType }) => {
   const { orders } = useSelector((state) => state.feed[feedType]);
@@ -14,7 +13,7 @@ const OrderRibbon = ({ feedType }) => {
     <ul className={orStyles.ribbon}>
       {orders.map((order) => (
         <li key={order._id} className={orStyles.ribbon__item}>
-          <OrderPlate order={order} feedType={PUBLIC} />
+          <OrderPlate order={order} feedType={feedType} />
         </li>
       )) }
     </ul>
