@@ -1,9 +1,7 @@
 import {
   PRIVATE_FEED_CLOSE,
-  PRIVATE_FEED_DESELECT,
   PRIVATE_FEED_MESSAGE,
   PRIVATE_FEED_OPEN,
-  PRIVATE_FEED_SELECT,
 } from '../actions';
 
 const initialState = {
@@ -28,16 +26,6 @@ const privateFeedReducer = (state = initialState, action) => {
     case PRIVATE_FEED_MESSAGE: {
       return {
         ...state, ...action.payload,
-      };
-    }
-    case PRIVATE_FEED_SELECT: {
-      return {
-        ...state, selected: state.orders[action.payload],
-      };
-    }
-    case PRIVATE_FEED_DESELECT: {
-      return {
-        ...state, selected: null,
       };
     }
     default: {

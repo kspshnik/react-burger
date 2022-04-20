@@ -22,6 +22,7 @@ const Modal = ({
       document.removeEventListener('keydown', handleEscClose);
     };
   }, [onClose, portalRoot]);
+  console.log('Открытие модалки!');
   return ReactDOM.createPortal((
     <>
       <ModalOverlay onClose={onClose} />

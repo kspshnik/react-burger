@@ -7,12 +7,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
 import opStyles from './order-plate.module.css';
 import {
-  DONE, PRIVATE,
+  DONE, PRIVATE, PUBLIC,
 } from '../../constants';
 import ContentRibbon from '../content-ribbon/content-ribbon';
 import { calculateTotal, prepareDateTime, statusName } from '../../helpers';
-// import { useHistory, useLocation }                     from "react-router-dom";
-import { publicFeedSelect } from '../../services/actionCreators';
+import { captureOrder } from '../../services/actionCreators';
 
 const OrderPlate = ({ order, feedType }) => {
   const dispatch = useDispatch();
@@ -28,8 +27,9 @@ const OrderPlate = ({ order, feedType }) => {
   const total = calculateTotal(all, ingredients);
 
   const onClick = () => {
-    dispatch(publicFeedSelect(_id));
-    history.push({ pathname: `/feed/${_id}`, state: { background: location } });
+    dispatch(captureOrder(order));
+    const pathToGo = feedType === PUBLIC ? `/feed/${_id}` : `/profile/orders/${_id}`;
+    history.push({ pathname: `${pathToGo}`, state: { background: location } });
   };
 
   return (

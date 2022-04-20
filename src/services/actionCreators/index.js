@@ -56,8 +56,6 @@ import {
   setPublicFeedOpened,
   setPublicFeedClosed,
   onPublicFeedMessage,
-  publicFeedSelect,
-  publicFeedDeselect,
 } from './public-feed';
 
 import {
@@ -66,9 +64,12 @@ import {
   setPrivateFeedOpened,
   setPrivateFeedClosed,
   onPrivateFeedMessage,
-  privateFeedSelect,
-  privateFeedDeselect,
 } from './private-feed';
+
+import {
+  captureOrder,
+  releaseOrder,
+} from './order-select';
 
 export {
   setIngredients,
@@ -128,13 +129,11 @@ export {
   setPublicFeedOpened,
   setPublicFeedClosed,
   onPublicFeedMessage,
-  publicFeedSelect,
-  publicFeedDeselect,
   startPrivateFeed,
   stopPrivateFeed,
   setPrivateFeedOpened,
   setPrivateFeedClosed,
   onPrivateFeedMessage,
-  privateFeedSelect,
-  privateFeedDeselect,
+  captureOrder,
+  releaseOrder,
 };

@@ -1,9 +1,7 @@
 import {
   PUBLIC_FEED_CLOSE,
-  PUBLIC_FEED_DESELECT,
   PUBLIC_FEED_MESSAGE,
   PUBLIC_FEED_OPEN,
-  PUBLIC_FEED_SELECT,
 } from '../actions';
 
 const initialState = {
@@ -28,16 +26,6 @@ const publicFeedReducer = (state = initialState, action) => {
     case PUBLIC_FEED_MESSAGE: {
       return {
         ...state, ...action.payload,
-      };
-    }
-    case PUBLIC_FEED_SELECT: {
-      return {
-        ...state, selected: state.orders.find((order) => order._id === action.payload),
-      };
-    }
-    case PUBLIC_FEED_DESELECT: {
-      return {
-        ...state, selected: null,
       };
     }
     default: {

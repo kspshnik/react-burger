@@ -15,7 +15,7 @@ import IngredientDetails from '../ingredient-details/ingredient-details';
 import OrderAccept from '../order-accept/order-accept';
 
 import {
-  clearError, releaseIngredient, archiveOrder, clearSuccess, publicFeedDeselect,
+  clearError, releaseIngredient, archiveOrder, clearSuccess, releaseOrder,
 } from '../../services/actionCreators';
 
 import { getIngredientsThunk, getUserThunk, refreshTokenThunk } from '../../services/thunks';
@@ -43,16 +43,15 @@ const App = () => {
   const background = location.state && location.state.background;
   const selectedIngredient = useSelector((store) => store.ingredients.selected);
   const acceptedOrder = useSelector((state) => state.orders.accepted);
-  const publicFeedSelected = useSelector((state) => state.feed.public.selected);
-  //  const privateFeedSelected = useSelector((state) => state.feed.private.selected);
+  const orderSelected = useSelector((state) => state.feed.select);
   const { errorMessage, successMessage } = useSelector((state) => state.api);
   const handleIngredientDetailsClose = () => {
     dispatch(releaseIngredient());
     history.push({ pathname: '/', state: { background: null } });
   };
-  const handlePublicFeedOrderDetailsClose = () => {
-    dispatch(publicFeedDeselect());
-    history.push({ pathname: '/feed', state: { background: null } });
+  const orderDetailsClose = () => {
+    dispatch(releaseOrder());
+    history.push({ ...location.state.background, state: { background: null } });
   };
   const handleOrderAcceptClose = () => dispatch(archiveOrder());
   const handleErrorClose = () => dispatch(clearError());
@@ -99,7 +98,7 @@ const App = () => {
           <Route exact path='/feed'>
             <FeedPage />
           </Route>
-          <Route path='/feed/:id'>
+          <Route exact path='/feed/:id'>
             <OrderPage feedType={PUBLIC} />
           </Route>
           <Route path='/' exact>
@@ -118,9 +117,9 @@ const App = () => {
         <IngredientDetails />
       </Modal>
       )}
-      {(!!background && !!publicFeedSelected) && (
-        <Modal title='' onClose={handlePublicFeedOrderDetailsClose}>
-          <OrderDetails order={publicFeedSelected} />
+      {(!!background && !!orderSelected) && (
+        <Modal title='' onClose={orderDetailsClose}>
+          <OrderDetails order={orderSelected} />
         </Modal>
       )}
       {!!acceptedOrder && (

@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import { useHistory, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -7,64 +6,50 @@ import { useDispatch, useSelector } from 'react-redux';
 import LoaderProtector from '../../components/loader-protector/loader-protector';
 import CenterInfo from '../../components/center-info/center-info';
 import OrderDetails from '../../components/order-details/order-details';
-import { PRIVATE, PUBLIC } from '../../constants';
 import {
-  startPrivateFeed, startPublicFeed, stopPrivateFeed, stopPublicFeed,
+  startPublicFeed, stopPublicFeed,
 } from '../../services/actionCreators';
 
-const OrderPage = ({ feedType }) => {
+const OrderPage = () => {
   const { id } = useParams();
   const history = useHistory();
   const dispatch = useDispatch();
-  const { orders } = useSelector((state) => state.feed[feedType]);
-
-  const startFeed = React.useCallback(() => {
-    if (feedType === PUBLIC) {
-      dispatch(startPublicFeed());
-    } else if (feedType === PRIVATE) {
-      dispatch(startPrivateFeed());
-    } else throw new TypeError('Неверный тип фида передан!');
-  }, [dispatch, feedType]);
-
-  const stopFeed = React.useCallback(() => {
-    if (feedType === PUBLIC) {
-      dispatch(stopPublicFeed());
-    } else if (feedType === PRIVATE) {
-      dispatch(stopPrivateFeed());
-    } else throw new TypeError('Неверный тип фида передан!');
-  }, [dispatch, feedType]);
+  const latestOrders = useSelector((state) => state?.feed?.public?.orders);
+  const selectedOrder = useSelector((state) => state?.feed?.select);
+  const { isOpen } = useSelector((store) => store.feed.public);
+  const foundOrder = React.useMemo(
+    () => latestOrders?.find((item) => item._id === id),
+    [latestOrders, id],
+  );
+  const order = React.useMemo(() => selectedOrder || foundOrder, [selectedOrder, foundOrder]);
+  console.dir(order);
+  console.log('--------');
+  console.dir(selectedOrder);
 
   React.useEffect(() => {
-    dispatch(startFeed());
-    return () => {
-      dispatch(stopFeed());
-    };
-  }, [dispatch, startFeed, stopFeed]);
-
-  const order = React.useMemo(() => {
-    if (orders) {
-      return orders.find((item) => item._id === id);
-    }
-    return {};
-  }, [orders, id]);
-
-  React.useEffect(() => {
-    if (orders || !order) {
+    if (!!latestOrders && !foundOrder) {
       history.push({ pathname: '/404', state: { order: true } });
     }
-  }, [history, id, orders, order]);
+  }, [history, foundOrder, latestOrders]);
+
+  React.useEffect(() => {
+    if (!order && !!latestOrders && !isOpen) {
+      dispatch(startPublicFeed());
+    }
+    return () => {
+      if (isOpen) {
+        dispatch(stopPublicFeed());
+      }
+    };
+  }, [dispatch, isOpen, latestOrders, order]);
 
   return (
-    <LoaderProtector isLoaded={!!id && !!orders}>
+    <LoaderProtector isLoaded={!!order}>
       <CenterInfo>
         <OrderDetails order={order} />
       </CenterInfo>
     </LoaderProtector>
   );
-};
-
-OrderPage.propTypes = {
-  feedType: PropTypes.string.isRequired,
 };
 
 export default OrderPage;
