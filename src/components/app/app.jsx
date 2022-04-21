@@ -48,10 +48,11 @@ import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import FeedPage from '../../pages/feed-page/feed-page';
 import OrderPage from '../../pages/order-page/order-page';
 import OrderDetails from '../order-details/order-details';
-import ppStyles from '../../pages/profile-page/profile-page.module.css';
+// import ppStyles       from '../../pages/profile-page/profile-page.module.css';
 import ProfileSidebar from '../profile-sidebar/profile-sidebar';
 import OrdersFeed from '../orders-feed/orders-feed';
 import ProfileForm from '../profile-form/profile-form';
+import TwoColumns from '../two-columns/two-columns';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -126,16 +127,16 @@ const App = () => {
             <ResetPage />
           </NotLoggedRoute>
           <ProtectedRoute exact path='/profile'>
-            <main className={`${ppStyles.main} pt-30`}>
+            <TwoColumns profile>
               <ProfileSidebar />
               <ProfileForm />
-            </main>
+            </TwoColumns>
           </ProtectedRoute>
           <ProtectedRoute exact path='/profile/orders'>
-            <main className={`${ppStyles.main} pt-30`}>
+            <TwoColumns profile>
               <ProfileSidebar />
               <OrdersFeed />
-            </main>
+            </TwoColumns>
           </ProtectedRoute>
           <ProtectedRoute path='/profile/orders/:id'>
             <OrderPage feedType={PRIVATE} />
