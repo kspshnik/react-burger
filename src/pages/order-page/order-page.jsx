@@ -14,7 +14,6 @@ import { PRIVATE, PUBLIC } from '../../constants';
 
 const OrderPage = ({ feedType }) => {
   const { id } = useParams();
-  console.log(feedType);
   const history = useHistory();
   const dispatch = useDispatch();
   const latestPublicOrders = useSelector((state) => state?.feed.public?.orders);

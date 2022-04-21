@@ -25,7 +25,6 @@ const OrderPlate = ({ order, feedType }) => {
 
   const isDone = () => status === DONE;
   const total = calculateTotal(all, ingredients);
-  console.log(feedType);
   const onClick = () => {
     dispatch(captureOrder(order));
     const pathToGo = feedType === PUBLIC ? `/feed/${_id}` : `/profile/orders/${_id}`;
