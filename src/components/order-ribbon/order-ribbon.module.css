@@ -1,16 +1,17 @@
 .ribbon {
-  overflow-y: scroll;
+  overflow: scroll;
   display: flex;
   flex-flow: column nowrap;
   justify-content: flex-start;
   align-items: center;
-  height: 100%;
   width: 100%;
   list-style: none outside;
   margin-block-start: 0;
   margin-block-end: 0;
   padding-inline-start: 0;
   padding-inline-end: 0;
+  position: relative;
+  height: 860px;
 }
 
 .ribbon__item {

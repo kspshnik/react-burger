@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { useLocation } from 'react-router-dom';
 import { calculateTotal, prepareDateTime, statusName } from '../../helpers';
 import IngredientPlate from '../ingredient-plate/ingredient-plate';
 
@@ -14,6 +15,7 @@ const OrderDetails = ({ order }) => {
   } = order;
   const { all } = useSelector((state) => state.ingredients);
   const uniqueContent = Array.from(new Set(ingredients));
+  const { state } = useLocation();
   const total = calculateTotal(all, ingredients);
   const makeIngredient = (itm) => {
     if (itm) {
@@ -31,7 +33,7 @@ const OrderDetails = ({ order }) => {
   return (
     <div className={odStyles.order__wrapper}>
       <section className={odStyles.order}>
-        <p className={`${odStyles.order__align} text text_type_digits-default mb-10 mt-30`}>
+        <p className={`text text_type_digits-default mb-10 ${state?.background ? '' : 'mt-30'}`}>
           #
           {number}
         </p>

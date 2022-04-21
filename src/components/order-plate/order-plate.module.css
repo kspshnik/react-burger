@@ -9,7 +9,6 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.04), 0 0 2px rgba(0, 0, 0, 0.06), 0 0 1px rgba(0, 0, 0, 0.04);
   border-radius: 40px;
   box-sizing: border-box;
-  position: relative;
   border: transparent;
   transition: 0.5s ease-in-out;
 }
@@ -29,10 +28,6 @@
   align-items: center;
 }
 
-.order__line:nth-of-type(3) {
-  justify-content: flex-end;
-}
-
 .order__caption {
   text-overflow: ellipsis;
   height: 30px;
@@ -44,6 +39,6 @@
   height: 64px;
   display: flex;
   flex-flow: row nowrap;
-  justify-content: flex-end;
+  justify-content: space-between;
   align-items: center;
 }
