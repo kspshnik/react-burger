@@ -39,6 +39,10 @@ const PRIVATE = 'private';
 
 const WS_THROTTLE_THRESHOLD = 3000;
 
+const REASON_404_ORDER = 'заказ';
+const REASON_404_INGREDIENT = 'ингредиент';
+const REASON_404_GENERAL = 'столик';
+
 export {
   BUN,
   SAUCE,
@@ -60,4 +64,7 @@ export {
   PUBLIC,
   PRIVATE,
   WS_THROTTLE_THRESHOLD,
+  REASON_404_ORDER,
+  REASON_404_INGREDIENT,
+  REASON_404_GENERAL,
 };
