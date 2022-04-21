@@ -15,7 +15,7 @@ import App from './components/app/app';
 import './index.css';
 
 import rootReducer from './services/reducers';
-import { BACKEND_ROUTES } from './constants';
+import { BACKEND_ROUTES, PRIVATE, PUBLIC } from './constants';
 import {
   PRIVATE_FEED_START,
   PRIVATE_FEED_STOP,
@@ -24,8 +24,12 @@ import {
 } from './services/actions';
 import { socketMiddleware } from './services/middlewares/socket-middleware';
 import {
+  discardPrivateFeed,
+  discardPublicFeed,
   onPrivateFeedMessage,
   onPublicFeedMessage,
+  requestPrivateFeed,
+  requestPublicFeed,
   setPrivateFeedClosed,
   setPrivateFeedOpened,
   setPublicFeedClosed,
@@ -61,6 +65,8 @@ const publicFeedUrl = `${BACKEND_ROUTES.baseWS}${BACKEND_ROUTES.publicFeed}`;
 const publicFeedActions = {
   wsStart: PUBLIC_FEED_START,
   wsStop: PUBLIC_FEED_STOP,
+  connectRequest: requestPublicFeed,
+  disconnectRequest: discardPublicFeed,
   onOpen: setPublicFeedOpened,
   onClose: setPublicFeedClosed,
   onError: wsError,
@@ -71,6 +77,8 @@ const privateFeedUrl = `${BACKEND_ROUTES.baseWS}${BACKEND_ROUTES.privateFeed}?to
 const privateFeedActions = {
   wsStart: PRIVATE_FEED_START,
   wsStop: PRIVATE_FEED_STOP,
+  connectRequest: requestPrivateFeed,
+  disconnectRequest: discardPrivateFeed,
   onOpen: setPrivateFeedOpened,
   onClose: setPrivateFeedClosed,
   onError: wsError,
@@ -79,8 +87,8 @@ const privateFeedActions = {
 
 const enhancer = composeEnhancers(
   applyMiddleware(thunk),
-  applyMiddleware(socketMiddleware(publicFeedUrl, publicFeedActions)),
-  applyMiddleware(socketMiddleware(privateFeedUrl, privateFeedActions)),
+  applyMiddleware(socketMiddleware(publicFeedUrl, publicFeedActions, PUBLIC)),
+  applyMiddleware(socketMiddleware(privateFeedUrl, privateFeedActions, PRIVATE)),
   sentryReduxEnhancer,
 );
 

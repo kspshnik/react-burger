@@ -1,15 +1,23 @@
-export const socketMiddleware = (wsUrl, wsActions) => (store) => {
+import { WS_THROTTLE_THRESHOLD } from '../../constants';
+
+export const socketMiddleware = (wsUrl, wsActions, feedType) => (store) => {
   let socket = null;
 
   return (next) => (action) => {
-    const { dispatch } = store;
+    const { dispatch, getState } = store;
     const { type } = action;
+
     const {
-      wsStart, wsStop, onOpen, onClose, onError, onMessage,
+      wsStart, wsStop, connectRequest, disconnectRequest, onOpen, onClose, onError, onMessage,
     } = wsActions;
-    if (type === wsStart) {
-      socket = new WebSocket(`${wsUrl}`);
-    } else if (socket && type === wsStop) {
+    if (type === wsStart && !getState().feed[feedType].isOpen) {
+      if ((Date.now() - getState().feed[feedType].requestedAt) > WS_THROTTLE_THRESHOLD) {
+        dispatch(connectRequest());
+        socket = new WebSocket(`${wsUrl}`);
+      }
+    } else if (socket && type === wsStop
+               && (Date.now() - getState().feed[feedType].discardedAt) > WS_THROTTLE_THRESHOLD) {
+      dispatch(disconnectRequest());
       socket.close(1000);
     }
 

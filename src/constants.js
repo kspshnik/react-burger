@@ -37,6 +37,8 @@ const CREATED = 'created';
 const PUBLIC = 'public';
 const PRIVATE = 'private';
 
+const WS_THROTTLE_THRESHOLD = 3000;
+
 export {
   BUN,
   SAUCE,
@@ -57,4 +59,5 @@ export {
   DONE,
   PUBLIC,
   PRIVATE,
+  WS_THROTTLE_THRESHOLD,
 };

@@ -76,8 +76,6 @@ const App = () => {
   const handleOrderAcceptClose = () => dispatch(archiveOrder());
   const handleErrorClose = () => dispatch(clearError());
   const handleSuccessClose = () => dispatch(clearSuccess());
-  useEffect(() => console.dir(location), [location]);
-
   React.useEffect(() => {
     if (!(orderSelected || selectedIngredient) && location?.state?.background) {
       history.push({ ...location, state: { background: null } });
