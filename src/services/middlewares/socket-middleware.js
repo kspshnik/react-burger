@@ -1,6 +1,7 @@
-import { WS_THROTTLE_THRESHOLD } from '../../constants';
+import { PRIVATE, WS_THROTTLE_THRESHOLD } from '../../constants';
+import { jwt } from '../api';
 
-export const socketMiddleware = (wsUrl, wsActions, feedType) => (store) => {
+export const socketMiddleware = (wsBaseUrl, wsActions, feedType) => (store) => {
   let socket = null;
 
   return (next) => (action) => {
@@ -13,7 +14,7 @@ export const socketMiddleware = (wsUrl, wsActions, feedType) => (store) => {
     if (type === wsStart && !getState().feed[feedType].isOpen) {
       if ((Date.now() - getState().feed[feedType].requestedAt) > WS_THROTTLE_THRESHOLD) {
         dispatch(connectRequest());
-        socket = new WebSocket(`${wsUrl}`);
+        socket = new WebSocket(`${wsBaseUrl}${feedType === PRIVATE ? `?token=${jwt.get()}` : ''}`);
       }
     } else if (socket && type === wsStop
                && (Date.now() - getState().feed[feedType].discardedAt) > WS_THROTTLE_THRESHOLD) {

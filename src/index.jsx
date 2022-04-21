@@ -36,7 +36,6 @@ import {
   setPublicFeedOpened,
   wsError,
 } from './services/actionCreators';
-import { jwt } from './services/api';
 
 LogRocket.init('owbpwl/react-burger');
 
@@ -73,7 +72,7 @@ const publicFeedActions = {
   onMessage: onPublicFeedMessage,
 };
 
-const privateFeedUrl = `${BACKEND_ROUTES.baseWS}${BACKEND_ROUTES.privateFeed}?token=${jwt.get()}`;
+const privateFeedUrl = `${BACKEND_ROUTES.baseWS}${BACKEND_ROUTES.privateFeed}`;
 const privateFeedActions = {
   wsStart: PRIVATE_FEED_START,
   wsStop: PRIVATE_FEED_STOP,
@@ -84,7 +83,6 @@ const privateFeedActions = {
   onError: wsError,
   onMessage: onPrivateFeedMessage,
 };
-
 const enhancer = composeEnhancers(
   applyMiddleware(thunk),
   applyMiddleware(socketMiddleware(publicFeedUrl, publicFeedActions, PUBLIC)),
