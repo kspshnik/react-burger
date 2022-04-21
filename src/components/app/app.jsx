@@ -59,6 +59,7 @@ const App = () => {
   const history = useHistory();
   const location = useLocation();
   const background = location.state && location.state.background;
+  const { loggedIn } = useSelector((state) => state.user);
   const selectedIngredient = useSelector((store) => store.ingredients.selected);
   const acceptedOrder = useSelector((state) => state.orders.accepted);
   const orderSelected = useSelector((state) => state.feed.select.order);
@@ -100,12 +101,12 @@ const App = () => {
   }, [dispatch, location.pathname, isPublicFeedOpen]);
 
   React.useEffect(() => {
-    if (location.pathname.includes('/profile/orders') && !isPrivateFeedOpen) {
+    if (location.pathname.includes('/profile/orders') && !isPrivateFeedOpen && loggedIn) {
       dispatch(startPrivateFeed());
     } else if (!location.pathname.includes('/profile/orders') && isPrivateFeedOpen) {
       dispatch(stopPrivateFeed());
     }
-  }, [dispatch, location.pathname, isPrivateFeedOpen]);
+  }, [dispatch, location.pathname, isPrivateFeedOpen, loggedIn]);
 
   return (
     <>
