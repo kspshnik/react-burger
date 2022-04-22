@@ -8,8 +8,12 @@ const CenterInfo = ({ children }) => (
   </main>
 );
 
+CenterInfo.defaultProps = {
+  children: null,
+};
+
 CenterInfo.propTypes = {
-  children: PropTypes.element.isRequired,
+  children: PropTypes.element,
 };
 
 export default CenterInfo;

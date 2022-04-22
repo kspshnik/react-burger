@@ -2,7 +2,7 @@ import {
   captureOrder,
   getOrderRequested,
   getOrderSucceed,
-  getOrderFailed,
+  getOrderFailed, getOrderNotFound,
 } from '../actionCreators';
 import { fetchOrder } from '../api';
 
@@ -16,8 +16,10 @@ const getOrderThunk = (number) => async (dispatch) => {
     } = await fetchOrder(number);
     if (success && !!orders && orders.length > 0) {
       dispatch(getOrderSucceed());
-      console.dir(orders[0]);
       dispatch(captureOrder(orders[0]));
+    } else if (success && !!orders && orders.length === 0) {
+      dispatch(getOrderSucceed());
+      dispatch(getOrderNotFound());
     } else {
       dispatch(getOrderFailed(message));
     }

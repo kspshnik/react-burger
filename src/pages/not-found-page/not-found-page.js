@@ -2,14 +2,21 @@ import React from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
+import { useDispatch } from 'react-redux';
 import nfStyles from './not-found-page.module.css';
 import { REASON_404_GENERAL } from '../../constants';
+import { clearOrderNotFound } from '../../services/actionCreators';
 
 const NotFoundPage = () => {
   const history = useHistory();
   const location = useLocation();
+  const dispatch = useDispatch();
 
   const reasonFor404 = location?.state?.reasonFor404 || REASON_404_GENERAL;
+
+  React.useEffect(() => {
+    dispatch(clearOrderNotFound());
+  }, [dispatch]);
 
   const onClickBack = () => {
     history.push({ pathname: location.state.wayback || '/', state: { reasonFor404: null, wayback: null } });
