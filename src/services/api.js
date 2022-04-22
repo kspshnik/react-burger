@@ -60,6 +60,19 @@ export const fetchIngredients = async () => {
   return Promise.reject(ingredients);
 };
 
+export const fetchOrder = async (number) => {
+  const options = {
+    ...defaultOptions,
+    method: 'GET',
+    headers: { 'Content-Type': 'application/json' },
+  };
+  const order = await fetch(endpoint(`${BACKEND_ROUTES.orders}/${number}`), options);
+  if (order.ok) {
+    return order.json();
+  }
+  return Promise.reject(order);
+};
+
 export const postOrder = async (order) => {
   const options = {
     ...defaultOptions,
