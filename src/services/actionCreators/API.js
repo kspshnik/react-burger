@@ -7,6 +7,9 @@ import {
   PLACE_ORDER_FAIL,
   PLACE_ORDER_REQUEST,
   PLACE_ORDER_SUCCEED,
+  GET_ORDER_REQUEST,
+  GET_ORDER_SUCCEED,
+  GET_ORDER_FAIL,
   REFRESH_TOKEN_FAIL,
   REGISTER_SUCCEED,
   REGISTER_FAILED,
@@ -29,9 +32,13 @@ export const ingredientsRequested = () => ({ type: GET_INGREDIENTS_REQUEST });
 export const ingredientsReceived = () => ({ type: GET_INGREDIENTS_SUCCEED });
 export const ingredientsFailed = (message) => ({ type: GET_INGREDIENTS_FAIL, payload: message });
 
-export const orderRequested = () => ({ type: PLACE_ORDER_REQUEST });
-export const orderPlaced = () => ({ type: PLACE_ORDER_SUCCEED });
-export const orderFailed = (message) => ({ type: PLACE_ORDER_FAIL, payload: message });
+export const placeOrderRequested = () => ({ type: PLACE_ORDER_REQUEST });
+export const placeOrderSucceed = () => ({ type: PLACE_ORDER_SUCCEED });
+export const placeOrderFailed = (message) => ({ type: PLACE_ORDER_FAIL, payload: message });
+
+export const getOrderRequested = () => ({ type: GET_ORDER_REQUEST });
+export const getOrderSucceed = () => ({ type: GET_ORDER_SUCCEED });
+export const getOrderFailed = (message) => ({ type: GET_ORDER_FAIL, payload: message });
 
 export const userFailed = (message) => ({ type: GET_USER_FAIL, payload: message });
 export const refreshFailed = (message) => ({ type: REFRESH_TOKEN_FAIL, payload: message });
