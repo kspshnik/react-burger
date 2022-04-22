@@ -93,7 +93,7 @@ const App = () => {
   }, [dispatch]);
 
   React.useEffect(() => {
-    if (location.pathname.includes('/feed') && !isPublicFeedOpen) {
+    if (location.pathname.includes('/feed') && location.pathname.length < 7 && !isPublicFeedOpen) {
       dispatch(startPublicFeed());
     } else if (!location.pathname.includes('/feed') && isPublicFeedOpen) {
       dispatch(stopPublicFeed());
@@ -101,7 +101,7 @@ const App = () => {
   }, [dispatch, location.pathname, isPublicFeedOpen]);
 
   React.useEffect(() => {
-    if (location.pathname.includes('/profile/orders') && !isPrivateFeedOpen && loggedIn) {
+    if (location.pathname.includes('/profile/orders') && location.pathname.length < 17 && !isPrivateFeedOpen && loggedIn) {
       dispatch(startPrivateFeed());
     } else if (!location.pathname.includes('/profile/orders') && isPrivateFeedOpen) {
       dispatch(stopPrivateFeed());
