@@ -9,6 +9,7 @@ export const PLACE_ORDER_FAIL = 'PLACE_ORDER_FAIL';
 export const GET_ORDER_REQUEST = 'GET_ORDER_REQUEST';
 export const GET_ORDER_SUCCEED = 'GET_ORDER_SUCCEED';
 export const GET_ORDER_FAIL = 'GET_ORDER_FAIL';
+export const GET_ORDER_404 = 'GET_ORDER_404';
 
 export const REGISTER_SUCCEED = 'REGISTER_SUCCEED';
 export const REGISTER_FAILED = 'REGISTER_FAILED';
@@ -33,6 +34,7 @@ export const UPDATE_PROFILE_FAILED = 'UPDATE_PROFILE_FAILED';
 
 export const DISMISS_ERROR = 'DISMISS_ERROR';
 export const CLOSE_SUCCESS = 'CLOSE_SUCCESS';
+export const CLEAR_404 = 'CLEAR_404';
 
 export const WS_ERROR = 'WS_ERROR';
 

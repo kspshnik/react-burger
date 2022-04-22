@@ -1,44 +1,52 @@
 import React from 'react';
 
-import { useHistory, useParams } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useHistory, useLocation } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 
 import PropTypes from 'prop-types';
 import LoaderProtector from '../../components/loader-protector/loader-protector';
 import CenterInfo from '../../components/center-info/center-info';
 import OrderDetails from '../../components/order-details/order-details';
 import { PRIVATE, PUBLIC, REASON_404_ORDER } from '../../constants';
+import { getOrderThunk } from '../../services/thunks';
 
 const OrderPage = ({ feedType }) => {
-  const { id } = useParams();
+  const location = useLocation();
+  const dispatch = useDispatch();
+  const params = React.useMemo(() => new URLSearchParams(location.search), [location]);
+  const orderNumber = React.useMemo(() => Number(params.get('number')), [params]);
   const history = useHistory();
-  const latestPublicOrders = useSelector((state) => state?.feed.public?.orders);
-  const latestPrivateOrders = useSelector((state) => state?.feed.private?.orders);
-  const selectedOrder = useSelector((state) => state?.feed?.select.order);
-  const latestOrders = feedType === PUBLIC ? latestPublicOrders : latestPrivateOrders;
-  const wayback = feedType === PRIVATE ? '/profile/orders' : '/feed';
-  const isOrderNonExist = React.useMemo(
-    () => (latestOrders
-      ? !latestOrders?.find((item) => item._id === id)
-      : false),
-    [id, latestOrders],
-  );
-  const foundOrder = React.useMemo(
-    () => latestOrders?.find((item) => item._id === id),
-    [latestOrders, id],
-  );
-  const order = React.useMemo(() => selectedOrder || foundOrder, [selectedOrder, foundOrder]);
-
+  const { isIngredientsLoading, isIngredientsLoaded, isOrderNotFound } = useSelector((state) => ({
+    isIngredientsLoading: state.api.isIngredientsLoading,
+    isIngredientsLoaded: !!state.ingredients.all,
+    isOrderNotFound: state.api.isOrderNotFound,
+  }));
+  const wayback = React.useMemo(() => {
+    switch (feedType) {
+      case PRIVATE: return '/profile/orders';
+      case PUBLIC: return '/feed';
+      default: throw new TypeError('Неверный тип FeedType в OrderPage!!');
+    }
+  }, [feedType]);
+  const { order } = useSelector((state) => state.feed.select);
   React.useEffect(() => {
-    if (!!latestOrders && isOrderNonExist) {
+    if (!!orderNumber || orderNumber === 0) {
+      dispatch(getOrderThunk(orderNumber));
+    }
+  }, [dispatch, orderNumber]);
+  React.useEffect(() => {
+    if (isOrderNotFound) {
       history.push({ pathname: '/404', state: { reasonFor404: REASON_404_ORDER, wayback } });
     }
-  }, [history, isOrderNonExist, latestOrders, wayback]);
+  }, [history, isOrderNotFound, wayback]);
 
   return (
-    <LoaderProtector isLoaded={!!order}>
+    <LoaderProtector isLoaded={!!order
+                               && !isIngredientsLoading
+                               && !isOrderNotFound
+                               && isIngredientsLoaded}>
       <CenterInfo>
-        <OrderDetails order={order || {}} />
+        {order && <OrderDetails order={order} />}
       </CenterInfo>
     </LoaderProtector>
   );

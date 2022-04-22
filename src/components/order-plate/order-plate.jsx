@@ -27,7 +27,7 @@ const OrderPlate = ({ order, feedType }) => {
   const total = calculateTotal(all, ingredients);
   const onClick = () => {
     dispatch(captureOrder(order));
-    const pathToGo = feedType === PUBLIC ? `/feed/${_id}` : `/profile/orders/${_id}`;
+    const pathToGo = feedType === PUBLIC ? `/feed/${_id}/?number=${number}` : `/profile/orders/${_id}/?number=${number}`;
     history.push({ pathname: `${pathToGo}`, state: { background: location } });
   };
 

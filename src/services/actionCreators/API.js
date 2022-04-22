@@ -25,7 +25,7 @@ import {
   UPDATE_PROFILE_FAILED,
   CLOSE_SUCCESS,
   ERROR_500,
-  WS_ERROR,
+  WS_ERROR, GET_ORDER_404, CLEAR_404,
 } from '../actions';
 
 export const ingredientsRequested = () => ({ type: GET_INGREDIENTS_REQUEST });
@@ -39,6 +39,7 @@ export const placeOrderFailed = (message) => ({ type: PLACE_ORDER_FAIL, payload:
 export const getOrderRequested = () => ({ type: GET_ORDER_REQUEST });
 export const getOrderSucceed = () => ({ type: GET_ORDER_SUCCEED });
 export const getOrderFailed = (message) => ({ type: GET_ORDER_FAIL, payload: message });
+export const getOrderNotFound = () => ({ type: GET_ORDER_404 });
 
 export const userFailed = (message) => ({ type: GET_USER_FAIL, payload: message });
 export const refreshFailed = (message) => ({ type: REFRESH_TOKEN_FAIL, payload: message });
@@ -68,6 +69,7 @@ export const profileUpdateFailed = (message) => ({ type: UPDATE_PROFILE_FAILED, 
 
 export const clearSuccess = () => ({ type: CLOSE_SUCCESS });
 export const clearError = () => ({ type: DISMISS_ERROR });
+export const clearOrderNotFound = () => ({ type: CLEAR_404 });
 
 export const wsError = (message) => ({ type: WS_ERROR, payload: message });
 

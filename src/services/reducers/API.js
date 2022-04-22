@@ -24,13 +24,14 @@ import {
   CLOSE_SUCCESS,
   ERROR_500,
   REGISTER_SUCCEED,
-  REGISTER_FAILED, WS_ERROR,
+  REGISTER_FAILED, WS_ERROR, GET_ORDER_404, CLEAR_404,
 } from '../actions';
 
 const initialState = {
   isIngredientsLoading: false,
   isOrderLoading: false,
   isOrderSent: false,
+  isOrderNotFound: false,
   errorMessage: '',
   successMessage: '',
 };
@@ -82,6 +83,11 @@ const APIReducer = (state = initialState, action) => {
         ...state, isOrderLoading: false, errorMessage: action.payload,
       };
     }
+    case GET_ORDER_404: {
+      return {
+        ...state, isOrderNotFound: true,
+      };
+    }
     case DISMISS_ERROR: {
       return {
         ...state, errorMessage: '',
@@ -90,6 +96,11 @@ const APIReducer = (state = initialState, action) => {
     case CLOSE_SUCCESS: {
       return {
         ...state, successMessage: '',
+      };
+    }
+    case CLEAR_404: {
+      return {
+        ...state, isOrderNotFound: false,
       };
     }
     case REQUEST_CODE_SUCCEED:

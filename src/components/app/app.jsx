@@ -48,7 +48,6 @@ import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import FeedPage from '../../pages/feed-page/feed-page';
 import OrderPage from '../../pages/order-page/order-page';
 import OrderDetails from '../order-details/order-details';
-// import ppStyles       from '../../pages/profile-page/profile-page.module.css';
 import ProfileSidebar from '../profile-sidebar/profile-sidebar';
 import OrdersFeed from '../orders-feed/orders-feed';
 import ProfileForm from '../profile-form/profile-form';
@@ -93,7 +92,7 @@ const App = () => {
   }, [dispatch]);
 
   React.useEffect(() => {
-    if (location.pathname.includes('/feed') && !isPublicFeedOpen) {
+    if (location.pathname.includes('/feed') && location.pathname.length < 7 && !isPublicFeedOpen) {
       dispatch(startPublicFeed());
     } else if (!location.pathname.includes('/feed') && isPublicFeedOpen) {
       dispatch(stopPublicFeed());
@@ -101,7 +100,7 @@ const App = () => {
   }, [dispatch, location.pathname, isPublicFeedOpen]);
 
   React.useEffect(() => {
-    if (location.pathname.includes('/profile/orders') && !isPrivateFeedOpen && loggedIn) {
+    if (location.pathname.includes('/profile/orders') && location.pathname.length < 17 && !isPrivateFeedOpen && loggedIn) {
       dispatch(startPrivateFeed());
     } else if (!location.pathname.includes('/profile/orders') && isPrivateFeedOpen) {
       dispatch(stopPrivateFeed());
