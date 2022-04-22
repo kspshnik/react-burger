@@ -17,6 +17,7 @@ const BurgerConstructor = () => {
   const { all } = useSelector((store) => store.ingredients);
   const { bun, choice } = useSelector((state) => state.orders);
   const { loggedIn } = useSelector((state) => state.user);
+  const { isOrderSent } = useSelector((state) => state.api);
   const dispatch = useDispatch();
   const history = useHistory();
   const location = useLocation();
@@ -100,8 +101,7 @@ const BurgerConstructor = () => {
           size='medium'
           onClick={handlePlaceOrderClick}
           disabled={!bun || choice.length < 1}>
-          Оформить
-          заказ
+          {isOrderSent ? 'Заказываю...' : 'Оформить заказ'}
         </Button>
       </footer>
     </section>
