@@ -1,17 +1,17 @@
 import { postOrder } from '../api';
 import {
-  orderRequested, orderPlaced, orderFailed, setOrder, clearBurger,
+  placeOrderRequested, placeOrderSucceed, placeOrderFailed, setOrder, clearBurger,
 } from '../actionCreators';
 
 const placeOrderThunk = (order) => async (dispatch) => {
-  dispatch(orderRequested());
+  dispatch(placeOrderRequested());
   try {
     const res = await postOrder(order);
     dispatch(setOrder(res));
-    dispatch(orderPlaced());
+    dispatch(placeOrderSucceed());
     dispatch(clearBurger());
   } catch (err) {
-    dispatch(orderFailed(err.message || 'При оформлении заказа произошла неизвестная ошибка :('));
+    dispatch(placeOrderFailed(err.message || 'При оформлении заказа произошла неизвестная ошибка :('));
   }
 };
 
