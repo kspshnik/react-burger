@@ -7,6 +7,9 @@ import {
   PLACE_ORDER_FAIL,
   PLACE_ORDER_REQUEST,
   PLACE_ORDER_SUCCEED,
+  GET_ORDER_REQUEST,
+  GET_ORDER_SUCCEED,
+  GET_ORDER_FAIL,
   REFRESH_TOKEN_FAIL,
   LOGIN_SUCCEED,
   LOGIN_FAILED,
@@ -26,6 +29,7 @@ import {
 
 const initialState = {
   isIngredientsLoading: false,
+  isOrderLoading: false,
   isOrderSent: false,
   errorMessage: '',
   successMessage: '',
@@ -61,6 +65,21 @@ const APIReducer = (state = initialState, action) => {
     case PLACE_ORDER_FAIL: {
       return {
         ...state, isOrderSent: false, errorMessage: action.payload,
+      };
+    }
+    case GET_ORDER_REQUEST: {
+      return {
+        ...state, isOrderLoading: true, errorMessage: '',
+      };
+    }
+    case GET_ORDER_SUCCEED: {
+      return {
+        ...state, isOrderLoading: false, errorMessage: '',
+      };
+    }
+    case GET_ORDER_FAIL: {
+      return {
+        ...state, isOrderLoading: false, errorMessage: action.payload,
       };
     }
     case DISMISS_ERROR: {
