@@ -22,14 +22,22 @@ const Modal = ({
       document.removeEventListener('keydown', handleEscClose);
     };
   }, [onClose, portalRoot]);
+  const makeCaption = () => {
+    if (title) {
+      return (
+        <div className={mdStyles.caption}>
+          <h2 className={`${mdStyles.title} text text_type_main-large`}>{title}</h2>
+        </div>
+      );
+    }
+    return null;
+  };
   return ReactDOM.createPortal((
     <>
       <ModalOverlay onClose={onClose} />
-      <div className={`${mdStyles.modal} p-10`}>
-        <header className={mdStyles.header}>
-          <div className={mdStyles.caption}>
-            <h2 className={`${mdStyles.title} text text_type_main-large`}>{title}</h2>
-          </div>
+      <div className={`${mdStyles.modal} p-10 `}>
+        <header className={`${mdStyles.header} ${title ? '' : `${mdStyles.header_nocontent}`}`}>
+          {makeCaption()}
           <CloseIcon type='primary' onClick={onClose} />
         </header>
         {
@@ -39,7 +47,7 @@ const Modal = ({
     </>), portalRoot);
 };
 Modal.defaultProps = {
-  title: '   ',
+  title: null,
 };
 
 Modal.propTypes = {

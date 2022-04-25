@@ -1,5 +1,6 @@
 const BACKEND_ROUTES = {
   base: 'https://norma.nomoreparties.space/api',
+  baseWS: 'wss://norma.nomoreparties.space',
   ingredients: '/ingredients',
   orders: '/orders',
   login: '/auth/login',
@@ -9,6 +10,8 @@ const BACKEND_ROUTES = {
   user: '/auth/user',
   forgot: '/password-reset',
   reset: '/password-reset/reset',
+  publicFeed: '/orders/all',
+  privateFeed: '/orders',
 };
 
 const BUN = 'bun';
@@ -27,6 +30,19 @@ const INFO = 'INFO';
 const ERROR = 'ERROR';
 const OK = 'OK';
 
+const PENDING = 'pending';
+const DONE = 'done';
+const CREATED = 'created';
+
+const PUBLIC = 'public';
+const PRIVATE = 'private';
+
+const WS_THROTTLE_THRESHOLD = 3000;
+
+const REASON_404_ORDER = 'заказ';
+const REASON_404_INGREDIENT = 'ингредиент';
+const REASON_404_GENERAL = 'столик';
+
 export {
   BUN,
   SAUCE,
@@ -42,4 +58,13 @@ export {
   INFO,
   ERROR,
   OK,
+  CREATED,
+  PENDING,
+  DONE,
+  PUBLIC,
+  PRIVATE,
+  WS_THROTTLE_THRESHOLD,
+  REASON_404_ORDER,
+  REASON_404_INGREDIENT,
+  REASON_404_GENERAL,
 };

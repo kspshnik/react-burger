@@ -5,6 +5,7 @@ import { selectIngredient } from '../../services/actionCreators';
 
 import ipStyles from './ingredient-page.module.css';
 import IngredientDetails from '../../components/ingredient-details/ingredient-details';
+import { REASON_404_INGREDIENT } from '../../constants';
 
 const IngredientPage = () => {
   const history = useHistory();
@@ -18,7 +19,7 @@ const IngredientPage = () => {
     if (all && all[id]) {
       dispatch(selectIngredient(all[id]));
     } else if (all && !all[id]) {
-      history.push({ pathname: '/404', state: { ingredient: true } });
+      history.push({ pathname: '/404', state: { reasonFor404: REASON_404_INGREDIENT } });
     }
   }, [all, selected, id, history, dispatch]);
 

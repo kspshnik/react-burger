@@ -1,0 +1,34 @@
+.info {
+  display: grid;
+  grid-template: 1fr / repeat(2, 280px);
+  gap: 0 36px;
+  height: 100%;
+}
+
+.info__heading {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.info__column {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.info__data {
+  display: grid;
+  grid-template: repeat(5, 28px) /repeat(3, 75px);
+  gap: 8px 27px;
+  list-style: none outside;
+  margin-block-start: 0;
+  margin-block-end: 0;
+  padding-inline-start: 0;
+}
+
+.info__number {
+  list-style: none outside;
+}
