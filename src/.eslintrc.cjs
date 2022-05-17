@@ -29,7 +29,7 @@ module.exports = {
     "ecmaVersion": 12, // версия стандарта JavaScript. Последний 12 (2021).
     "sourceType": "module" // Позволяет использовать import/export
   },
-  ignorePatterns: ['*.cjs', 'src/reportWebVitals.js', 'src/reportWebVitals.ts', 'src/index.js'],
+  ignorePatterns: ['*.cjs', 'src/reportWebVitals.js', 'src/reportWebVitals.ts', 'src/index.ts'],
   rules: {
     'no-underscore-dangle': [
       'error',

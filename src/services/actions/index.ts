@@ -28,7 +28,7 @@ import {
   CLEAR_404,
   ERROR_500,
   WS_ERROR,
-} from './API';
+} from './API.ts';
 
 import {
   SET_INGREDIENTS,
