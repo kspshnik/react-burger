@@ -1,9 +1,9 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { FC, PropsWithChildren } from 'react';
 
+import { TTwoColumnsProps } from '../components.props.types';
 import tcStyles from './two-columns.module.css';
 
-const TwoColumns = ({ children, profile }) => (
+const TwoColumns : FC<PropsWithChildren<TTwoColumnsProps>> = ({ children, profile = false }) => (
   <main className={`${tcStyles.main} ${profile ? `${tcStyles.main_place_profile} pt-30` : ''}`}>
     {children}
   </main>
@@ -11,11 +11,6 @@ const TwoColumns = ({ children, profile }) => (
 
 TwoColumns.defaultProps = {
   profile: false,
-};
-
-TwoColumns.propTypes = {
-  children: PropTypes.arrayOf(PropTypes.element).isRequired,
-  profile: PropTypes.bool,
 };
 
 export default TwoColumns;

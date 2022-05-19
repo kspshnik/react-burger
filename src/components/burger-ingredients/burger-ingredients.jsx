@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux';
 import biStyles from './burger-ingredients.module.css';
 
 import ScrollArea from '../scroll-area/scroll-area';
-import DropZone from '../drop-zone/drop-zone';
+import DropZone   from '../drop-zone/drop-zone';
 
 import IngredientsGrid from '../ingredients-grid/ingredients-grid';
 import { ORDER } from '../../constants';

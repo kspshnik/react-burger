@@ -1,15 +1,16 @@
-import React from 'react';
+import React, { FC } from 'react';
 
 import '@ya.praktikum/react-developer-burger-ui-components';
-import PropTypes from 'prop-types';
+
 import { ERROR, INFO, OK } from '../../constants';
 
 import ttStyles from './tooltip.module.css';
+import { TTooltipProps } from '../components.props.types';
 
-const ToolTip = ({ message, type }) => {
-  const textClass = (kind) => {
+const ToolTip : FC<TTooltipProps> = ({ message, type }) => {
+  const textClass = (kind : string) => {
     switch (kind) {
-      case INFO: return 'text text_type_main-medium';
+      case INFO:
       case OK: return 'text text_type_main-medium';
       case ERROR: return 'text text_type_main-medium text_color_error';
       default: throw new TypeError('Тип всплывающего окна не соответствует!');
@@ -17,18 +18,13 @@ const ToolTip = ({ message, type }) => {
   };
   return (
     <div className={ttStyles.tooltip}>
-      <p className={`${textClass(type)}`}>{message}</p>
+      <p className={`${textClass(type || INFO)}`}>{message}</p>
     </div>
   );
 };
 
 ToolTip.defaultProps = {
   type: INFO,
-};
-
-ToolTip.propTypes = {
-  message: PropTypes.string.isRequired,
-  type: PropTypes.string,
 };
 
 export default ToolTip;

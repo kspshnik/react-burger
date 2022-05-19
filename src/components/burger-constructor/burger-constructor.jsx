@@ -5,8 +5,8 @@ import { Button, ConstructorElement, CurrencyIcon } from '@ya.praktikum/react-de
 import { useSelector, useDispatch } from 'react-redux';
 
 import { useHistory, useLocation } from 'react-router-dom';
-import bcStyles from './burger-constructor.module.css';
-import ScrollArea from '../scroll-area/scroll-area';
+import bcStyles        from './burger-constructor.module.css';
+import ScrollArea      from '../scroll-area/scroll-area';
 import ConstructorGrid from '../constructor-grid/constructor-grid';
 import placeOrderThunk from '../../services/thunks/place-order-thunk';
 import { insertInterior, setBun } from '../../services/actionCreators';

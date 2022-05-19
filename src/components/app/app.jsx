@@ -33,13 +33,13 @@ import {
 } from '../../pages';
 
 import appStyles from './app.module.css';
-import ToolTip from '../tooltip/tooltip';
+import ToolTip   from '../tooltip/tooltip';
 import {
   ERROR,
   OK,
   PRIVATE,
   PUBLIC,
-} from '../../constants';
+}                from '../../constants';
 import { jwt, token } from '../../services/api';
 import ProtectedRoute from '../protected-route/protected-route';
 import NotLoggedRoute from '../not-logged-route/not-logged-route';
@@ -51,7 +51,7 @@ import OrderDetails from '../order-details/order-details';
 import ProfileSidebar from '../profile-sidebar/profile-sidebar';
 import OrdersFeed from '../orders-feed/orders-feed';
 import ProfileForm from '../profile-form/profile-form';
-import TwoColumns from '../two-columns/two-columns';
+import TwoColumns  from '../two-columns/two-columns';
 
 const App = () => {
   const dispatch = useDispatch();
