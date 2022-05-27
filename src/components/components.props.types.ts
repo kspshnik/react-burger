@@ -1,4 +1,4 @@
-import {PropsWithoutRef, ReactNode} from 'react';
+import { PropsWithoutRef, ReactNode } from 'react';
 
 export type TTooltipProps = {
   message: string,

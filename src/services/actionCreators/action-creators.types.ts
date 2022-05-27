@@ -1,6 +1,8 @@
 import {
   CLEAR_404,
-  CLOSE_SUCCESS, DISMISS_ERROR, ERROR_500,
+  CLOSE_SUCCESS,
+  DISMISS_ERROR,
+  ERROR_500,
   GET_INGREDIENTS_FAIL,
   GET_INGREDIENTS_REQUEST,
   GET_INGREDIENTS_SUCCEED,
@@ -20,31 +22,61 @@ import {
   REGISTER_FAILED,
   REGISTER_SUCCEED,
   REQUEST_CODE_FAILED,
-  REQUEST_CODE_SUCCEED, RESET_PASSWORD_FAILED,
-  RESET_PASSWORD_SUCCEED, UPDATE_PROFILE_FAILED, UPDATE_PROFILE_SUCCEED, WS_ERROR
+  REQUEST_CODE_SUCCEED,
+  RESET_PASSWORD_FAILED,
+  RESET_PASSWORD_SUCCEED,
+  UPDATE_PROFILE_FAILED,
+  UPDATE_PROFILE_SUCCEED,
+  WS_ERROR
 } from "../actions";
 
 export interface IIngredientsRequested  {
   readonly type: typeof GET_INGREDIENTS_REQUEST
 };
+
 export interface IIngredientsReceived {
   readonly type: typeof GET_INGREDIENTS_SUCCEED
 };
-export interface ingredientsFailed { readonly type: GET_INGREDIENTS_FAIL, readonly payload: string };
+export interface ingredientsFailed {
+  readonly type: typeof GET_INGREDIENTS_FAIL,
+  readonly payload: string
+};
 
-export interface placeOrderRequested = () => ({ type: PLACE_ORDER_REQUEST });
-export interface placeOrderSucceed = () => ({ type: PLACE_ORDER_SUCCEED });
-export interface placeOrderFailed = (message) => ({ type: PLACE_ORDER_FAIL, payload: message });
+export interface placeOrderRequested {
+  readonly type: typeof PLACE_ORDER_REQUEST
+};
+export interface placeOrderSucceed {
+  readonly type: typeof PLACE_ORDER_SUCCEED
+};
+export interface placeOrderFailed {
+  type: typeof PLACE_ORDER_FAIL,
+  readonly payload: string };
 
-export interface getOrderRequested = () => ({ type: GET_ORDER_REQUEST });
-export interface getOrderSucceed = () => ({ type: GET_ORDER_SUCCEED });
-export interface getOrderFailed = (message) => ({ type: GET_ORDER_FAIL, payload: message });
-export interface getOrderNotFound = () => ({ type: GET_ORDER_404 });
+export interface getOrderRequested {
+  readonly type: typeof GET_ORDER_REQUEST
+};
+export interface getOrderSucceed {
+  readonly type: typeof GET_ORDER_SUCCEED
+};
+export interface getOrderFailed {
+  readonly type: typeof GET_ORDER_FAIL,
+  readonly payload: string
+};
+export interface getOrderNotFound {
+  readonly type: typeof GET_ORDER_404
+};
 
-export interface userFailed = (message) => ({ type: GET_USER_FAIL, payload: message });
-export interface refreshFailed = (message) => ({ type: REFRESH_TOKEN_FAIL, payload: message });
+export interface userFailed {
+  readonly type: typeof GET_USER_FAIL,
+  readonly payload: string
+};
 
-export interface registerSucceed = (message) => ({ type: REGISTER_SUCCEED, payload: message });
+export interface refreshFailed { readonly type: typeof REFRESH_TOKEN_FAIL,
+  readonly payload: string
+};
+
+export interface registerSucceed { readonly type: typeof REGISTER_SUCCEED, readonly payload: string
+};
 export interface registerFailed = (message) => ({ type: REGISTER_FAILED, payload: message });
 
 export interface loginSucceed = (message) => ({ type: LOGIN_SUCCEED, payload: message });
