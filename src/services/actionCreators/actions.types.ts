@@ -49,6 +49,8 @@ import {
   SET_INGREDIENTS,
 } from '../actions';
 
+import { TIngredient, TIngredients } from '../../types/types';
+
 export type TIngredientsRequestedAction = {
   readonly type: typeof GET_INGREDIENTS_REQUEST
 };
@@ -249,12 +251,20 @@ export type TFormsAction = TSetLoginEmailAction | TSetLoginPassAction | TSetRegi
 | TResetLoginFormAction | TResetRegisterFormAction | TResetResetFormAction | TResetForgotFormAction
 | TResetProfileFormAction;
 
-/*
+export type TSetIngredientsAction = {
+  readonly type: typeof SET_INGREDIENTS,
+  readonly payload: TIngredients
+};
+export type TSelectIngredientAction = {
+  readonly type: typeof SELECT_INGREDIENT,
+  readonly payload: TIngredient
+};
+export type TReleaseIngredientAction = {
+  readonly type: typeof RELEASE_INGREDIENT
+};
 
-export type TSetIngredientsAction = (ingredients) => ({ readonly type: typeof SET_INGREDIENTS, readonly payload: ingredients });
-export type TSelectIngredientAction = (ingredient) => ({ readonly type: typeof SELECT_INGREDIENT, readonly payload: ingredient });
-export type TReleaseIngredientAction = () => ({ readonly type: typeof RELEASE_INGREDIENT });
+export type TIngredientsAction = TSetIngredientsAction | TSelectIngredientAction
+| TReleaseIngredientAction;
 
-*/
-type TAppActionTypes = TAPIAction & TFormsAction;
+type TAppActionTypes = TAPIAction & TFormsAction & TIngredientsAction;
 export default TAppActionTypes;
