@@ -47,9 +47,11 @@ import {
   RELEASE_INGREDIENT,
   SELECT_INGREDIENT,
   SET_INGREDIENTS,
+  FEED_ORDER_CAPTURE,
+  FEED_ORDER_RELEASE,
 } from '../actions';
 
-import { TIngredient, TIngredients } from '../../types/types';
+import { TAcceptedOrder, TIngredient, TIngredients } from '../../types/types';
 
 export type TIngredientsRequestedAction = {
   readonly type: typeof GET_INGREDIENTS_REQUEST
@@ -266,5 +268,15 @@ export type TReleaseIngredientAction = {
 export type TIngredientsAction = TSetIngredientsAction | TSelectIngredientAction
 | TReleaseIngredientAction;
 
-type TAppActionTypes = TAPIAction & TFormsAction & TIngredientsAction;
+export type TCaptureOrderAction = {
+  readonly type: typeof FEED_ORDER_CAPTURE,
+  readonly payload: TAcceptedOrder
+};
+export type TReleaseOrderAction = {
+  readonly type: typeof FEED_ORDER_RELEASE
+};
+
+export type TSelectedOrderAction = TCaptureOrderAction | TReleaseOrderAction;
+
+type TAppActionTypes = TAPIAction & TFormsAction & TIngredientsAction & TSelectedOrderAction;
 export default TAppActionTypes;

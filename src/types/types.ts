@@ -1,4 +1,6 @@
-import { BUN, SAUCE, MAIN } from '../constants';
+import {
+  BUN, SAUCE, MAIN, PENDING, CREATED, DONE,
+} from '../constants';
 
 export type TIngredientType = typeof BUN | typeof SAUCE | typeof MAIN;
 
@@ -18,3 +20,14 @@ export type TIngredient = {
 };
 
 export type TIngredients = Array<TIngredient>;
+
+export type TOrderStatus = typeof PENDING | typeof CREATED | typeof DONE;
+
+export type TAcceptedOrder = {
+  _id: string,
+  status: TOrderStatus,
+  name: string,
+  createdAt: string,
+  updatedAt: string,
+  number: number,
+};

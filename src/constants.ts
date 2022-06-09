@@ -32,9 +32,9 @@ const INFO = 'INFO';
 const ERROR = 'ERROR';
 const OK = 'OK';
 
-const PENDING = 'pending';
-const DONE = 'done';
-const CREATED = 'created';
+const PENDING :'pending' = 'pending';
+const DONE : 'done' = 'done';
+const CREATED : 'created' = 'created';
 
 const PUBLIC = 'public';
 const PRIVATE = 'private';
