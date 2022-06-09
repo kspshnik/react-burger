@@ -25,16 +25,36 @@ import {
   UPDATE_PROFILE_FAILED,
   CLOSE_SUCCESS,
   ERROR_500,
-  WS_ERROR, GET_ORDER_404, CLEAR_404,
+  WS_ERROR,
+  GET_ORDER_404,
+  CLEAR_404,
 } from '../actions';
 
-export const ingredientsRequested = () => ({ type: GET_INGREDIENTS_REQUEST });
-export const ingredientsReceived = () => ({ type: GET_INGREDIENTS_SUCCEED });
-export const ingredientsFailed = (message) => ({ type: GET_INGREDIENTS_FAIL, payload: message });
+import {
+  TIngredientsFailedAction,
+  TIngredientsReceivedAction,
+  TIngredientsRequestedAction, TPlaceOrderFailedAction, TPlaceOrderRequestedAction, TPlaceOrderSucceedAction
+} from './action-creators.types';
 
-export const placeOrderRequested = () => ({ type: PLACE_ORDER_REQUEST });
-export const placeOrderSucceed = () => ({ type: PLACE_ORDER_SUCCEED });
-export const placeOrderFailed = (message) => ({ type: PLACE_ORDER_FAIL, payload: message });
+export const ingredientsRequested = () : TIngredientsRequestedAction => (
+  { type: GET_INGREDIENTS_REQUEST }
+);
+export const ingredientsReceived = () : TIngredientsReceivedAction => (
+  { type: GET_INGREDIENTS_SUCCEED }
+);
+export const ingredientsFailed = (message : string) : TIngredientsFailedAction => (
+  { type: GET_INGREDIENTS_FAIL, payload: message }
+);
+
+export const placeOrderRequested = () : TPlaceOrderRequestedAction => (
+  { type: PLACE_ORDER_REQUEST }
+);
+export const placeOrderSucceed = () : TPlaceOrderSucceedAction => (
+  { type: PLACE_ORDER_SUCCEED }
+);
+export const placeOrderFailed = (message : string) : TPlaceOrderFailedAction => (
+  { type: PLACE_ORDER_FAIL, payload: message }
+);
 
 export const getOrderRequested = () => ({ type: GET_ORDER_REQUEST });
 export const getOrderSucceed = () => ({ type: GET_ORDER_SUCCEED });
