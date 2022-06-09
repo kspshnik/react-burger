@@ -1,6 +1,6 @@
-import { jwt, logout, token } from '../api';
+import { jwt, logout, token }                           from '../api';
 import { generalAPIError, resetProfileForm, resetUser } from '../actionCreators';
-import { EXPIRY_MESSAGE } from '../../constants';
+import { EXPIRY_MESSAGE }                               from '../../constants';
 import refreshTokenThunk from './refresh-token-thunk';
 
 const logoutUserThunk = () => async (dispatch) => {

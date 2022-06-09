@@ -11,7 +11,7 @@ import {
 } from '../../constants';
 import ContentRibbon from '../content-ribbon/content-ribbon';
 import { calculateTotal, prepareDateTime, statusName } from '../../helpers';
-import { captureOrder } from '../../services/actionCreators';
+import { captureOrder }                                from '../../services/actionCreators';
 
 const OrderPlate = ({ order, feedType }) => {
   const dispatch = useDispatch();

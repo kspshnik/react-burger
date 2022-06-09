@@ -1,6 +1,6 @@
-import { patchUser } from '../api';
+import { patchUser }                                          from '../api';
 import { profileUpdateFailed, profileUpdateSucceed, setUser } from '../actionCreators';
-import { EXPIRY_MESSAGE } from '../../constants';
+import { EXPIRY_MESSAGE }                                     from '../../constants';
 import refreshTokenThunk from './refresh-token-thunk';
 
 const patchUserThunk = () => async (dispatch, getState) => {

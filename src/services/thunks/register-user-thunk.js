@@ -2,7 +2,7 @@ import { jwt, registerUser, token } from '../api';
 import { stripBearer } from '../../helpers';
 import {
   registerFailed, registerSucceed, resetRegisterForm, setUser,
-} from '../actionCreators';
+}                      from '../actionCreators';
 
 const registerUserThunk = () => async (dispatch, getState) => {
   const { forms: { register: { name, email, password } } } = getState();

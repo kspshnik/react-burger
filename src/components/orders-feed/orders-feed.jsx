@@ -3,7 +3,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { startPrivateFeed, stopPrivateFeed } from '../../services/actionCreators';
-import OrderRibbon from '../order-ribbon/order-ribbon';
+import OrderRibbon                           from '../order-ribbon/order-ribbon';
 import { PRIVATE } from '../../constants';
 import LoaderProtector from '../loader-protector/loader-protector';
 

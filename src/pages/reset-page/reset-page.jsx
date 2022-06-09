@@ -10,9 +10,9 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import LinkBox from '../../components/link-box/link-box';
 
-import resetStyles from './reset-page.module.css';
+import resetStyles                                    from './reset-page.module.css';
 import { resetResetForm, setResetCode, setResetPass } from '../../services/actionCreators';
-import { passwordValidity } from '../../helpers';
+import { passwordValidity }                           from '../../helpers';
 import resetPasswordThunk from '../../services/thunks/reset-password-thunk';
 
 const ResetPage = () => {

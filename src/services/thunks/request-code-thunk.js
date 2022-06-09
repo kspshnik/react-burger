@@ -1,4 +1,4 @@
-import { sendPasswordCode } from '../api';
+import { sendPasswordCode }                                       from '../api';
 import { codeRequestFailed, codeRequestSucceed, resetForgotForm } from '../actionCreators';
 
 const requestCodeThunk = () => async (dispatch, getState) => {

@@ -1,4 +1,4 @@
-import { resetPassword } from '../api';
+import { resetPassword }                                             from '../api';
 import { passwordResetFailed, passwordResetSucceed, resetResetForm } from '../actionCreators';
 
 const resetPasswordThunk = () => async (dispatch, getState) => {

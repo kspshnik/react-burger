@@ -1,7 +1,7 @@
 import { postOrder } from '../api';
 import {
   placeOrderRequested, placeOrderSucceed, placeOrderFailed, setOrder, clearBurger,
-} from '../actionCreators';
+}                    from '../actionCreators';
 
 const placeOrderThunk = (order) => async (dispatch) => {
   dispatch(placeOrderRequested());
