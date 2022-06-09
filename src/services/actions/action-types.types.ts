@@ -7,7 +7,7 @@ import TActionTypesPrivateFeed from './private-feed';
 import TActionTypesPublicFeed from './public-feed';
 import TActionTypesUser from './user';
 
-type TAppActions = TActionTypesAPI
+type TAppActionTypes = TActionTypesAPI
 & TActionTypesForms &
 TActionTypesIngredients &
 TActionTypesOrders &
@@ -16,4 +16,4 @@ TActionTypesOrderSelect
 TActionTypesPublicFeed &
 TActionTypesUser;
 
-export default TAppActions;
+export default TAppActionTypes;

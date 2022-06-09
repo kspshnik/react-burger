@@ -44,6 +44,9 @@ import {
   FORGOT_FORM_RESET,
   RESET_FORM_RESET,
   PROFILE_FORM_RESET,
+  RELEASE_INGREDIENT,
+  SELECT_INGREDIENT,
+  SET_INGREDIENTS,
 } from '../actions';
 
 export type TIngredientsRequestedAction = {
@@ -165,3 +168,93 @@ export type TGeneralAPIErrorAction = {
   readonly type: typeof ERROR_500,
   readonly payload: string
 };
+
+export type TAPIAction = TIngredientsRequestedAction | TIngredientsReceivedAction
+| TIngredientsFailedAction | TGetOrderRequestedAction | TGetOrderSucceedAction
+| TGetOrderFailedAction | TGetOrderNotFoundAction | TGeneralAPIErrorAction
+| TPlaceOrderRequestedAction | TPlaceOrderSucceedAction | TPlaceOrderFailedAction
+| TUserFailedAction | TRefreshFailedAction | TRegisterSucceedAction | TRegisterFailedAction
+| TLoginSucceedAction | TLoginFailedAction | TLogoutSucceedAction | TLogoutFailedAction
+| TCodeRequestSucceedAction | TCodeRequestFailedAction | TPasswordResetSucceedAction
+| TPasswordResetFailedAction | TProfileUpdateSucceedAction | TProfileUpdateFailedAction
+| TClearSuccessAction | TClearErrorAction | TClearOrderNotFoundAction | TWSErrorAction;
+
+export type TSetRegisterNameAction = {
+  readonly type: typeof REGISTER_SET_NAME,
+  readonly payload: string
+};
+export type TSetRegisterEmailAction = {
+  readonly type: typeof REGISTER_SET_EMAIL,
+  readonly payload: string
+};
+export type TSetRegisterPassAction = {
+  readonly type: typeof REGISTER_SET_PASS,
+  readonly payload: string
+};
+
+export type TSetLoginEmailAction = {
+  readonly type: typeof LOGIN_SET_EMAIL,
+  readonly payload: string
+};
+export type TSetLoginPassAction = {
+  readonly type: typeof LOGIN_SET_PASS,
+  readonly payload: string
+};
+
+export type TSetForgotEmailAction = {
+  readonly type: typeof FORGOT_SET_EMAIL,
+  readonly payload: string };
+
+export type TSetResetCodeAction = {
+  readonly type: typeof RESET_SET_CODE,
+  readonly payload: string
+};
+export type TSetResetPassAction = {
+  readonly type: typeof RESET_SET_PASS,
+  readonly payload: string
+};
+
+export type TSetProfileNameAction = {
+  readonly type: typeof PROFILE_SET_NAME,
+  readonly payload: string
+};
+export type TSetProfileEmailAction = {
+  readonly type: typeof PROFILE_SET_EMAIL,
+  readonly payload: string
+};
+export type TSetProfilePassAction = {
+  readonly type: typeof PROFILE_SET_PASS,
+  readonly payload: string
+};
+
+export type TResetRegisterFormAction = {
+  readonly type: typeof REGISTER_FORM_RESET
+};
+export type TResetLoginFormAction = {
+  readonly type: typeof LOGIN_FORM_RESET
+};
+export type TResetForgotFormAction = {
+  readonly type: typeof FORGOT_FORM_RESET
+};
+export type TResetResetFormAction = {
+  readonly type: typeof RESET_FORM_RESET
+};
+export type TResetProfileFormAction = {
+  readonly type: typeof PROFILE_FORM_RESET
+};
+
+export type TFormsAction = TSetLoginEmailAction | TSetLoginPassAction | TSetRegisterNameAction
+| TSetRegisterEmailAction | TSetRegisterPassAction | TSetResetCodeAction | TSetResetPassAction
+| TSetProfileNameAction | TSetProfileEmailAction | TSetProfilePassAction | TSetForgotEmailAction
+| TResetLoginFormAction | TResetRegisterFormAction | TResetResetFormAction | TResetForgotFormAction
+| TResetProfileFormAction;
+
+/*
+
+export type TSetIngredientsAction = (ingredients) => ({ readonly type: typeof SET_INGREDIENTS, readonly payload: ingredients });
+export type TSelectIngredientAction = (ingredient) => ({ readonly type: typeof SELECT_INGREDIENT, readonly payload: ingredient });
+export type TReleaseIngredientAction = () => ({ readonly type: typeof RELEASE_INGREDIENT });
+
+*/
+type TAppActionTypes = TAPIAction & TFormsAction;
+export default TAppActionTypes;

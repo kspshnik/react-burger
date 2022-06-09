@@ -54,7 +54,7 @@ import {
   TRegisterFailedAction,
   TRegisterSucceedAction,
   TUserFailedAction, TWSErrorAction,
-} from './action-creators.types';
+} from './actions.types';
 
 export const ingredientsRequested = () : TIngredientsRequestedAction => (
   { type: GET_INGREDIENTS_REQUEST }
