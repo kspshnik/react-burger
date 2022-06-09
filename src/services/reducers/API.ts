@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/default-param-last */
+
 import {
   DISMISS_ERROR,
   GET_INGREDIENTS_FAIL,
@@ -27,7 +29,18 @@ import {
   REGISTER_FAILED, WS_ERROR, GET_ORDER_404, CLEAR_404,
 } from '../actions';
 
-const initialState = {
+import { TAPIActions } from '../actionCreators/actions.types';
+
+export type TAPIState = {
+  isIngredientsLoading: boolean,
+  isOrderLoading: boolean,
+  isOrderSent: boolean,
+  isOrderNotFound: boolean,
+  errorMessage: string,
+  successMessage: string,
+};
+
+const initialState : TAPIState = {
   isIngredientsLoading: false,
   isOrderLoading: false,
   isOrderSent: false,
@@ -36,7 +49,7 @@ const initialState = {
   successMessage: '',
 };
 
-const APIReducer = (state = initialState, action) => {
+const APIReducer = (state = initialState, action : TAPIActions) : TAPIState => {
   switch (action.type) {
     case GET_INGREDIENTS_REQUEST: {
       return {

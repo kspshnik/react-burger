@@ -1,10 +1,14 @@
+/* eslint-disable @typescript-eslint/default-param-last */
+
 import {
   PRIVATE_FEED_CLOSE, PRIVATE_FEED_CONNECT_REQUESTED, PRIVATE_FEED_DISCONNECT_REQUESTED,
   PRIVATE_FEED_MESSAGE,
   PRIVATE_FEED_OPEN,
 } from '../actions';
+import { TFeedState } from '../../types/store.types';
+import { TPrivateFeedActions } from '../actionCreators/actions.types';
 
-const initialState = {
+const initialState : TFeedState = {
   orders: null,
   total: 0,
   totalToday: 0,
@@ -13,16 +17,16 @@ const initialState = {
   discardedAt: 0,
 };
 
-const privateFeedReducer = (state = initialState, action) => {
+const privateFeedReducer = (state = initialState, action : TPrivateFeedActions) : TFeedState => {
   switch (action.type) {
     case PRIVATE_FEED_OPEN: {
       return {
-        ...state, isOpen: true, discardedAt: 0, requestedAt: Date.now(),
+        ...state, isOpen: true, discardedAt: 0, requestedAt: +Date.now(),
       };
     }
     case PRIVATE_FEED_CLOSE: {
       return {
-        ...initialState, discardedAt: Date.now(),
+        ...initialState, discardedAt: +Date.now(),
       };
     }
     case PRIVATE_FEED_MESSAGE: {
@@ -37,7 +41,7 @@ const privateFeedReducer = (state = initialState, action) => {
     }
     case PRIVATE_FEED_DISCONNECT_REQUESTED: {
       return {
-        ...state, discardedAt: Date.now(),
+        ...state, discardedAt: +Date.now(),
       };
     }
     default: {

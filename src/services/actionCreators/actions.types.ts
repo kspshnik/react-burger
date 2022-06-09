@@ -75,7 +75,7 @@ import {
 } from '../actions';
 
 import {
-  TOrder, TIngredient, TIngredients, TOrderRecord, TUser,
+  TOrder, TIngredient, TOrderRecord, TUser, TAllIngredients,
 } from '../../types/types';
 import { TWSData } from '../../types/websocket.types';
 
@@ -199,7 +199,7 @@ export type TGeneralAPIErrorAction = {
   readonly payload: string
 };
 
-export type TAPIAction = TIngredientsRequestedAction | TIngredientsReceivedAction
+export type TAPIActions = TIngredientsRequestedAction | TIngredientsReceivedAction
 | TIngredientsFailedAction | TGetOrderRequestedAction | TGetOrderSucceedAction
 | TGetOrderFailedAction | TGetOrderNotFoundAction | TGeneralAPIErrorAction
 | TPlaceOrderRequestedAction | TPlaceOrderSucceedAction | TPlaceOrderFailedAction
@@ -221,6 +221,12 @@ export type TSetRegisterPassAction = {
   readonly type: typeof REGISTER_SET_PASS,
   readonly payload: string
 };
+export type TResetRegisterFormAction = {
+  readonly type: typeof REGISTER_FORM_RESET
+};
+
+export type TRegisterFormActions = TSetRegisterNameAction | TSetRegisterEmailAction
+| TSetRegisterPassAction | TResetRegisterFormAction;
 
 export type TSetLoginEmailAction = {
   readonly type: typeof LOGIN_SET_EMAIL,
@@ -230,10 +236,22 @@ export type TSetLoginPassAction = {
   readonly type: typeof LOGIN_SET_PASS,
   readonly payload: string
 };
+export type TResetLoginFormAction = {
+  readonly type: typeof LOGIN_FORM_RESET
+};
+
+export type TLoginFormActions = TSetLoginEmailAction | TSetLoginPassAction
+| TResetLoginFormAction;
 
 export type TSetForgotEmailAction = {
   readonly type: typeof FORGOT_SET_EMAIL,
   readonly payload: string };
+
+export type TResetForgotFormAction = {
+  readonly type: typeof FORGOT_FORM_RESET
+};
+
+export type TForgotFormActions = TSetForgotEmailAction | TResetForgotFormAction;
 
 export type TSetResetCodeAction = {
   readonly type: typeof RESET_SET_CODE,
@@ -243,6 +261,12 @@ export type TSetResetPassAction = {
   readonly type: typeof RESET_SET_PASS,
   readonly payload: string
 };
+export type TResetResetFormAction = {
+  readonly type: typeof RESET_FORM_RESET
+};
+
+export type TResetFormActions = TSetResetCodeAction | TSetResetPassAction
+| TResetResetFormAction;
 
 export type TSetProfileNameAction = {
   readonly type: typeof PROFILE_SET_NAME,
@@ -257,23 +281,14 @@ export type TSetProfilePassAction = {
   readonly payload: string
 };
 
-export type TResetRegisterFormAction = {
-  readonly type: typeof REGISTER_FORM_RESET
-};
-export type TResetLoginFormAction = {
-  readonly type: typeof LOGIN_FORM_RESET
-};
-export type TResetForgotFormAction = {
-  readonly type: typeof FORGOT_FORM_RESET
-};
-export type TResetResetFormAction = {
-  readonly type: typeof RESET_FORM_RESET
-};
 export type TResetProfileFormAction = {
   readonly type: typeof PROFILE_FORM_RESET
 };
 
-export type TFormsAction = TSetLoginEmailAction | TSetLoginPassAction | TSetRegisterNameAction
+export type TProfileFormActions = TSetProfileNameAction | TSetProfileEmailAction
+| TSetProfilePassAction | TResetProfileFormAction;
+
+export type TFormsActions = TSetLoginEmailAction | TSetLoginPassAction | TSetRegisterNameAction
 | TSetRegisterEmailAction | TSetRegisterPassAction | TSetResetCodeAction | TSetResetPassAction
 | TSetProfileNameAction | TSetProfileEmailAction | TSetProfilePassAction | TSetForgotEmailAction
 | TResetLoginFormAction | TResetRegisterFormAction | TResetResetFormAction | TResetForgotFormAction
@@ -281,7 +296,7 @@ export type TFormsAction = TSetLoginEmailAction | TSetLoginPassAction | TSetRegi
 
 export type TSetIngredientsAction = {
   readonly type: typeof SET_INGREDIENTS,
-  readonly payload: TIngredients
+  readonly payload: TAllIngredients
 };
 export type TSelectIngredientAction = {
   readonly type: typeof SELECT_INGREDIENT,
@@ -291,7 +306,7 @@ export type TReleaseIngredientAction = {
   readonly type: typeof RELEASE_INGREDIENT
 };
 
-export type TIngredientsAction = TSetIngredientsAction | TSelectIngredientAction
+export type TIngredientsActions = TSetIngredientsAction | TSelectIngredientAction
 | TReleaseIngredientAction;
 
 export type TCaptureOrderAction = {
@@ -302,7 +317,7 @@ export type TReleaseOrderAction = {
   readonly type: typeof FEED_ORDER_RELEASE,
 };
 
-export type TSelectedOrderAction = TCaptureOrderAction | TReleaseOrderAction;
+export type TSelectedOrderActions = TCaptureOrderAction | TReleaseOrderAction;
 
 export type TSetBunAction = {
   readonly type: typeof SET_BUN,
@@ -331,7 +346,7 @@ export type TSetOrderAction = {
   readonly payload: TOrderRecord
 };
 
-export type TOrderAction = TSetBunAction | TInsertInteriorAction | TDropInteriorAction
+export type TOrderActions = TSetBunAction | TInsertInteriorAction | TDropInteriorAction
 | TClearBurgerAction | TMoveInteriorAction | TArchiveOrderAction | TSetOrderAction;
 
 export type TStartPrivateFeedAction = {
@@ -356,7 +371,7 @@ export type TDiscardPrivateFeedAction = {
   readonly type: typeof PRIVATE_FEED_DISCONNECT_REQUESTED
 };
 
-export type TPrivateFeedAction = TStartPrivateFeedAction | TStopPrivateFeedAction
+export type TPrivateFeedActions = TStartPrivateFeedAction | TStopPrivateFeedAction
 | TSetPrivateFeedClosedAction | TSetPrivateFeedOpenedAction | TOnPrivateFeedMessageAction
 | TRequestPrivateFeedAction | TDiscardPrivateFeedAction;
 
@@ -382,7 +397,7 @@ export type TDiscardPublicFeedAction = {
   readonly type: typeof PUBLIC_FEED_DISCONNECT_REQUESTED
 };
 
-export type TPublicFeedAction = TStartPublicFeedAction | TStopPublicFeedAction
+export type TPublicFeedActions = TStartPublicFeedAction | TStopPublicFeedAction
 | TSetPublicFeedClosedAction | TSetPublicFeedOpenedAction | TOnPublicFeedMessageAction
 | TRequestPublicFeedAction | TDiscardPublicFeedAction;
 
@@ -393,7 +408,7 @@ export type TSetUserAction = {
 export type TResetUserAction = {
   readonly type: typeof RESET_USER
 };
-export type TUserAction = TSetUserAction | TResetUserAction;
+export type TUserActions = TSetUserAction | TResetUserAction;
 
 type TAppActions = TIngredientsRequestedAction | TIngredientsReceivedAction
 | TIngredientsFailedAction | TGetOrderRequestedAction | TGetOrderSucceedAction
@@ -411,10 +426,10 @@ type TAppActions = TIngredientsRequestedAction | TIngredientsReceivedAction
 | TResetProfileFormAction | TSetIngredientsAction | TSelectIngredientAction
 | TReleaseIngredientAction | TCaptureOrderAction | TReleaseOrderAction | TSetBunAction
 | TInsertInteriorAction | TDropInteriorAction | TClearBurgerAction | TMoveInteriorAction
-| TArchiveOrderAction | TSetOrderAction | TPrivateFeedAction | TStartPrivateFeedAction
+| TArchiveOrderAction | TSetOrderAction | TPrivateFeedActions | TStartPrivateFeedAction
 | TStopPrivateFeedAction | TSetPrivateFeedClosedAction | TSetPrivateFeedOpenedAction
 | TOnPrivateFeedMessageAction | TRequestPrivateFeedAction | TDiscardPrivateFeedAction
-| TPublicFeedAction | TStartPublicFeedAction | TStopPublicFeedAction
+| TPublicFeedActions | TStartPublicFeedAction | TStopPublicFeedAction
 | TSetPublicFeedClosedAction | TSetPublicFeedOpenedAction | TOnPublicFeedMessageAction
 | TRequestPublicFeedAction | TDiscardPublicFeedAction | TSetUserAction | TResetUserAction;
 

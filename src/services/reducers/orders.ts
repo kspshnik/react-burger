@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/default-param-last */
+
 import {
   SET_BUN,
   INSERT_INTERIOR,
@@ -10,14 +12,17 @@ import {
 
 import { reorderChoice } from '../../helpers';
 
-const initialState = {
+import { TOrderActions } from '../actionCreators/actions.types';
+import { TOrderState } from '../../types/store.types';
+
+const initialState : TOrderState = {
   bun: null,
   choice: [],
   accepted: null,
   past: [],
 };
 
-const ordersReducer = (state = initialState, action) => {
+const ordersReducer = (state = initialState, action : TOrderActions) => {
   switch (action.type) {
     case SET_BUN: {
       return {

@@ -1,10 +1,14 @@
+/* eslint-disable @typescript-eslint/default-param-last */
+
 import {
   PUBLIC_FEED_CLOSE, PUBLIC_FEED_CONNECT_REQUESTED, PUBLIC_FEED_DISCONNECT_REQUESTED,
   PUBLIC_FEED_MESSAGE,
   PUBLIC_FEED_OPEN,
 } from '../actions';
+import { TFeedState } from '../../types/store.types';
+import { TPublicFeedActions } from '../actionCreators/actions.types';
 
-const initialState = {
+const initialState : TFeedState = {
   orders: null,
   total: 0,
   totalToday: 0,
@@ -13,7 +17,7 @@ const initialState = {
   discardedAt: 0,
 };
 
-const publicFeedReducer = (state = initialState, action) => {
+const publicFeedReducer = (state = initialState, action : TPublicFeedActions) : TFeedState => {
   switch (action.type) {
     case PUBLIC_FEED_OPEN: {
       return {

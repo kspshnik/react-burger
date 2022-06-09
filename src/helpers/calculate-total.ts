@@ -1,6 +1,7 @@
 import { BUN } from '../constants';
+import { TAllIngredients } from '../types/types';
 
-const calculateTotal = (all, ingredients) => {
+const calculateTotal = (all : TAllIngredients, ingredients: Array<string>) : number => {
   const bun = ingredients.find((item) => all[item]?.type === BUN);
   const total = ingredients.reduce((acc, item) => {
     if (!item || !all[item] || !all[item]?.price) {

@@ -1,6 +1,7 @@
 import { CREATED, DONE, PENDING } from '../constants';
+import { TOrderStatus } from '../types/types';
 
-const statusName = (stage) => {
+const statusName = (stage : TOrderStatus) : string => {
   switch (stage) {
     case CREATED: {
       return 'Создан';

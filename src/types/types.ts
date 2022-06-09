@@ -22,6 +22,10 @@ export type TIngredient = {
 
 export type TIngredients = Array<TIngredient>;
 
+export type TAllIngredients = {
+  [key: string]: TIngredient,
+};
+
 export type TOrderStatus = typeof PENDING | typeof CREATED | typeof DONE;
 
 export type TOwnerData = {
@@ -48,8 +52,12 @@ export type TOrder = {
   owner?: TOwnerData,
 };
 
+export type TOrders = Array<TOrder>;
+
 export type TOrderRecord = {
   success: boolean,
   name: string,
   order: TOrder,
 };
+
+export type TOrderRecords = Array<TOrderRecord>;

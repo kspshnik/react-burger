@@ -1,20 +1,18 @@
+/* eslint-disable @typescript-eslint/default-param-last */
+
 import {
   FEED_ORDER_CAPTURE,
   FEED_ORDER_RELEASE,
 } from '../actions';
 
-const initialState = {
+import { TSelectedOrderActions } from '../actionCreators/actions.types';
+import { TOrderSelectState } from '../../types/store.types';
+
+const initialState : TOrderSelectState = {
   order: null,
-/*  _id: null,
-  createdAt: null,
-  updatedAt: null,
-  name: null,
-  number: null,
-  status: null,
-  ingredients: null, */
 };
 
-const orderSelectReducer = (state = initialState, action) => {
+const orderSelectReducer = (state = initialState, action : TSelectedOrderActions) => {
   switch (action.type) {
     case FEED_ORDER_CAPTURE: {
       return {
