@@ -6,7 +6,7 @@ import { useDrag } from 'react-dnd';
 import cgeStyles from './constructor-grid-element.module.css';
 import {
   dropInterior, moveInterior,
-} from '../../services/actionCreators';
+}                from '../../services/actionCreators';
 import { ORDER } from '../../constants';
 import DropZone from '../drop-zone/drop-zone';
 

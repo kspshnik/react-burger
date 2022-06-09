@@ -5,9 +5,9 @@ import { useDispatch } from 'react-redux';
 
 import { useDrag } from 'react-dnd';
 
-import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Counter, CurrencyIcon }                    from '@ya.praktikum/react-developer-burger-ui-components';
 import { selectIngredient, insertInterior, setBun } from '../../services/actionCreators';
-import { BUN, INGREDIENT } from '../../constants';
+import { BUN, INGREDIENT }                          from '../../constants';
 
 import icStyles from './ingredient-card.module.css';
 

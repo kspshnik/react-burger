@@ -1,7 +1,7 @@
 import React from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectIngredient } from '../../services/actionCreators';
+import { selectIngredient }         from '../../services/actionCreators';
 
 import ipStyles from './ingredient-page.module.css';
 import IngredientDetails from '../../components/ingredient-details/ingredient-details';

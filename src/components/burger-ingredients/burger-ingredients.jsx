@@ -10,7 +10,7 @@ import ScrollArea from '../scroll-area/scroll-area';
 import DropZone   from '../drop-zone/drop-zone';
 
 import IngredientsGrid from '../ingredients-grid/ingredients-grid';
-import { ORDER } from '../../constants';
+import { ORDER }        from '../../constants';
 import { dropInterior } from '../../services/actionCreators';
 
 const BurgerIngredients = () => {

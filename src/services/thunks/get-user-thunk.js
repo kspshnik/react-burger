@@ -1,6 +1,6 @@
-import { fetchUser } from '../api';
+import { fetchUser }           from '../api';
 import { setUser, userFailed } from '../actionCreators';
-import { EXPIRY_MESSAGE } from '../../constants';
+import { EXPIRY_MESSAGE }      from '../../constants';
 import refreshTokenThunk from './refresh-token-thunk';
 
 const getUserThunk = () => async (dispatch) => {

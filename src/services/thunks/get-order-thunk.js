@@ -3,7 +3,7 @@ import {
   getOrderRequested,
   getOrderSucceed,
   getOrderFailed, getOrderNotFound,
-} from '../actionCreators';
+}                     from '../actionCreators';
 import { fetchOrder } from '../api';
 
 const getOrderThunk = (number) => async (dispatch) => {

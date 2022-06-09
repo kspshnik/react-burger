@@ -8,9 +8,9 @@ import { useHistory, useLocation } from 'react-router-dom';
 import bcStyles        from './burger-constructor.module.css';
 import ScrollArea      from '../scroll-area/scroll-area';
 import ConstructorGrid from '../constructor-grid/constructor-grid';
-import placeOrderThunk from '../../services/thunks/place-order-thunk';
+import placeOrderThunk            from '../../services/thunks/place-order-thunk';
 import { insertInterior, setBun } from '../../services/actionCreators';
-import { BUN, INGREDIENT } from '../../constants';
+import { BUN, INGREDIENT }        from '../../constants';
 import DropZone from '../drop-zone/drop-zone';
 
 const BurgerConstructor = () => {

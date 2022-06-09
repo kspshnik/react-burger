@@ -6,9 +6,9 @@ import { Button, EmailInput } from '@ya.praktikum/react-developer-burger-ui-comp
 import { useDispatch, useSelector } from 'react-redux';
 import LinkBox from '../../components/link-box/link-box';
 
-import forgotStyles from './forgot-page.module.css';
+import forgotStyles                        from './forgot-page.module.css';
 import { resetForgotForm, setForgotEmail } from '../../services/actionCreators';
-import { requestCodeThunk } from '../../services/thunks';
+import { requestCodeThunk }                from '../../services/thunks';
 
 const ForgotPage = () => {
   const { email } = useSelector((state) => state.forms.forgot);

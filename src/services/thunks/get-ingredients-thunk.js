@@ -1,7 +1,7 @@
 import { fetchIngredients } from '../api';
 import {
   ingredientsRequested, ingredientsReceived, ingredientsFailed, setIngredients, refreshFailed,
-} from '../actionCreators';
+}                           from '../actionCreators';
 
 const getIngredientsThunk = () => async (dispatch) => {
   dispatch(ingredientsRequested());

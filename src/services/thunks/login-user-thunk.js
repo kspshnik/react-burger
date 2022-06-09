@@ -1,6 +1,6 @@
 import { jwt, login, token } from '../api';
-import { stripBearer } from '../../helpers';
-import { setUser } from '../actionCreators';
+import { stripBearer }               from '../../helpers';
+import { setUser }                   from '../actionCreators';
 import { loginFailed, loginSucceed } from '../actionCreators/API';
 
 const loginUserThunk = () => async (dispatch, getState) => {
