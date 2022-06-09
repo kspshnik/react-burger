@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/prefer-as-const */
+
 const BACKEND_ROUTES = {
   base: 'https://norma.nomoreparties.space/api',
   baseWS: 'wss://norma.nomoreparties.space',
@@ -14,9 +16,9 @@ const BACKEND_ROUTES = {
   privateFeed: '/orders',
 };
 
-const BUN = 'bun';
-const SAUCE = 'sauce';
-const MAIN = 'main';
+const BUN : 'bun' = 'bun';
+const SAUCE : 'sauce' = 'sauce';
+const MAIN : 'main' = 'main';
 const INGREDIENT = 'ingredient';
 const ORDER = 'order';
 
