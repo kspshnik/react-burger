@@ -1,5 +1,7 @@
-const reorderChoice = (ingrs, from, to) => {
-  const result = [];
+import { TIngredients } from '../types/types';
+
+const reorderChoice = (ingrs : TIngredients, from : number, to : number) : TIngredients => {
+  const result : TIngredients = [];
   const el = ingrs[from];
   if (from === to) {
     return ingrs;

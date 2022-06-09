@@ -1,8 +1,8 @@
 import { FEED_ORDER_CAPTURE, FEED_ORDER_RELEASE } from '../actions';
-import { TAcceptedOrder } from '../../types/types';
+import { TOrder } from '../../types/types';
 import { TCaptureOrderAction, TReleaseOrderAction } from './actions.types';
 
-export const captureOrder = (order : TAcceptedOrder) : TCaptureOrderAction => (
+export const captureOrder = (order : TOrder) : TCaptureOrderAction => (
   {
     type: FEED_ORDER_CAPTURE,
     payload: order,

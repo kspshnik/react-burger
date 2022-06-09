@@ -17,17 +17,39 @@ export type TIngredient = {
   image_mobile: string,
   image_large: string,
   __v: number,
+  bcid?: string,
 };
 
 export type TIngredients = Array<TIngredient>;
 
 export type TOrderStatus = typeof PENDING | typeof CREATED | typeof DONE;
 
-export type TAcceptedOrder = {
+export type TOwnerData = {
+  name: string,
+  email: string,
+  createdAt: string,
+  updatedAt: string,
+};
+
+export type TUser = {
+  name: string,
+  email: string,
+};
+
+export type TOrder = {
   _id: string,
+  ingredients: Array<string> | TIngredients,
   status: TOrderStatus,
   name: string,
   createdAt: string,
   updatedAt: string,
   number: number,
+  price?: number,
+  owner?: TOwnerData,
+};
+
+export type TOrderRecord = {
+  success: boolean,
+  name: string,
+  order: TOrder,
 };

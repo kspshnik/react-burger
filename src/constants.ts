@@ -36,8 +36,8 @@ const PENDING :'pending' = 'pending';
 const DONE : 'done' = 'done';
 const CREATED : 'created' = 'created';
 
-const PUBLIC = 'public';
-const PRIVATE = 'private';
+const PUBLIC : 'public' = 'public';
+const PRIVATE : 'private' = 'private';
 
 const WS_THROTTLE_THRESHOLD = 3000;
 

@@ -49,9 +49,35 @@ import {
   SET_INGREDIENTS,
   FEED_ORDER_CAPTURE,
   FEED_ORDER_RELEASE,
+  SET_BUN,
+  INSERT_INTERIOR,
+  DROP_INTERIOR,
+  CLEAR_BURGER,
+  MOVE_INTERIOR,
+  ARCHIVE_ORDER,
+  SET_ORDER,
+  PRIVATE_FEED_CLOSE,
+  PRIVATE_FEED_MESSAGE,
+  PRIVATE_FEED_OPEN,
+  PRIVATE_FEED_START,
+  PRIVATE_FEED_STOP,
+  PRIVATE_FEED_CONNECT_REQUESTED,
+  PRIVATE_FEED_DISCONNECT_REQUESTED,
+  PUBLIC_FEED_CLOSE,
+  PUBLIC_FEED_MESSAGE,
+  PUBLIC_FEED_OPEN,
+  PUBLIC_FEED_START,
+  PUBLIC_FEED_STOP,
+  PUBLIC_FEED_CONNECT_REQUESTED,
+  PUBLIC_FEED_DISCONNECT_REQUESTED,
+  SET_USER,
+  RESET_USER,
 } from '../actions';
 
-import { TAcceptedOrder, TIngredient, TIngredients } from '../../types/types';
+import {
+  TOrder, TIngredient, TIngredients, TOrderRecord, TUser,
+} from '../../types/types';
+import { TWSData } from '../../types/websocket.types';
 
 export type TIngredientsRequestedAction = {
   readonly type: typeof GET_INGREDIENTS_REQUEST
@@ -270,13 +296,126 @@ export type TIngredientsAction = TSetIngredientsAction | TSelectIngredientAction
 
 export type TCaptureOrderAction = {
   readonly type: typeof FEED_ORDER_CAPTURE,
-  readonly payload: TAcceptedOrder
+  readonly payload: TOrder,
 };
 export type TReleaseOrderAction = {
-  readonly type: typeof FEED_ORDER_RELEASE
+  readonly type: typeof FEED_ORDER_RELEASE,
 };
 
 export type TSelectedOrderAction = TCaptureOrderAction | TReleaseOrderAction;
 
-type TAppActionTypes = TAPIAction & TFormsAction & TIngredientsAction & TSelectedOrderAction;
-export default TAppActionTypes;
+export type TSetBunAction = {
+  readonly type: typeof SET_BUN,
+  readonly payload: TIngredient,
+};
+export type TInsertInteriorAction = {
+  readonly type: typeof INSERT_INTERIOR,
+  readonly payload: TIngredient,
+};
+export type TDropInteriorAction = {
+  readonly type: typeof DROP_INTERIOR,
+  readonly payload: TIngredient
+};
+export type TClearBurgerAction = {
+  readonly type: typeof CLEAR_BURGER
+};
+export type TMoveInteriorAction = {
+  readonly type: typeof MOVE_INTERIOR,
+  readonly payload: { ingredient : TIngredient, to : number },
+};
+export type TArchiveOrderAction = {
+  readonly type: typeof ARCHIVE_ORDER
+};
+export type TSetOrderAction = {
+  readonly type: typeof SET_ORDER,
+  readonly payload: TOrderRecord
+};
+
+export type TOrderAction = TSetBunAction | TInsertInteriorAction | TDropInteriorAction
+| TClearBurgerAction | TMoveInteriorAction | TArchiveOrderAction | TSetOrderAction;
+
+export type TStartPrivateFeedAction = {
+  readonly type: typeof PRIVATE_FEED_START
+};
+export type TStopPrivateFeedAction = {
+  readonly type: typeof PRIVATE_FEED_STOP
+};
+export type TSetPrivateFeedOpenedAction = {
+  readonly type: typeof PRIVATE_FEED_OPEN
+};
+export type TSetPrivateFeedClosedAction = {
+  readonly type: typeof PRIVATE_FEED_CLOSE
+};
+export type TOnPrivateFeedMessageAction = {
+  readonly type: typeof PRIVATE_FEED_MESSAGE,
+  readonly payload: TWSData };
+export type TRequestPrivateFeedAction = {
+  readonly type: typeof PRIVATE_FEED_CONNECT_REQUESTED
+};
+export type TDiscardPrivateFeedAction = {
+  readonly type: typeof PRIVATE_FEED_DISCONNECT_REQUESTED
+};
+
+export type TPrivateFeedAction = TStartPrivateFeedAction | TStopPrivateFeedAction
+| TSetPrivateFeedClosedAction | TSetPrivateFeedOpenedAction | TOnPrivateFeedMessageAction
+| TRequestPrivateFeedAction | TDiscardPrivateFeedAction;
+
+export type TStartPublicFeedAction = {
+  readonly type: typeof PUBLIC_FEED_START
+};
+export type TStopPublicFeedAction = {
+  readonly type: typeof PUBLIC_FEED_STOP
+};
+export type TSetPublicFeedOpenedAction = {
+  readonly type: typeof PUBLIC_FEED_OPEN
+};
+export type TSetPublicFeedClosedAction = {
+  readonly type: typeof PUBLIC_FEED_CLOSE
+};
+export type TOnPublicFeedMessageAction = {
+  readonly type: typeof PUBLIC_FEED_MESSAGE,
+  readonly payload: TWSData };
+export type TRequestPublicFeedAction = {
+  readonly type: typeof PUBLIC_FEED_CONNECT_REQUESTED
+};
+export type TDiscardPublicFeedAction = {
+  readonly type: typeof PUBLIC_FEED_DISCONNECT_REQUESTED
+};
+
+export type TPublicFeedAction = TStartPublicFeedAction | TStopPublicFeedAction
+| TSetPublicFeedClosedAction | TSetPublicFeedOpenedAction | TOnPublicFeedMessageAction
+| TRequestPublicFeedAction | TDiscardPublicFeedAction;
+
+export type TSetUserAction = {
+  readonly type: typeof SET_USER,
+  readonly payload: TUser
+};
+export type TResetUserAction = {
+  readonly type: typeof RESET_USER
+};
+export type TUserAction = TSetUserAction | TResetUserAction;
+
+type TAppActions = TIngredientsRequestedAction | TIngredientsReceivedAction
+| TIngredientsFailedAction | TGetOrderRequestedAction | TGetOrderSucceedAction
+| TGetOrderFailedAction | TGetOrderNotFoundAction | TGeneralAPIErrorAction
+| TPlaceOrderRequestedAction | TPlaceOrderSucceedAction | TPlaceOrderFailedAction
+| TUserFailedAction | TRefreshFailedAction | TRegisterSucceedAction | TRegisterFailedAction
+| TLoginSucceedAction | TLoginFailedAction | TLogoutSucceedAction | TLogoutFailedAction
+| TCodeRequestSucceedAction | TCodeRequestFailedAction | TPasswordResetSucceedAction
+| TPasswordResetFailedAction | TProfileUpdateSucceedAction | TProfileUpdateFailedAction
+| TClearSuccessAction | TClearErrorAction | TClearOrderNotFoundAction | TWSErrorAction
+| TSetLoginEmailAction | TSetLoginPassAction | TSetRegisterNameAction
+| TSetRegisterEmailAction | TSetRegisterPassAction | TSetResetCodeAction | TSetResetPassAction
+| TSetProfileNameAction | TSetProfileEmailAction | TSetProfilePassAction | TSetForgotEmailAction
+| TResetLoginFormAction | TResetRegisterFormAction | TResetResetFormAction | TResetForgotFormAction
+| TResetProfileFormAction | TSetIngredientsAction | TSelectIngredientAction
+| TReleaseIngredientAction | TCaptureOrderAction | TReleaseOrderAction | TSetBunAction
+| TInsertInteriorAction | TDropInteriorAction | TClearBurgerAction | TMoveInteriorAction
+| TArchiveOrderAction | TSetOrderAction | TPrivateFeedAction | TStartPrivateFeedAction
+| TStopPrivateFeedAction | TSetPrivateFeedClosedAction | TSetPrivateFeedOpenedAction
+| TOnPrivateFeedMessageAction | TRequestPrivateFeedAction | TDiscardPrivateFeedAction
+| TPublicFeedAction | TStartPublicFeedAction | TStopPublicFeedAction
+| TSetPublicFeedClosedAction | TSetPublicFeedOpenedAction | TOnPublicFeedMessageAction
+| TRequestPublicFeedAction | TDiscardPublicFeedAction | TSetUserAction | TResetUserAction;
+
+export default TAppActions;
