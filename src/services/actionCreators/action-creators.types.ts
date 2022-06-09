@@ -27,82 +27,141 @@ import {
   RESET_PASSWORD_SUCCEED,
   UPDATE_PROFILE_FAILED,
   UPDATE_PROFILE_SUCCEED,
-  WS_ERROR
-} from "../actions";
+  WS_ERROR,
+  REGISTER_SET_NAME,
+  REGISTER_SET_EMAIL,
+  REGISTER_SET_PASS,
+  LOGIN_SET_EMAIL,
+  LOGIN_SET_PASS,
+  FORGOT_SET_EMAIL,
+  RESET_SET_PASS,
+  RESET_SET_CODE,
+  PROFILE_SET_NAME,
+  PROFILE_SET_EMAIL,
+  PROFILE_SET_PASS,
+  REGISTER_FORM_RESET,
+  LOGIN_FORM_RESET,
+  FORGOT_FORM_RESET,
+  RESET_FORM_RESET,
+  PROFILE_FORM_RESET,
+} from '../actions';
 
-export interface IIngredientsRequested  {
+export type TIngredientsRequestedAction = {
   readonly type: typeof GET_INGREDIENTS_REQUEST
 };
 
-export interface IIngredientsReceived {
+export type TIngredientsReceivedAction = {
   readonly type: typeof GET_INGREDIENTS_SUCCEED
 };
-export interface ingredientsFailed {
+export type TIngredientsFailedAction = {
   readonly type: typeof GET_INGREDIENTS_FAIL,
   readonly payload: string
 };
 
-export interface placeOrderRequested {
+export type TPlaceOrderRequestedAction = {
   readonly type: typeof PLACE_ORDER_REQUEST
 };
-export interface placeOrderSucceed {
+export type TPlaceOrderSucceedAction = {
   readonly type: typeof PLACE_ORDER_SUCCEED
 };
-export interface placeOrderFailed {
+export type TPlaceOrderFailedAction = {
   type: typeof PLACE_ORDER_FAIL,
-  readonly payload: string };
+  readonly payload: string
+};
 
-export interface getOrderRequested {
+export type TGetOrderRequestedAction = {
   readonly type: typeof GET_ORDER_REQUEST
 };
-export interface getOrderSucceed {
+export type TGetOrderSucceedAction = {
   readonly type: typeof GET_ORDER_SUCCEED
 };
-export interface getOrderFailed {
+export type TGetOrderFailedAction = {
   readonly type: typeof GET_ORDER_FAIL,
   readonly payload: string
 };
-export interface getOrderNotFound {
+export type TGetOrderNotFoundAction = {
   readonly type: typeof GET_ORDER_404
 };
 
-export interface userFailed {
+export type TUserFailedAction = {
   readonly type: typeof GET_USER_FAIL,
   readonly payload: string
 };
 
-export interface refreshFailed { readonly type: typeof REFRESH_TOKEN_FAIL,
+export type TRefreshFailedAction = {
+  readonly type: typeof REFRESH_TOKEN_FAIL,
   readonly payload: string
 };
 
-export interface registerSucceed { readonly type: typeof REGISTER_SUCCEED, readonly payload: string
+export type TRegisterSucceedAction = {
+  readonly type: typeof REGISTER_SUCCEED,
+  readonly payload: string
 };
-export interface registerFailed = (message) => ({ type: REGISTER_FAILED, payload: message });
+export type TRegisterFailedAction = {
+  readonly type: typeof REGISTER_FAILED,
+  readonly payload: string
+};
 
-export interface loginSucceed = (message) => ({ type: LOGIN_SUCCEED, payload: message });
-export interface loginFailed = (message) => ({ type: LOGIN_FAILED, payload: message });
-export interface logoutSucceed = (message) => ({ type: LOGOUT_SUCCEED, payload: message });
-export interface logoutFailed = (message) => ({ type: LOGOUT_FAILED, payload: message });
+export type TLoginSucceedAction = {
+  readonly type: typeof LOGIN_SUCCEED,
+  readonly payload: string
+};
+export type TLoginFailedAction = {
+  readonly type: typeof LOGIN_FAILED,
+  readonly payload: string
+};
+export type TLogoutSucceedAction = {
+  readonly type: typeof LOGOUT_SUCCEED,
+  readonly payload: string
+};
+export type TLogoutFailedAction = {
+  readonly type: typeof LOGOUT_FAILED,
+  readonly payload: string
+};
 
-export interface codeRequestSucceed = (message) => ({ type: REQUEST_CODE_SUCCEED, payload: message });
-export interface codeRequestFailed = (message) => ({ type: REQUEST_CODE_FAILED, payload: message });
+export type TCodeRequestSucceedAction = {
+  readonly type: typeof REQUEST_CODE_SUCCEED,
+  readonly payload: string
+};
+export type TCodeRequestFailedAction = {
+  readonly type: typeof REQUEST_CODE_FAILED,
+  readonly payload: string
+};
 
-export interface passwordResetSucceed = (message) => ({
-  type: RESET_PASSWORD_SUCCEED,
-  payload: message,
-});
-export interface passwordResetFailed = (message) => ({ type: RESET_PASSWORD_FAILED, payload: message });
+export type TPasswordResetSucceedAction = {
+  readonly type: typeof RESET_PASSWORD_SUCCEED,
+  readonly payload: string,
+};
+export type TPasswordResetFailedAction = {
+  readonly type: typeof RESET_PASSWORD_FAILED,
+  readonly payload: string
+};
 
-export interface profileUpdateSucceed = (message) => ({
-  type: UPDATE_PROFILE_SUCCEED,
-  payload: message,
-});
-export interface profileUpdateFailed = (message) => ({ type: UPDATE_PROFILE_FAILED, payload: message });
+export type TProfileUpdateSucceedAction = {
+  readonly type: typeof UPDATE_PROFILE_SUCCEED,
+  readonly payload: string,
+};
+export type TProfileUpdateFailedAction = {
+  readonly type: typeof UPDATE_PROFILE_FAILED,
+  readonly payload: string
+};
 
-export interface clearSuccess = () => ({ type: CLOSE_SUCCESS });
-export interface clearError = () => ({ type: DISMISS_ERROR });
-export interface clearOrderNotFound = () => ({ type: CLEAR_404 });
+export type TClearSuccessAction = {
+  readonly type: typeof CLOSE_SUCCESS
+};
+export type TClearErrorAction = {
+  readonly type: typeof DISMISS_ERROR
+};
+export type TClearOrderNotFoundAction = {
+  readonly type: typeof CLEAR_404
+};
 
-export interface wsError = (message) => ({ type: WS_ERROR, payload: message });
+export type TWSErrorAction = {
+  readonly type: typeof WS_ERROR,
+  readonly payload: string
+};
 
-export interface generalAPIError = (message) => ({ type: ERROR_500, payload: message });
+export type TGeneralAPIErrorAction = {
+  readonly type: typeof ERROR_500,
+  readonly payload: string
+};
