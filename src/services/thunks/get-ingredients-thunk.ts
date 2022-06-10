@@ -1,9 +1,10 @@
 import { fetchIngredients } from '../api';
 import {
   ingredientsRequested, ingredientsReceived, ingredientsFailed, setIngredients, refreshFailed,
-}                           from '../actionCreators';
+} from '../store';
+import { AppThunk } from '../store/store';
 
-const getIngredientsThunk = () => async (dispatch) => {
+const getIngredientsThunk : AppThunk = () => async (dispatch) => {
   dispatch(ingredientsRequested());
   try {
     const {

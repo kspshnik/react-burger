@@ -1,5 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
-import thunk from 'redux-thunk';
+import thunk, { ThunkAction } from 'redux-thunk';
+import { Action, ActionCreator } from 'redux';
+
+import {
+  TypedUseSelectorHook,
+  useDispatch as dispatchHook,
+  useSelector as selectorHook,
+} from 'react-redux';
 
 import apiReducer from './api-slice';
 import formsReducer from './forms-slice';
@@ -70,5 +77,13 @@ const store = configureStore({
   // eslint-disable-next-line no-undef
   devTools: process.env.NODE_ENV !== 'production',
 });
+
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
+
+export type AppThunk<TReturn = void> = ActionCreator<
+ThunkAction<TReturn, RootState, unknown, Action>
+>;
+
 
 export default store;
