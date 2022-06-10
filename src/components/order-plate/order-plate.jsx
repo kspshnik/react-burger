@@ -9,8 +9,8 @@ import opStyles from './order-plate.module.css';
 import {
   DONE, PRIVATE, PUBLIC,
 } from '../../constants';
-import ContentRibbon from '../content-ribbon/content-ribbon';
-import { calculateTotal, prepareDateTime, statusName } from '../../helpers';
+import ContentRibbon                                   from '../content-ribbon/content-ribbon';
+import { calculateTotal, prepareDateTime, statusName } from '../../services/helpers';
 import { captureOrder }                                from '../../services/actionCreators';
 
 const OrderPlate = ({ order, feedType }) => {

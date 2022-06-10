@@ -21,8 +21,8 @@ import {
   PRIVATE_FEED_STOP,
   PUBLIC_FEED_START,
   PUBLIC_FEED_STOP,
-} from './services/actions';
-import { socketMiddleware } from './services/middlewares/socket-middleware';
+}                           from './services/actions';
+import { socketMiddleware } from './services/store/websocket-middleware';
 import {
   discardPrivateFeed,
   discardPublicFeed,
@@ -35,7 +35,7 @@ import {
   setPublicFeedClosed,
   setPublicFeedOpened,
   wsError,
-} from './services/actionCreators';
+}                           from './services/actionCreators';
 
 LogRocket.init('owbpwl/react-burger');
 

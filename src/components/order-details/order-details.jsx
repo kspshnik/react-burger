@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useLocation } from 'react-router-dom';
-import { calculateTotal, prepareDateTime, statusName } from '../../helpers';
-import IngredientPlate from '../ingredient-plate/ingredient-plate';
+import { useLocation }                                 from 'react-router-dom';
+import { calculateTotal, prepareDateTime, statusName } from '../../services/helpers';
+import IngredientPlate                                 from '../ingredient-plate/ingredient-plate';
 
 import odStyles from './order-details.module.css';
 

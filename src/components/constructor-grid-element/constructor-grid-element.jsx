@@ -22,7 +22,7 @@ const ConstructorGridElement = ({ item, index }) => {
   }), [item]);
 
   const handleDrop = (dropItem) => {
-    dispatch(moveInterior(dropItem, index));
+    dispatch(moveInterior({ingredient: dropItem, to: index}));
   };
 
   return (

@@ -12,8 +12,8 @@ import LinkBox from '../../components/link-box/link-box';
 
 import resetStyles                                    from './reset-page.module.css';
 import { resetResetForm, setResetCode, setResetPass } from '../../services/actionCreators';
-import { passwordValidity }                           from '../../helpers';
-import resetPasswordThunk from '../../services/thunks/reset-password-thunk';
+import { passwordValidity }                           from '../../services/helpers';
+import resetPasswordThunk                             from '../../services/thunks/reset-password-thunk';
 
 const ResetPage = () => {
   const dispatch = useDispatch();

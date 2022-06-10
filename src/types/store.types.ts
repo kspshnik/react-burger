@@ -1,9 +1,15 @@
 import {
-  TIngredient, TIngredients, TOrder, TOrderRecord, TOrderRecords, TOrders,
+  TAllIngredients,
+  TIngredient,
+  TIngredients,
+  TOrder,
+  TOrderRecord,
+  TOrderRecords,
+  TOrders,
 } from './types';
 
 export type TIngredientsState = {
-  all: TIngredients | null,
+  all: TAllIngredients | null,
   selected: TIngredient | null,
 };
 
@@ -47,4 +53,17 @@ export type TUserState = {
   name: string,
   email: string,
   loggedIn: boolean,
+};
+
+export type TForgotFormState = {
+  email: string,
+};
+
+export type TAPIState = {
+  isIngredientsLoading: boolean,
+  isOrderLoading: boolean,
+  isOrderSent: boolean,
+  isOrderNotFound: boolean,
+  errorMessage: string,
+  successMessage: string,
 };

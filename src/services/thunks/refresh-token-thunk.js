@@ -1,6 +1,6 @@
 import { fetchToken, jwt, token } from '../api';
-import { stripBearer }   from '../../helpers';
-import { refreshFailed } from '../actionCreators';
+import { stripBearer }            from '../helpers';
+import { refreshFailed }          from '../actionCreators';
 
 const refreshTokenThunk = (thunk = null) => async (dispatch) => {
   try {
