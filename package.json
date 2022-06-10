@@ -4,6 +4,7 @@
   "private": true,
   "homepage": "./",
   "dependencies": {
+    "@reduxjs/toolkit": "^1.8.1",
     "@sentry/react": "^6.19.6",
     "@sentry/tracing": "^6.19.6",
     "@testing-library/jest-dom": "^5.16.2",
@@ -31,8 +32,8 @@
     "redux-thunk": "^2.4.1",
     "redux-toolkit": "^1.1.2",
     "typescript": "^4.5.2",
-    "web-vitals": "^1.1.2",
-    "@reduxjs/toolkit": "^1.8.1"
+    "typescript-cookie": "^1.0.3",
+    "web-vitals": "^1.1.2"
   },
   "scripts": {
     "start": "react-scripts start",

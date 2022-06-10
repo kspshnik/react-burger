@@ -1,5 +1,6 @@
 import {Cookies as JsCookie} from 'typescript-cookie';
 import { BACKEND_ROUTES, JWT_TOKEN, REFRESH_TOKEN } from '../constants';
+import {TAPIIngredients} from "../types/api.types";
 
 const endpoint = (route : string) : string => (`${BACKEND_ROUTES.base}${route}`);
 export const makeUser = (name : string, email : string, password : string) => {
@@ -16,7 +17,7 @@ export const makeUser = (name : string, email : string, password : string) => {
   return res;
 };
 
-const defaultOptions = {
+const defaultOptions : RequestInit = {
   mode: 'cors',
   cache: 'no-cache',
   credentials: 'same-origin',
@@ -25,30 +26,30 @@ const defaultOptions = {
 };
 
 export const jwt = {
-  set: (value : string) => {
+  set: (value : string) : void => {
     if (value) {
       JsCookie.set(JWT_TOKEN, `${value}`);
     } else {
       JsCookie.remove(JWT_TOKEN);
     }
   },
-  get: () => JsCookie.get(JWT_TOKEN),
-  test: () => !!JsCookie.get(JWT_TOKEN),
+  get: () : string => JsCookie.get(JWT_TOKEN) as string,
+  test: () : boolean => !!JsCookie.get(JWT_TOKEN),
 };
 export const token = {
-  set: (value) => {
+  set: (value : string) : void => {
     if (value) {
       localStorage.setItem(REFRESH_TOKEN, `${value}`);
     } else {
       localStorage.removeItem(REFRESH_TOKEN);
     }
   },
-  get: () => localStorage.getItem(REFRESH_TOKEN),
-  test: () => !!localStorage.getItem(REFRESH_TOKEN),
+  get: () : string | null => localStorage.getItem(REFRESH_TOKEN),
+  test: () : boolean => !!localStorage.getItem(REFRESH_TOKEN),
 };
 
 export const fetchIngredients = async () => {
-  const options = {
+  const options : RequestInit = {
     ...defaultOptions,
     method: 'GET',
     headers: { 'Content-Type': 'application/json' },
