@@ -24,7 +24,7 @@ import {
   stopPublicFeed,
   startPrivateFeed,
   stopPrivateFeed,
-} from '../../services/actionCreators';
+} from '../../services/store';
 
 import { getIngredientsThunk, getUserThunk, refreshTokenThunk } from '../../services/thunks';
 

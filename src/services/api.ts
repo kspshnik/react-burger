@@ -1,8 +1,8 @@
-import JsCookie from 'js-cookie';
+import {Cookies as JsCookie} from 'typescript-cookie';
 import { BACKEND_ROUTES, JWT_TOKEN, REFRESH_TOKEN } from '../constants';
 
-const endpoint = (route) => (`${BACKEND_ROUTES.base}${route}`);
-export const makeUser = (name, email, password) => {
+const endpoint = (route : string) : string => (`${BACKEND_ROUTES.base}${route}`);
+export const makeUser = (name : string, email : string, password : string) => {
   let res = {};
   if (name) {
     res = { ...res, name };
@@ -25,7 +25,7 @@ const defaultOptions = {
 };
 
 export const jwt = {
-  set: (value) => {
+  set: (value : string) => {
     if (value) {
       JsCookie.set(JWT_TOKEN, `${value}`);
     } else {
