@@ -1,3 +1,4 @@
+import { batch } from 'react-redux';
 import {
   captureOrder,
   getOrderRequested,
@@ -13,16 +14,22 @@ const getOrderThunk : AppThunk = (number : number) => async (dispatch) => {
   dispatch(getOrderRequested());
   try {
     const {
-      orders,
-      success,
-      message = 'При получении данных произошла неизвестная ошибка :(',
+      data: {
+        orders,
+        success,
+        message = 'При получении данных произошла неизвестная ошибка :(',
+      },
     } = await fetchOrder(number);
     if (success && !!orders && orders.length > 0) {
-      dispatch(getOrderSucceed());
-      dispatch(captureOrder(orders[0]));
+      batch(() => {
+        dispatch(getOrderSucceed());
+        dispatch(captureOrder(orders[0]));
+      });
     } else if (success && !!orders && orders.length === 0) {
-      dispatch(getOrderSucceed());
-      dispatch(getOrderNotFound());
+      batch(() => {
+        dispatch(getOrderSucceed());
+        dispatch(getOrderNotFound());
+      });
     } else {
       dispatch(getOrderFailed(message));
     }

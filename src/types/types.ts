@@ -33,6 +33,13 @@ export type TUser = {
   email: string,
 };
 
+export type TOwnerRecord = {
+  createdAt: string,
+  email: string,
+  name: string,
+  updatedAt: string,
+};
+
 export type TOrder = {
   _id: string,
   ingredients: Array<string> | TIngredients,
@@ -42,7 +49,7 @@ export type TOrder = {
   updatedAt: string,
   number: number,
   price?: number,
-  owner?: string,
+  owner?: string | TOwnerRecord,
 };
 
 export type TOrders = Array<TOrder>;

@@ -1,4 +1,4 @@
-import {TIngredients, TOrders} from './types';
+import {TIngredients, TOrder, TOrders} from './types';
 
 export type TAPIIngredients = {
   success: boolean,
@@ -21,4 +21,14 @@ export type TAPIOrders = {
 export type TAPIError = {
   success: boolean,
   message?: string,
+};
+
+export type TAPIOrderRequest = {
+  ingredients: TIngredients,
+};
+
+export type TAPIOrderResponse = {
+  success: boolean,
+  name: string,
+  order: TOrder,
 };

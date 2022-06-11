@@ -1,6 +1,12 @@
 import { Cookies as JsCookie } from 'typescript-cookie';
-import { BACKEND_ROUTES, JWT_TOKEN, REFRESH_TOKEN } from '../constants';
-import {TAPIIngredients, TAPIOrders, TAPIUserProfile} from '../types/api.types';
+import axios, { AxiosInstance, AxiosPromise, AxiosRequestConfig } from 'axios';
+import {
+  API_ROOT, BACKEND_ROUTES, JWT_TOKEN, REFRESH_TOKEN, REGISTER_ROUTE,
+} from '../constants';
+import {
+  TAPIIngredients, TAPIOrderRequest, TAPIOrderResponse, TAPIOrders, TAPIUserProfile,
+} from '../types/api.types';
+import { TIngredients } from '../types/types';
 
 const endpoint = (route : string) : string => (`${BACKEND_ROUTES.base}${route}`);
 export const makeUser = (name : string, email : string, password : string) : TAPIUserProfile => {
@@ -48,46 +54,58 @@ export const token = {
   test: () : boolean => !!localStorage.getItem(REFRESH_TOKEN),
 };
 
-export const fetchIngredients = async () : Promise<TAPIIngredients> => {
-  const options : RequestInit = {
-    ...defaultOptions,
-    method: 'GET',
-    headers: { 'Content-Type': 'application/json' },
-  };
-  const ingredients = await fetch(endpoint(BACKEND_ROUTES.ingredients), options);
-  if (ingredients.ok) {
-    return ingredients.json() as Promise<TAPIIngredients>;
-  }
-  return Promise.reject(ingredients);
+const defaultRequestConfig : AxiosRequestConfig = {
+  baseURL: BACKEND_ROUTES.base,
+  headers: {
+    mode: 'cors',
+    cache: 'no-cache',
+    credentials: 'same-origin',
+    redirect: 'follow',
+    referrerPolicy: 'no-referrer',
+    'Content-Type': 'application/json',
+  },
 };
 
-export const fetchOrder = async (number: number) : Promise<TAPIOrders> => {
-  const options : RequestInit = {
-    ...defaultOptions,
-    method: 'GET',
-    headers: { 'Content-Type': 'application/json' },
-  };
-  const order = await fetch(endpoint(`${BACKEND_ROUTES.orders}/${number}`), options);
-  if (order.ok) {
-    return order.json() as Promise<TAPIOrders>;
+const injectBearerToken = (requestConfig : AxiosRequestConfig) : AxiosRequestConfig => {
+  if (jwt.test()) {
+    return { ...requestConfig, headers: { ...defaultRequestConfig.headers, Authorization: `Bearer ${jwt.get()}` } };
   }
-  return Promise.reject(order);
+  return requestConfig;
 };
 
-export const postOrder = async (order) => {
-  const options = {
+const burgerAPI : AxiosInstance = axios.create(defaultRequestConfig);
+
+export const fetchIngredients = () : AxiosPromise<TAPIIngredients> => {
+  const requestConfig : AxiosRequestConfig = {
+    url: BACKEND_ROUTES.ingredients,
+    method: 'post',
+  };
+  return burgerAPI(requestConfig) as AxiosPromise<TAPIIngredients>;
+};
+
+export const fetchOrder = (number: number) : AxiosPromise<TAPIOrders> => {
+  const requestConfig : AxiosRequestConfig = {
+    url: `${BACKEND_ROUTES.orders}/${number}`,
+    method: 'post',
+  };
+  return burgerAPI(requestConfig) as AxiosPromise<TAPIOrders>;
+};
+
+export const postOrder = async (order : TIngredients) : Promise<TAPIOrderResponse> => {
+  const requestBody : TAPIOrderRequest = { ingredients: order };
+  const options : RequestInit = {
     ...defaultOptions,
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${jwt.get()}`,
     },
-    body: JSON.stringify({ ingredients: order }),
+    body: JSON.stringify(requestBody),
   };
   try {
     const ordered = await fetch(endpoint(BACKEND_ROUTES.orders), options);
     if (ordered.ok) {
-      return await ordered.json();
+      return await (ordered.json() as Promise<TAPIOrderResponse>);
     }
     return await Promise.reject(ordered);
   } catch (err) {
