@@ -7,7 +7,7 @@ import logoutUserThunk from './logout-user-thunk';
 import patchUserThunk from './patch-user-thunk';
 import setProfileForm from './set-profile-form';
 import requestCodeThunk from './request-code-thunk';
-import getOrderThunk from './get-order-thunk';
+import getOrderThunk    from './get-order-thunk';
 
 export {
   getIngredientsThunk,

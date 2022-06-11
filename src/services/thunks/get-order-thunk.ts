@@ -2,11 +2,14 @@ import {
   captureOrder,
   getOrderRequested,
   getOrderSucceed,
-  getOrderFailed, getOrderNotFound,
-}                     from '../actionCreators';
+  getOrderFailed,
+  getOrderNotFound,
+} from '../store';
 import { fetchOrder } from '../api';
+import { AppThunk } from '../store/store';
+import { TAPIError } from '../../types/api.types';
 
-const getOrderThunk = (number) => async (dispatch) => {
+const getOrderThunk : AppThunk = (number : number) => async (dispatch) => {
   dispatch(getOrderRequested());
   try {
     const {
@@ -24,7 +27,8 @@ const getOrderThunk = (number) => async (dispatch) => {
       dispatch(getOrderFailed(message));
     }
   } catch (err) {
-    dispatch(getOrderFailed(err.message));
+    const { message = 'При получении данных произошла неизвестная ошибка :(' } = err as TAPIError;
+    dispatch(getOrderFailed(message));
   }
 };
 export default getOrderThunk;

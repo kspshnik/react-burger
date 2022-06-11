@@ -1,9 +1,9 @@
-import {Cookies as JsCookie} from 'typescript-cookie';
+import { Cookies as JsCookie } from 'typescript-cookie';
 import { BACKEND_ROUTES, JWT_TOKEN, REFRESH_TOKEN } from '../constants';
-import {TAPIIngredients} from "../types/api.types";
+import {TAPIIngredients, TAPIOrders, TAPIUserProfile} from '../types/api.types';
 
 const endpoint = (route : string) : string => (`${BACKEND_ROUTES.base}${route}`);
-export const makeUser = (name : string, email : string, password : string) => {
+export const makeUser = (name : string, email : string, password : string) : TAPIUserProfile => {
   let res = {};
   if (name) {
     res = { ...res, name };
@@ -48,7 +48,7 @@ export const token = {
   test: () : boolean => !!localStorage.getItem(REFRESH_TOKEN),
 };
 
-export const fetchIngredients = async () => {
+export const fetchIngredients = async () : Promise<TAPIIngredients> => {
   const options : RequestInit = {
     ...defaultOptions,
     method: 'GET',
@@ -56,20 +56,20 @@ export const fetchIngredients = async () => {
   };
   const ingredients = await fetch(endpoint(BACKEND_ROUTES.ingredients), options);
   if (ingredients.ok) {
-    return ingredients.json();
+    return ingredients.json() as Promise<TAPIIngredients>;
   }
   return Promise.reject(ingredients);
 };
 
-export const fetchOrder = async (number) => {
-  const options = {
+export const fetchOrder = async (number: number) : Promise<TAPIOrders> => {
+  const options : RequestInit = {
     ...defaultOptions,
     method: 'GET',
     headers: { 'Content-Type': 'application/json' },
   };
   const order = await fetch(endpoint(`${BACKEND_ROUTES.orders}/${number}`), options);
   if (order.ok) {
-    return order.json();
+    return order.json() as Promise<TAPIOrders>;
   }
   return Promise.reject(order);
 };
@@ -87,9 +87,9 @@ export const postOrder = async (order) => {
   try {
     const ordered = await fetch(endpoint(BACKEND_ROUTES.orders), options);
     if (ordered.ok) {
-      return ordered.json();
+      return await ordered.json();
     }
-    return Promise.reject(ordered);
+    return await Promise.reject(ordered);
   } catch (err) {
     return Promise.reject(err);
   }
@@ -107,7 +107,7 @@ export const fetchUser = async () => {
   };
   try {
     const user = await fetch(endpoint(BACKEND_ROUTES.user), options);
-    return user.json();
+    return await user.json();
   } catch (err) {
     return Promise.reject(err);
   }
@@ -142,7 +142,7 @@ export const login = async (email, password) => {
   };
   try {
     const loginResponse = await fetch(endpoint(BACKEND_ROUTES.login), options);
-    return loginResponse.json();
+    return await loginResponse.json();
   } catch (err) {
     return Promise.reject(err);
   }
@@ -159,7 +159,7 @@ export const logout = async () => {
   };
   try {
     const logoutResponse = await fetch(endpoint(BACKEND_ROUTES.logout), options);
-    return logoutResponse.json();
+    return await logoutResponse.json();
   } catch (err) {
     return Promise.reject(err);
   }
@@ -178,9 +178,9 @@ export const registerUser = async (name, email, password) => {
   try {
     const register = await fetch(endpoint(BACKEND_ROUTES.register), options);
     if (register.ok) {
-      return register.json();
+      return await register.json();
     }
-    return Promise.reject(register);
+    return await Promise.reject(register);
   } catch (err) {
     return Promise.reject(err);
   }
@@ -198,9 +198,9 @@ export const sendPasswordCode = async (email) => {
   try {
     const forgot = await fetch(endpoint(BACKEND_ROUTES.forgot), options);
     if (forgot.ok) {
-      return forgot.json();
+      return await forgot.json();
     }
-    return Promise.reject(forgot);
+    return await Promise.reject(forgot);
   } catch (err) {
     return Promise.reject(err);
   }
@@ -221,7 +221,7 @@ export const resetPassword = async (code, password) => {
     if (reset.ok) {
       return reset.json();
     }
-    return Promise.reject(reset);
+    return await Promise.reject(reset);
   } catch (err) {
     return Promise.reject(err);
   }
@@ -239,7 +239,7 @@ export const patchUser = async (name = null, email = null, password = null) => {
   };
   try {
     const user = await fetch(endpoint(BACKEND_ROUTES.user), options);
-    return user.json();
+    return await user.json();
   } catch (err) {
     return Promise.reject(err);
   }

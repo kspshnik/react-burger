@@ -36,9 +36,10 @@ import {
 import socketMiddleware from './websocket-middleware';
 
 import { BACKEND_ROUTES, PRIVATE, PUBLIC } from '../../constants';
+import {TWSActions} from "../../types/store.types";
 
 const publicFeedUrl = `${BACKEND_ROUTES.baseWS}${BACKEND_ROUTES.publicFeed}`;
-const publicFeedActions = {
+const publicFeedActions : TWSActions = {
   wsStart: PUBLIC_FEED_START,
   wsStop: PUBLIC_FEED_STOP,
   connectRequest: requestPublicFeed,
@@ -50,7 +51,7 @@ const publicFeedActions = {
 };
 
 const privateFeedUrl = `${BACKEND_ROUTES.baseWS}${BACKEND_ROUTES.privateFeed}`;
-const privateFeedActions = {
+const privateFeedActions : TWSActions = {
   wsStart: PRIVATE_FEED_START,
   wsStop: PRIVATE_FEED_STOP,
   connectRequest: requestPrivateFeed,

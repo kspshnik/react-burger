@@ -28,13 +28,6 @@ export type TAllIngredients = {
 
 export type TOrderStatus = typeof PENDING | typeof CREATED | typeof DONE;
 
-export type TOwnerData = {
-  name: string,
-  email: string,
-  createdAt: string,
-  updatedAt: string,
-};
-
 export type TUser = {
   name: string,
   email: string,
@@ -49,7 +42,7 @@ export type TOrder = {
   updatedAt: string,
   number: number,
   price?: number,
-  owner?: TOwnerData,
+  owner?: string,
 };
 
 export type TOrders = Array<TOrder>;
