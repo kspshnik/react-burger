@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { FC } from 'react';
 import plStyles from './preloader.module.css';
 
-const Preloader = () => (
+const Preloader : FC = () => (
   <div className={plStyles.preloader}>
     <div className={plStyles.preloader__container}>
       <span className={plStyles.preloader__round} />

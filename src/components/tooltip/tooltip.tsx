@@ -7,7 +7,7 @@ import { ERROR, INFO, OK } from '../../constants';
 import ttStyles from './tooltip.module.css';
 import { TTooltipProps } from '../components.props.types';
 
-const ToolTip : FC<TTooltipProps> = ({ message, type }) => {
+const ToolTip : FC<TTooltipProps> = ({ message, type = INFO }) => {
   const textClass = (kind : string) => {
     switch (kind) {
       case INFO:
@@ -21,10 +21,6 @@ const ToolTip : FC<TTooltipProps> = ({ message, type }) => {
       <p className={`${textClass(type || INFO)}`}>{message}</p>
     </div>
   );
-};
-
-ToolTip.defaultProps = {
-  type: INFO,
 };
 
 export default ToolTip;

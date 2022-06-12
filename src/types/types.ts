@@ -1,5 +1,5 @@
 import {
-  BUN, SAUCE, MAIN, PENDING, CREATED, DONE,
+  BUN, SAUCE, MAIN, PENDING, CREATED, DONE, OK, INFO, ERROR,
 } from '../constants';
 
 export type TIngredientType = typeof BUN | typeof SAUCE | typeof MAIN;
@@ -82,3 +82,9 @@ export type TRibbonItemIngredient = {
 export interface IDropHandler {
   (dropItem : TIngredient) : void;
 }
+
+export interface IGenericHandler {
+  () : void;
+}
+
+export type TTooltipType = typeof OK | typeof INFO | typeof ERROR;

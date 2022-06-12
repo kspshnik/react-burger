@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {ChangeEventHandler, FormEventHandler, useState} from 'react';
 import {
   Redirect, useLocation,
 } from 'react-router-dom';
@@ -7,36 +7,35 @@ import {
   Button, Input, PasswordInput,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../services/store/hooks';
 import LinkBox                      from '../../components/link-box/link-box';
 
 import resetStyles                                    from './reset-page.module.css';
-import { resetResetForm, setResetCode, setResetPass } from '../../services/actionCreators';
+import { resetResetForm, setResetCode, setResetPass } from '../../services/store';
 import { passwordValidity } from '../../services/helpers';
 import resetPasswordThunk   from '../../services/thunks/reset-password-thunk';
 
 const ResetPage = () => {
   const dispatch = useDispatch();
   const { code, password } = useSelector((store) => store.forms.reset);
-  const [isPasswordValid, setPasswordValidity] = useState(false);
+  const [isPasswordValid, setPasswordValidity] = useState<boolean>(false);
   const location = useLocation();
-  const onSubmit = async (evt) => {
+  const onSubmit : FormEventHandler<HTMLFormElement> = (evt) => {
     evt.preventDefault();
     dispatch(resetPasswordThunk());
   };
 
-  const onCodeChange = (evt) => {
+  const onCodeChange : ChangeEventHandler<HTMLInputElement> = (evt) => {
     const { value } = evt.target;
     dispatch(setResetCode(value));
   };
-  const onPasswordChange = (evt) => {
+  const onPasswordChange : ChangeEventHandler<HTMLInputElement> = (evt) => {
     const { value, validity: { valid } } = evt.target;
     dispatch(setResetPass(value));
     setPasswordValidity(valid && passwordValidity(value));
   };
   React.useEffect(() => {
     dispatch(resetResetForm());
-    return () => resetResetForm();
   }, [dispatch]);
 
   if (!location?.state?.from || location?.state?.from !== '/forgot-password') {

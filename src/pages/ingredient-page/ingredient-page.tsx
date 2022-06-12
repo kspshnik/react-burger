@@ -1,7 +1,7 @@
 import React from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { selectIngredient }         from '../../services/actionCreators';
+import { useDispatch, useSelector } from '../../services/store/hooks';
+import { selectIngredient } from '../../services/store';
 
 import ipStyles from './ingredient-page.module.css';
 import IngredientDetails from '../../components/ingredient-details/ingredient-details';
@@ -9,7 +9,7 @@ import { REASON_404_INGREDIENT } from '../../constants';
 
 const IngredientPage = () => {
   const history = useHistory();
-  const { id } = useParams();
+  const { id } = useParams<{ id: string }>();
   const dispatch = useDispatch();
 
   const selected = useSelector((store) => store.ingredients.selected);

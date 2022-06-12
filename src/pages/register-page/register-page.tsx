@@ -1,60 +1,59 @@
-import React, { useRef, useState } from 'react';
+import React, {ChangeEventHandler, FC, FormEventHandler, MouseEventHandler, useRef, useState} from 'react';
 // import { useHistory } from 'react-router-dom';
-
-import { useDispatch, useSelector } from 'react-redux';
 
 import {
   Button, EmailInput, Input, PasswordInput,
 } from '@ya.praktikum/react-developer-burger-ui-components';
+import { useDispatch, useSelector } from '../../services/store/hooks';
+
 
 import LinkBox from '../../components/link-box/link-box';
 
 import {
   resetRegisterForm, setRegisterEmail, setRegisterName, setRegisterPass,
-} from '../../services/actionCreators';
+} from '../../services/store';
 
 import { nameValidity, emailValidity, passwordValidity } from '../../services/helpers';
 import loginStyles       from './register-page.module.css';
 import registerUserThunk from '../../services/thunks/register-user-thunk';
 
-const RegisterPage = () => {
+const RegisterPage : FC = () => {
   const { name, email, password } = useSelector((store) => store.forms.register);
-  const [isNameValid, setNameValidity] = useState(false);
-  const [isEmailValid, setEmailValidity] = useState(false);
-  const [isPasswordValid, setPasswordValidity] = useState(false);
+  const [isNameValid, setNameValidity] = useState<boolean>(false);
+  const [isEmailValid, setEmailValidity] = useState<boolean>(false);
+  const [isPasswordValid, setPasswordValidity] = useState<boolean>(false);
 
   //  const history = useHistory();
   const dispatch = useDispatch();
   const inputRef = useRef(null);
 
-  const onSubmit = async (evt) => {
+  const onSubmit : FormEventHandler<HTMLFormElement> = (evt) => {
     evt.preventDefault();
     dispatch(registerUserThunk());
   };
 
-  const onNameChange = (evt) => {
+  const onNameChange : ChangeEventHandler<HTMLInputElement> = (evt) => {
     const { value, validity: { valid } } = evt.target;
     setRegisterName(value);
     setNameValidity(valid && nameValidity(value));
   };
 
-  const onEmailChange = (evt) => {
+  const onEmailChange : ChangeEventHandler<HTMLInputElement> = (evt) => {
     const { value, validity: { valid } } = evt.target;
     setRegisterEmail(value);
     setEmailValidity(valid && emailValidity(value));
   };
-  const onPasswordChange = (evt) => {
+  const onPasswordChange : ChangeEventHandler<HTMLInputElement> = (evt) => {
     const { value, validity: { valid } } = evt.target;
     setRegisterPass(value);
     setPasswordValidity(valid && passwordValidity(value));
   };
-  const onIconClick = () => {
+  const onIconClick : MouseEventHandler = () => {
     setTimeout(() => inputRef.current.focus(), 0);
   };
 
   React.useEffect(() => {
     dispatch(resetRegisterForm());
-    return () => resetRegisterForm();
   }, [dispatch]);
 
   return (

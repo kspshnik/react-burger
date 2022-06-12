@@ -1,11 +1,11 @@
 import React from 'react';
 
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../services/store/hooks';
 import oaStyles from './order-accept.module.css';
 import AcceptedImg from '../../assets/images/order-accepted.png';
 
 const OrderAccept = () => {
-  const orderNumber = useSelector((state) => state.orders.accepted.order.number);
+  const orderNumber = useSelector((state) => state.orders.accepted?.order.number || null);
   return (
     <div className={`${oaStyles.content} pl-25 pr-25`}>
       <h3 className={`${oaStyles.order} text text_type_digits-large pt-4 pb-4`}>{orderNumber}</h3>

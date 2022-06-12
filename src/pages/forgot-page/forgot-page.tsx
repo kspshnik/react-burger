@@ -1,33 +1,32 @@
-import React from 'react';
+import React, {ChangeEventHandler, FC, FormEventHandler} from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { Button, EmailInput } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../services/store/hooks';
 import LinkBox                      from '../../components/link-box/link-box';
 
 import forgotStyles                        from './forgot-page.module.css';
-import { resetForgotForm, setForgotEmail } from '../../services/actionCreators';
+import { resetForgotForm, setForgotEmail } from '../../services/store';
 import { requestCodeThunk }                from '../../services/thunks';
 
-const ForgotPage = () => {
+const ForgotPage : FC = () => {
   const { email } = useSelector((state) => state.forms.forgot);
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const onSubmit = async (evt) => {
+  const onSubmit : FormEventHandler<HTMLFormElement> = (evt) => {
     evt.preventDefault();
     dispatch(requestCodeThunk());
     history.replace({ pathname: '/reset-password', state: { from: '/forgot-password' } });
   };
 
-  const onEmailChange = (evt) => {
+  const onEmailChange : ChangeEventHandler<HTMLInputElement> = (evt) => {
     dispatch(setForgotEmail(evt.target.value));
   };
 
   React.useEffect(() => {
     dispatch(resetForgotForm());
-    return () => resetForgotForm();
   }, [dispatch]);
 
   return (

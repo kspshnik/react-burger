@@ -1,30 +1,37 @@
-import React from 'react';
+import React, { FC } from 'react';
 
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import PropTypes from 'prop-types';
-import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
+import { useDispatch, useSelector } from '../../services/store/hooks';
 import opStyles from './order-plate.module.css';
 import {
   DONE, PRIVATE, PUBLIC,
-}                                                      from '../../constants';
-import ContentRibbon                                   from '../content-ribbon/content-ribbon';
+} from '../../constants';
+import ContentRibbon from '../content-ribbon/content-ribbon';
 import { calculateTotal, prepareDateTime, statusName } from '../../services/helpers';
-import { captureOrder }                                from '../../services/actionCreators';
+import { captureOrder } from '../../services/store';
+import { TOrder } from '../../types/types';
+import { TFeedType } from '../../types/websocket.types';
 
-const OrderPlate = ({ order, feedType }) => {
+type TOrderPlateProps = {
+  order: TOrder,
+  feedType: TFeedType,
+};
+
+const OrderPlate : FC<TOrderPlateProps> = ({ order, feedType }) => {
   const dispatch = useDispatch();
   const location = useLocation();
   const history = useHistory();
 
   const {
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     createdAt, name, number, status, ingredients, _id,
   } = order;
   const { all } = useSelector((state) => state.ingredients);
 
   const isDone = () => status === DONE;
-  const total = calculateTotal(all, ingredients);
+  const total = calculateTotal(all!, ingredients as Array<string>);
   const onClick = () => {
     dispatch(captureOrder(order));
     const pathToGo = feedType === PUBLIC ? `/feed/${_id}/?number=${number}` : `/profile/orders/${_id}/?number=${number}`;
@@ -52,7 +59,7 @@ const OrderPlate = ({ order, feedType }) => {
         )}
       </div>
       <div className={opStyles.order__line}>
-        <ContentRibbon content={ingredients} />
+        <ContentRibbon content={ingredients as Array<string>} />
         <div className={opStyles.order__price}>
           <p className='text text_type_digits-default text_color_primary mr-2'>{total}</p>
           <CurrencyIcon type='primary' />
@@ -61,19 +68,6 @@ const OrderPlate = ({ order, feedType }) => {
     </button>
 
   );
-};
-
-OrderPlate.propTypes = {
-  order: PropTypes.shape({
-    _id: PropTypes.string.isRequired,
-    createdAt: PropTypes.string.isRequired,
-    updatedAt: PropTypes.string,
-    name: PropTypes.string.isRequired,
-    number: PropTypes.number.isRequired,
-    status: PropTypes.string.isRequired,
-    ingredients: PropTypes.arrayOf(PropTypes.string).isRequired,
-  }).isRequired,
-  feedType: PropTypes.string.isRequired,
 };
 
 export default OrderPlate;

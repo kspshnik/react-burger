@@ -1,10 +1,16 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, {FC} from 'react';
 
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import inpStyles from './ingredient-plate.module.css';
 
-const IngredientPlate = ({
+type TIngredientPlateProps = {
+  img: string,
+  name: string,
+  qty: number,
+  price: number,
+};
+
+const IngredientPlate : FC<TIngredientPlateProps> = ({
   img, name, qty, price,
 }) => (
   <li className={`${inpStyles.plate} mb-4`}>
@@ -22,12 +28,5 @@ const IngredientPlate = ({
     </div>
   </li>
 );
-
-IngredientPlate.propTypes = {
-  img: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  qty: PropTypes.number.isRequired,
-  price: PropTypes.number.isRequired,
-};
 
 export default IngredientPlate;

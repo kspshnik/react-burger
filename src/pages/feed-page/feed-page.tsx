@@ -1,16 +1,16 @@
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { FC } from 'react';
+import { useDispatch, useSelector } from '../../services/store/hooks';
 
-import { startPublicFeed, stopPublicFeed } from '../../services/actionCreators';
+import { startPublicFeed, stopPublicFeed } from '../../services/store';
 import TwoColumns  from '../../components/two-columns/two-columns';
 import FeedInfo    from '../../components/feed-info/feed-info';
 import OrderRibbon from '../../components/order-ribbon/order-ribbon';
-import { PUBLIC } from '../../constants';
+import { PUBLIC }  from '../../constants';
 
-import fpStyles from './feed-page.module.css';
+import fpStyles        from './feed-page.module.css';
 import LoaderProtector from '../../components/loader-protector/loader-protector';
 
-const FeedPage = () => {
+const FeedPage : FC = () => {
   const dispatch = useDispatch();
   const isFeedLoaded = useSelector((state) => !!state?.feed?.public?.orders);
   const isIngredientsLoaded = useSelector((state) => !!state?.ingredients?.all);

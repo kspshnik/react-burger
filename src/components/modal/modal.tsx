@@ -1,18 +1,26 @@
-import React, { useEffect, useMemo } from 'react';
+import React, {
+  FC, ReactNode, useEffect, useMemo,
+} from 'react';
 
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import mdStyles from './modal.module.css';
 import ModalOverlay from '../modal-overlay/modal-overlay';
+import { IGenericHandler } from '../../types/types';
 
-const Modal = ({
+type TModalProps = {
+  onClose: IGenericHandler,
+  title?: string | null,
+  children: ReactNode | Array<ReactNode>,
+};
+
+const Modal : FC<TModalProps> = ({
   onClose, title, children,
 }) => {
-  const portalRoot = useMemo(() => document.getElementById('modals'), []);
+  const portalRoot = useMemo(() => document.getElementById('modals'), []) as Element;
   useEffect(() => {
-    const handleEscClose = (evt) => {
+    const handleEscClose = (evt : KeyboardEvent) => {
       if (evt.key === 'Escape') {
         onClose();
       }
@@ -48,12 +56,6 @@ const Modal = ({
 };
 Modal.defaultProps = {
   title: null,
-};
-
-Modal.propTypes = {
-  onClose: PropTypes.func.isRequired,
-  title: PropTypes.string,
-  children: PropTypes.element.isRequired,
 };
 
 export default Modal;

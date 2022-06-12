@@ -1,14 +1,17 @@
-import React from 'react';
+import React, { FC } from 'react';
 
-import PropTypes from 'prop-types';
-
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../services/store/hooks';
 
 import icStyles from './ingredients-grid.module.css';
 
 import IngredientCard from '../ingredient-card/ingredient-card';
+import { TIngredientType } from '../../types/types';
 
-const IngredientsGrid = ({ type }) => {
+type TIngredientsGridProps = {
+  type: TIngredientType
+};
+
+const IngredientsGrid : FC<TIngredientsGridProps> = ({ type }) => {
   const { all } = useSelector((state) => state.ingredients);
   const { bun, choice } = useSelector((state) => state.orders);
   const order = React.useMemo(() => {
@@ -24,9 +27,9 @@ const IngredientsGrid = ({ type }) => {
     return Object.values(all);
   }, [all]);
 
-  const count = (id) => {
+  const count = (id : string) => {
     let preCount = order?.filter((item) => item?._id === id).length;
-    if (all[id].type === 'bun' && order?.map((item) => item?._id).includes(id)) {
+    if (all![id].type === 'bun' && order?.map((item) => item?._id).includes(id)) {
       preCount += 1;
     }
     return preCount;
@@ -42,10 +45,6 @@ const IngredientsGrid = ({ type }) => {
       ))}
     </ul>
   );
-};
-
-IngredientsGrid.propTypes = {
-  type: PropTypes.string.isRequired,
 };
 
 export default IngredientsGrid;

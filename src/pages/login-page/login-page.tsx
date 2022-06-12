@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, {ChangeEventHandler, FC, FormEventHandler, useState} from 'react';
 
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../services/store/hooks';
 
 import { Button, EmailInput, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 
@@ -8,27 +8,27 @@ import LinkBox from '../../components/link-box/link-box';
 
 import loginStyles                                     from './login-page.module.css';
 import { loginUserThunk }                              from '../../services/thunks';
-import { resetLoginForm, setLoginEmail, setLoginPass } from '../../services/actionCreators';
+import { resetLoginForm, setLoginEmail, setLoginPass } from '../../services/store';
 import { emailValidity, passwordValidity }             from '../../services/helpers';
 
-const LoginPage = () => {
+const LoginPage : FC = () => {
   const { email, password } = useSelector((state) => state.forms.login);
-  const [isEmailValid, setEmailValidity] = useState(false);
-  const [isPasswordValid, setPasswordValidity] = useState(false);
+  const [isEmailValid, setEmailValidity] = useState<boolean>(false);
+  const [isPasswordValid, setPasswordValidity] = useState<boolean>(false);
 
   const dispatch = useDispatch();
 
-  const onSubmit = async (evt) => {
+  const onSubmit : FormEventHandler<HTMLFormElement> = (evt) => {
     evt.preventDefault();
     dispatch(loginUserThunk());
   };
 
-  const onEmailChange = (evt) => {
+  const onEmailChange : ChangeEventHandler<HTMLInputElement> = (evt) => {
     const { value, validity: { valid } } = evt.target;
     dispatch(setLoginEmail(value));
     setEmailValidity(valid && emailValidity(value));
   };
-  const onPasswordChange = (evt) => {
+  const onPasswordChange : ChangeEventHandler<HTMLInputElement> = (evt) => {
     const { value, validity: { valid } } = evt.target;
     dispatch(setLoginPass(value));
     setPasswordValidity(valid && passwordValidity(value));
@@ -36,7 +36,6 @@ const LoginPage = () => {
 
   React.useEffect(() => {
     dispatch(resetLoginForm());
-    return () => dispatch(resetLoginForm());
   }, [dispatch]);
 
   return (

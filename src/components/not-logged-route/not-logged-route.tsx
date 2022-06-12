@@ -1,11 +1,15 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import { React } from 'react';
-import PropTypes from 'prop-types';
+import React, { FC, ReactNode } from 'react';
 
-import { useSelector } from 'react-redux';
 import { Redirect, Route } from 'react-router-dom';
+import { useSelector } from '../../services/store/hooks';
 
-const NotLoggedRoute = ({ children, ...rest }) => {
+type TNotLoggedRouteProps = {
+  children: ReactNode | Array<ReactNode>,
+  [key:string]: any;
+};
+
+const NotLoggedRoute : FC<TNotLoggedRouteProps> = ({ children, ...rest }) => {
   const { loggedIn } = useSelector((state) => state.user);
 
   return (
@@ -15,10 +19,6 @@ const NotLoggedRoute = ({ children, ...rest }) => {
         <Redirect to={location.state?.from || '/'} />
       ) : (children))} />
   );
-};
-
-NotLoggedRoute.propTypes = {
-  children: PropTypes.node.isRequired,
 };
 
 export default NotLoggedRoute;

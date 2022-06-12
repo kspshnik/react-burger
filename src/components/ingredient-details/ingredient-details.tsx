@@ -1,14 +1,18 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+// eslint-disable @typescript-eslint/naming-convention
+
+import React, { FC } from 'react';
+
+import { useSelector } from '../../services/store/hooks';
 
 import idStyles from './ingredient-details.module.css';
 
-const IngredientDetails = () => {
+const IngredientDetails : FC = () => {
   const {
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     name, image_large, proteins, fat,
     carbohydrates,
     calories,
-  } = useSelector((state) => state.ingredients.selected);
+  } = useSelector((state) => state.ingredients.selected) ?? {};
   return (
     <div className={`${idStyles.content} pl-25 pr-25`}>
       <img className={`${idStyles.image} pl-5 pr-5`} src={image_large} alt={name} />

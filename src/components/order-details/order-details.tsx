@@ -1,6 +1,5 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
+import React, {FC, ReactNode} from 'react';
+import { useSelector } from '../../services/store/hooks';
 
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useLocation }                                 from 'react-router-dom';
@@ -8,22 +7,28 @@ import { calculateTotal, prepareDateTime, statusName } from '../../services/help
 import IngredientPlate                                 from '../ingredient-plate/ingredient-plate';
 
 import odStyles from './order-details.module.css';
+import {TIngredient, TOrder} from "../../types/types";
 
-const OrderDetails = ({ order }) => {
+type TOrderDetailsProps = {
+  order: TOrder,
+}
+
+const OrderDetails : FC<TOrderDetailsProps> = ({ order }) => {
   const {
     createdAt, name, number, status, ingredients,
   } = order;
-  const { all } = useSelector((state) => state.ingredients);
-  const uniqueContent = Array.from(new Set(ingredients));
+  const { all } = useSelector((state) => state.ingredients || {});
+  const uniqueContent = Array.from(new Set(Object.keys(ingredients)));
   const { state } = useLocation();
-  const total = calculateTotal(all, ingredients);
-  const makeIngredient = (itm) => {
-    if (itm) {
+  const total = calculateTotal(all!, ingredients as Array<string>);
+  const makeIngredient = (itm : string) : ReactNode => {
+    const ingrs = ingredients as Array<string>;
+    if (all && itm && all[itm] && Array.isArray(ingredients)) {
       return (
         <IngredientPlate
           price={all[itm].price}
           img={all[itm].image_mobile}
-          qty={ingredients.filter((ing) => ing === itm).length}
+          qty={ingrs.filter((ing) => ing === itm).length}
           name={all[itm].name}
           key={itm} />
       );
@@ -59,18 +64,6 @@ const OrderDetails = ({ order }) => {
       </section>
     </div>
   );
-};
-
-OrderDetails.propTypes = {
-  order: PropTypes.shape({
-    _id: PropTypes.string.isRequired,
-    createdAt: PropTypes.string.isRequired,
-    updatedAt: PropTypes.string,
-    name: PropTypes.string.isRequired,
-    number: PropTypes.number.isRequired,
-    status: PropTypes.string.isRequired,
-    ingredients: PropTypes.arrayOf(PropTypes.string).isRequired,
-  }).isRequired,
 };
 
 export default OrderDetails;

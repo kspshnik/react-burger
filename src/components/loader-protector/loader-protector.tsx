@@ -1,9 +1,13 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { FC, ReactNode } from 'react';
 import Preloader from '../preloader/preloader';
 import lpStyles from '../two-columns/two-columns.module.css';
 
-const LoaderProtector = ({ isLoaded, children }) => (
+type TLoaderProtectorProps = {
+  isLoaded: boolean,
+  children: ReactNode | Array<ReactNode>,
+};
+
+const LoaderProtector : FC<TLoaderProtectorProps> = ({ isLoaded, children }) => (
   isLoaded ? (
     <div>
       {children}
@@ -11,10 +15,5 @@ const LoaderProtector = ({ isLoaded, children }) => (
   )
     : (<div className={lpStyles.loading}><Preloader /></div>)
 );
-
-LoaderProtector.propTypes = {
-  children: PropTypes.element.isRequired,
-  isLoaded: PropTypes.bool.isRequired,
-};
 
 export default LoaderProtector;

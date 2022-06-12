@@ -1,23 +1,23 @@
 // eslint-disable @typescript-eslint/naming-convention
-import React, {FC, MouseEventHandler} from 'react';
+import React, { FC, KeyboardEventHandler, MouseEventHandler } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
-import { useDispatch } from '../../services/store/hooks';
 
 import { useDrag } from 'react-dnd';
 
-import { Counter, CurrencyIcon }                    from '@ya.praktikum/react-developer-burger-ui-components';
+import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { useDispatch } from '../../services/store/hooks';
 import { selectIngredient, insertInterior, setBun } from '../../services/store';
-import { BUN, INGREDIENT }                          from '../../constants';
+import { BUN, INGREDIENT } from '../../constants';
 
-import icStyles        from './ingredient-card.module.css';
-import { TIngredient } from "../../types/types";
+import icStyles from './ingredient-card.module.css';
+import { TIngredient } from '../../types/types';
 
 type TIngredientCardProps = {
   data: TIngredient,
-  count: number,
+  count?: number,
 };
 
-const IngredientCard : FC<TIngredientCardProps> = ({ data, count }) => {
+const IngredientCard : FC<TIngredientCardProps> = ({ data, count = 0 }) => {
   const {
     // eslint-disable-next-line @typescript-eslint/naming-convention
     name, price, image, type, _id,
@@ -40,7 +40,7 @@ const IngredientCard : FC<TIngredientCardProps> = ({ data, count }) => {
       dispatch(insertInterior(data));
     }
   };
-  const handleKeyPressOnName = (evt) => {
+  const handleKeyPressOnName : KeyboardEventHandler<HTMLButtonElement> = (evt) => {
     if ((evt.target === evt.currentTarget) && (evt.key === 'Enter' || evt.key === 'Space')) {
       if (type === BUN) {
         dispatch(setBun(data));
@@ -49,11 +49,11 @@ const IngredientCard : FC<TIngredientCardProps> = ({ data, count }) => {
       }
     }
   };
-  const handleImgClick = () => {
+  const handleImgClick : MouseEventHandler<HTMLButtonElement> = () => {
     dispatch(selectIngredient(data));
     history.push({ pathname: `/ingredients/${_id}`, state: { background: location } });
   };
-  const handleKeyPressOnImg = (evt) => {
+  const handleKeyPressOnImg : KeyboardEventHandler<HTMLButtonElement> = (evt) => {
     if ((evt.target === evt.currentTarget) && (evt.key === 'Enter' || evt.key === 'Space')) {
       dispatch(selectIngredient(data));
     }
@@ -80,7 +80,7 @@ const IngredientCard : FC<TIngredientCardProps> = ({ data, count }) => {
         <button
           className={`${icStyles.add} text text_type_main-default`}
           type='button'
-          tabIndex='0'
+          tabIndex={0}
           onClick={handleNameClick}
           onKeyPress={handleKeyPressOnName}>
           {name}
@@ -94,21 +94,4 @@ IngredientCard.defaultProps = {
   count: 0,
 };
 
-IngredientCard.propTypes = {
-  data: PropTypes.shape({
-    _id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    type: PropTypes.string.isRequired,
-    proteins: PropTypes.number.isRequired,
-    fat: PropTypes.number.isRequired,
-    carbohydrates: PropTypes.number.isRequired,
-    calories: PropTypes.number.isRequired,
-    price: PropTypes.number.isRequired,
-    image: PropTypes.string.isRequired,
-    image_mobile: PropTypes.string.isRequired,
-    image_large: PropTypes.string.isRequired,
-  }).isRequired,
-  count: PropTypes.number,
-
-};
 export default IngredientCard;

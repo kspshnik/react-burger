@@ -2,10 +2,10 @@ import React from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '../../services/store/hooks';
 import nfStyles from './not-found-page.module.css';
 import { REASON_404_GENERAL } from '../../constants';
-import { clearOrderNotFound } from '../../services/actionCreators';
+import { clearOrderNotFound } from '../../services/store';
 
 const NotFoundPage = () => {
   const history = useHistory();
