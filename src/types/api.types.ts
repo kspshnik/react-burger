@@ -1,9 +1,14 @@
-import {TIngredients, TOrder, TOrders} from './types';
+import {
+  TIngredients, TOrder, TOrders, TUser,
+} from './types';
 
-export type TAPIIngredients = {
+export type TAPIBasicResponseData = {
   success: boolean,
-  data: TIngredients,
   message?: string,
+};
+
+export type TAPIIngredientsResponseData = TAPIBasicResponseData & {
+  data: TIngredients,
 };
 
 export type TAPIUserProfile = {
@@ -12,10 +17,8 @@ export type TAPIUserProfile = {
   password?: string,
 };
 
-export type TAPIOrders = {
-  success: boolean,
+export type TAPIOrdersResponseData = TAPIBasicResponseData & {
   orders: TOrders,
-  message?: string,
 };
 
 export type TAPIError = {
@@ -23,12 +26,41 @@ export type TAPIError = {
   message?: string,
 };
 
-export type TAPIOrderRequest = {
+export type TAPIPostOrderRequestData = {
   ingredients: TIngredients,
 };
 
-export type TAPIOrderResponse = {
-  success: boolean,
+export type TAPIOrderResponseData = TAPIBasicResponseData & {
   name: string,
   order: TOrder,
 };
+
+export type TAPIBasicAuth = {
+  accessToken: string,
+  refreshToken: string,
+};
+
+export type TAPIAuthResponseData = TAPIBasicResponseData & TAPIBasicAuth;
+
+export type TAPIUserData = {
+  user: TUser,
+};
+
+export type TAPIUserResponseData = TAPIBasicResponseData & TAPIBasicAuth & TAPIUserData;
+
+export type TAPIAuthUserResponseData = TAPIBasicResponseData & TAPIUserData;
+
+export type TAPITokenRequestData = {
+  token: string,
+};
+
+export type TAPICodeRequestData = {
+  email: string;
+};
+
+export type TAPIResetRequestData = {
+  password: string,
+  token: string,
+};
+
+export type TAPIPatchUserResponseData = TAPIBasicResponseData & TAPIUserData;
