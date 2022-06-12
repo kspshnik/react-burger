@@ -6,6 +6,8 @@ import { AppThunk } from '../store/store';
 import { TAllIngredients } from '../../types/types';
 import { TAPIError } from '../../types/api.types';
 import {batch} from "react-redux";
+import {getAxiosErrorMessage} from "../helpers";
+import {AxiosError} from "axios";
 
 const getIngredientsThunk : AppThunk = () => async (dispatch) => {
   dispatch(ingredientsRequested());
@@ -14,7 +16,7 @@ const getIngredientsThunk : AppThunk = () => async (dispatch) => {
       data: {
         success,
         data,
-        message = 'При получении данных произошла неизвестная ошибка :(',
+        message = 'Неизвестная ошибка при получении ингредиентов :(',
       },
     } = await fetchIngredients();
     if (success && !!data) {
@@ -29,7 +31,8 @@ const getIngredientsThunk : AppThunk = () => async (dispatch) => {
       dispatch(refreshFailed(message));
     }
   } catch (err) {
-    const { message = 'При получении данных произошла неизвестная ошибка :(' } = err as TAPIError;
+    const message = getAxiosErrorMessage(err as AxiosError<TAPIError>)
+      ?? 'Неизвестная ошибка при получении ингредиентов :(';
     dispatch(ingredientsFailed(message));
   }
 };

@@ -1,9 +1,9 @@
-import React, { useRef } from 'react';
+import React, {FC, useRef} from 'react';
 
 import { useInView } from 'react-intersection-observer';
 
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '../../services/store/hooks';
 import biStyles from './burger-ingredients.module.css';
 
 import ScrollArea from '../scroll-area/scroll-area';
@@ -11,9 +11,10 @@ import DropZone   from '../drop-zone/drop-zone';
 
 import IngredientsGrid from '../ingredients-grid/ingredients-grid';
 import { ORDER }        from '../../constants';
-import { dropInterior } from '../../services/actionCreators';
+import { dropInterior } from '../../services/store';
+import {TIngredient} from "../../types/types";
 
-const BurgerIngredients = () => {
+const BurgerIngredients : FC = () => {
   const baseRef = useRef(null);
   const bunsRef = useRef(null);
   const saucesRef = useRef(null);
@@ -33,7 +34,7 @@ const BurgerIngredients = () => {
     threshold: 0.25,
     root: baseRef.current,
   });
-  const handleDrop = (item) => dispatch(dropInterior(item));
+  const handleDrop = (item : TIngredient) => dispatch(dropInterior(item));
   return (
     <section className={`${biStyles.section} mb-10`}>
       <header className={`${biStyles.header} pt-10 pb-5`}>
@@ -45,6 +46,7 @@ const BurgerIngredients = () => {
         type={ORDER}
         handleDrop={handleDrop}>
         <nav className={biStyles.menu}>
+          {/* TODO: разобраться с типизацией рефов */}
           <Tab
             active={bunsInView}
             value='Булки'

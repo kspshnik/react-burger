@@ -1,16 +1,21 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useDispatch } from 'react-redux';
-import PropTypes from 'prop-types';
 import { useDrag } from 'react-dnd';
+import { useDispatch } from '../../services/store/hooks';
 import cgeStyles from './constructor-grid-element.module.css';
 import {
   dropInterior, moveInterior,
-}                from '../../services/actionCreators';
+} from '../../services/store';
 import { ORDER } from '../../constants';
 import DropZone from '../drop-zone/drop-zone';
+import { TIngredient } from '../../types/types';
 
-const ConstructorGridElement = ({ item, index }) => {
+type TConstructorGridElementProps = {
+  item: TIngredient & { index: number },
+  index: number,
+};
+
+const ConstructorGridElement : FC<TConstructorGridElementProps> = ({ item, index }) => {
   const dispatch = useDispatch();
 
   const [{ isOnTheWay }, dragRef] = useDrag(() => ({
@@ -21,8 +26,8 @@ const ConstructorGridElement = ({ item, index }) => {
     }),
   }), [item]);
 
-  const handleDrop = (dropItem) => {
-    dispatch(moveInterior({ingredient: dropItem, to: index}));
+  const handleDrop = (dropItem : TIngredient) => {
+    dispatch(moveInterior({ ingredient: dropItem, to: index }));
   };
 
   return (
@@ -46,25 +51,6 @@ const ConstructorGridElement = ({ item, index }) => {
     </li>
 
   );
-};
-
-ConstructorGridElement.propTypes = {
-  item: PropTypes.shape({
-    _id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    type: PropTypes.string.isRequired,
-    proteins: PropTypes.number.isRequired,
-    fat: PropTypes.number.isRequired,
-    carbohydrates: PropTypes.number.isRequired,
-    calories: PropTypes.number.isRequired,
-    price: PropTypes.number.isRequired,
-    image: PropTypes.string.isRequired,
-    image_mobile: PropTypes.string.isRequired,
-    image_large: PropTypes.string.isRequired,
-    bcid: PropTypes.string.isRequired,
-    index: PropTypes.number.isRequired,
-  }).isRequired,
-  index: PropTypes.number.isRequired,
 };
 
 export default ConstructorGridElement;

@@ -1,19 +1,20 @@
-import React from 'react';
+import React, { FC } from 'react';
 
 import { Button, ConstructorElement, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import { useSelector, useDispatch } from 'react-redux';
-
 import { useHistory, useLocation } from 'react-router-dom';
-import bcStyles        from './burger-constructor.module.css';
-import ScrollArea      from '../scroll-area/scroll-area';
-import ConstructorGrid from '../constructor-grid/constructor-grid';
-import placeOrderThunk            from '../../services/thunks/place-order-thunk';
-import { insertInterior, setBun } from '../../services/actionCreators';
-import { BUN, INGREDIENT }        from '../../constants';
-import DropZone from '../drop-zone/drop-zone';
+import { useSelector, useDispatch } from '../../services/store/hooks';
 
-const BurgerConstructor = () => {
+import bcStyles from './burger-constructor.module.css';
+import ScrollArea from '../scroll-area/scroll-area';
+import ConstructorGrid from '../constructor-grid/constructor-grid';
+import placeOrderThunk from '../../services/thunks/place-order-thunk';
+import { insertInterior, setBun } from '../../services/store';
+import { BUN, INGREDIENT } from '../../constants';
+import DropZone from '../drop-zone/drop-zone';
+import {IDropHandler, TIngredient} from '../../types/types';
+
+const BurgerConstructor : FC = () => {
   const { all } = useSelector((store) => store.ingredients);
   const { bun, choice } = useSelector((state) => state.orders);
   const { loggedIn } = useSelector((state) => state.user);
@@ -24,7 +25,7 @@ const BurgerConstructor = () => {
 
   const isEmpty = () => !(!!bun || choice.length > 0);
 
-  const handleDrop = (dropItem) => {
+  const handleDrop : IDropHandler = (dropItem) => {
     if (dropItem.type === BUN) {
       dispatch(setBun(dropItem));
     } else {
@@ -45,7 +46,7 @@ const BurgerConstructor = () => {
 
   const handlePlaceOrderClick = () => {
     if (loggedIn) {
-      const totalOrder = [bun, ...choice].map(((item) => item._id));
+      const totalOrder = [bun, ...choice].map(((item) => item?._id));
       dispatch(placeOrderThunk(totalOrder));
     } else {
       history.push({ pathname: '/login', state: { from: location } });
@@ -96,6 +97,7 @@ const BurgerConstructor = () => {
           </p>
           <CurrencyIcon type='primary' />
         </div>
+        {/* TODO: разобраться с элементами из библиотеки, посмотреть в слаке историю */}
         <Button
           type='primary'
           size='medium'

@@ -5,10 +5,10 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import PropTypes from 'prop-types';
 import LoaderProtector from '../../components/loader-protector/loader-protector';
-import CenterInfo from '../../components/center-info/center-info';
-import OrderDetails from '../../components/order-details/order-details';
+import CenterInfo      from '../../components/center-info/center-info';
+import OrderDetails    from '../../components/order-details/order-details';
 import { PRIVATE, PUBLIC, REASON_404_ORDER } from '../../constants';
-import { getOrderThunk } from '../../services/thunks';
+import { getOrderThunk }                     from '../../services/thunks';
 
 const OrderPage = ({ feedType }) => {
   const location = useLocation();

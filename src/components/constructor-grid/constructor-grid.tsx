@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../services/store/hooks';
 import cgStyles from './constructor-grid.module.css';
 
 import ConstructorGridElement from '../constructor-grid-element/constructor-grid-element';

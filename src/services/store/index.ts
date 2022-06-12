@@ -56,22 +56,29 @@ import {
   PUBLIC_FEED_STOP,
   startPrivateFeed,
   stopPrivateFeed,
-  setPrivateFeedOpened,
-  setPrivateFeedClosed,
-  onPrivateFeedMessage,
-  requestPrivateFeed,
-  discardPrivateFeed,
   startPublicFeed,
   stopPublicFeed,
+} from './feed-slice';
+import {
+  captureOrder,
+  releaseOrder,
+} from './order-select-sub-slice';
+
+import {
   setPublicFeedOpened,
   setPublicFeedClosed,
   onPublicFeedMessage,
   requestPublicFeed,
   discardPublicFeed,
-  captureOrder,
-  releaseOrder,
-} from './feed-slice';
+} from './public-feed-sub-slice';
 
+import {
+  setPrivateFeedOpened,
+  setPrivateFeedClosed,
+  onPrivateFeedMessage,
+  requestPrivateFeed,
+  discardPrivateFeed,
+} from './private-feed-sub-slice';
 import {
   setIngredients,
   selectIngredient,

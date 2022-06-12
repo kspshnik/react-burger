@@ -1,18 +1,25 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+// eslint-disable @typescript-eslint/naming-convention
+import React, {FC, MouseEventHandler} from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '../../services/store/hooks';
 
 import { useDrag } from 'react-dnd';
 
 import { Counter, CurrencyIcon }                    from '@ya.praktikum/react-developer-burger-ui-components';
-import { selectIngredient, insertInterior, setBun } from '../../services/actionCreators';
+import { selectIngredient, insertInterior, setBun } from '../../services/store';
 import { BUN, INGREDIENT }                          from '../../constants';
 
-import icStyles from './ingredient-card.module.css';
+import icStyles        from './ingredient-card.module.css';
+import { TIngredient } from "../../types/types";
 
-const IngredientCard = ({ data, count }) => {
+type TIngredientCardProps = {
+  data: TIngredient,
+  count: number,
+};
+
+const IngredientCard : FC<TIngredientCardProps> = ({ data, count }) => {
   const {
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     name, price, image, type, _id,
   } = data;
   const dispatch = useDispatch();
@@ -26,7 +33,7 @@ const IngredientCard = ({ data, count }) => {
     }),
   }), [data]);
 
-  const handleNameClick = () => {
+  const handleNameClick : MouseEventHandler<HTMLButtonElement> = () => {
     if (type === BUN) {
       dispatch(setBun(data));
     } else {

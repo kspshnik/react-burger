@@ -1,10 +1,14 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { FC } from 'react';
 
 import '@ya.praktikum/react-developer-burger-ui-components';
 import igStyles from './info-grid.module.css';
 
-const InfoGrid = ({ pendingOrders, doneOrders }) => (
+type TInfoGridProps = {
+  pendingOrders : Array<number>,
+  doneOrders: Array<number>,
+};
+
+const InfoGrid : FC<TInfoGridProps> = ({ pendingOrders, doneOrders }) => (
   <main className={igStyles.info}>
     <section className={igStyles.info__column}>
       <h2 className={`${igStyles.info__heading} text text_type_main-medium pb-6`}>Готовы:</h2>
@@ -32,10 +36,5 @@ const InfoGrid = ({ pendingOrders, doneOrders }) => (
     </section>
   </main>
 );
-
-InfoGrid.propTypes = {
-  pendingOrders: PropTypes.arrayOf(PropTypes.number).isRequired,
-  doneOrders: PropTypes.arrayOf(PropTypes.number).isRequired,
-};
 
 export default InfoGrid;

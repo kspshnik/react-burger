@@ -1,5 +1,5 @@
 import getIngredientsThunk from './get-ingredients-thunk';
-import placeOrderThunk     from './place-order-thunk';
+import placeOrderThunk from './place-order-thunk';
 import getUserThunk from './get-user-thunk';
 import refreshTokenThunk from './refresh-token-thunk';
 import loginUserThunk from './login-user-thunk';
@@ -7,7 +7,7 @@ import logoutUserThunk from './logout-user-thunk';
 import patchUserThunk from './patch-user-thunk';
 import setProfileForm from './set-profile-form';
 import requestCodeThunk from './request-code-thunk';
-import getOrderThunk    from './get-order-thunk';
+import getOrderThunk from './get-order-thunk';
 
 export {
   getIngredientsThunk,

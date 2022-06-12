@@ -8,12 +8,12 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import { useDispatch, useSelector } from 'react-redux';
-import LinkBox from '../../components/link-box/link-box';
+import LinkBox                      from '../../components/link-box/link-box';
 
 import resetStyles                                    from './reset-page.module.css';
 import { resetResetForm, setResetCode, setResetPass } from '../../services/actionCreators';
-import { passwordValidity }                           from '../../services/helpers';
-import resetPasswordThunk                             from '../../services/thunks/reset-password-thunk';
+import { passwordValidity } from '../../services/helpers';
+import resetPasswordThunk   from '../../services/thunks/reset-password-thunk';
 
 const ResetPage = () => {
   const dispatch = useDispatch();

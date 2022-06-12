@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 import { Button, EmailInput } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import { useDispatch, useSelector } from 'react-redux';
-import LinkBox from '../../components/link-box/link-box';
+import LinkBox                      from '../../components/link-box/link-box';
 
 import forgotStyles                        from './forgot-page.module.css';
 import { resetForgotForm, setForgotEmail } from '../../services/actionCreators';

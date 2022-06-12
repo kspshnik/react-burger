@@ -1,5 +1,5 @@
 /* eslint-disable ternary/no-unreachable */
-import React from 'react';
+import React, { FC } from 'react';
 
 import {
   BurgerIcon, ListIcon, Logo, ProfileIcon,
@@ -8,7 +8,7 @@ import {
 import { Link, useLocation } from 'react-router-dom';
 import headerStyles from './app-header.module.css';
 
-const AppHeader = () => {
+const AppHeader : FC = () => {
   const { pathname } = useLocation();
   const isMain = () => pathname === '/' || pathname.startsWith('/ingredients');
   const isProfile = () => pathname.startsWith('/profile');

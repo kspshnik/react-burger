@@ -1,12 +1,6 @@
-import { configureStore } from '@reduxjs/toolkit';
+import { ActionCreatorWithoutPayload, ActionCreatorWithPayload, configureStore } from '@reduxjs/toolkit';
 import thunk, { ThunkAction } from 'redux-thunk';
 import { Action, ActionCreator } from 'redux';
-
-import {
-  TypedUseSelectorHook,
-  useDispatch as dispatchHook,
-  useSelector as selectorHook,
-} from 'react-redux';
 
 import apiReducer from './api-slice';
 import formsReducer from './forms-slice';
@@ -36,7 +30,18 @@ import {
 import socketMiddleware from './websocket-middleware';
 
 import { BACKEND_ROUTES, PRIVATE, PUBLIC } from '../../constants';
-import {TWSActions} from "../../types/store.types";
+import { TWSData } from '../../types/websocket.types';
+
+export type TWSActions = {
+  wsStart: typeof PUBLIC_FEED_START | typeof PRIVATE_FEED_START,
+  wsStop: typeof PUBLIC_FEED_STOP | typeof PRIVATE_FEED_STOP,
+  connectRequest: ActionCreatorWithoutPayload<string>,
+  disconnectRequest: ActionCreatorWithoutPayload<string>,
+  onOpen: ActionCreatorWithoutPayload<string>,
+  onClose: ActionCreatorWithoutPayload<string>,
+  onError: ActionCreatorWithPayload<string, string>,
+  onMessage: ActionCreatorWithPayload<TWSData, string>,
+};
 
 const publicFeedUrl = `${BACKEND_ROUTES.baseWS}${BACKEND_ROUTES.publicFeed}`;
 const publicFeedActions : TWSActions = {
@@ -85,6 +90,5 @@ export type AppDispatch = typeof store.dispatch;
 export type AppThunk<TReturn = void> = ActionCreator<
 ThunkAction<TReturn, RootState, unknown, Action>
 >;
-
 
 export default store;

@@ -1,22 +1,13 @@
-import {
-  Middleware, MiddlewareAPI, Dispatch, Action,
-} from 'redux';
-
 import { PRIVATE, WS_THROTTLE_THRESHOLD } from '../../constants';
 import { jwt } from '../api';
-import { TWSActions } from '../../types/store.types';
-import { TFeedType } from '../../types/websocket.types';
 
-const socketMiddleware = (
-  wsBaseUrl : string,
-  wsActions : TWSActions,
-  feedType : TFeedType,
-) : Middleware => (store) => {
+const socketMiddleware = (wsBaseUrl, wsActions, feedType) => (store) => {
+  let socket = null;
 
   return (next) => (action) => {
     const { dispatch, getState } = store;
     const { type } = action;
-    let socket = null;
+
     const {
       wsStart, wsStop, connectRequest, disconnectRequest, onOpen, onClose, onError, onMessage,
     } = wsActions;

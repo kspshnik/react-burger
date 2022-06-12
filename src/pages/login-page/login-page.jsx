@@ -6,7 +6,7 @@ import { Button, EmailInput, PasswordInput } from '@ya.praktikum/react-developer
 
 import LinkBox from '../../components/link-box/link-box';
 
-import loginStyles from './login-page.module.css';
+import loginStyles                                     from './login-page.module.css';
 import { loginUserThunk }                              from '../../services/thunks';
 import { resetLoginForm, setLoginEmail, setLoginPass } from '../../services/actionCreators';
 import { emailValidity, passwordValidity }             from '../../services/helpers';

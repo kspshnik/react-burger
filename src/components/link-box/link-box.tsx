@@ -1,12 +1,18 @@
-import { React } from 'react';
-import PropTypes from 'prop-types';
+import React, { FC } from 'react';
 
 import '@ya.praktikum/react-developer-burger-ui-components';
 
 import { Link } from 'react-router-dom';
 import lbStyles from './link-box.module.css';
 
-const LinkBox = ({
+type TLinkBoxProps = {
+  caption: string,
+  linkName: string,
+  linkTo: string,
+  extraClasses: string,
+};
+
+const LinkBox : FC<TLinkBoxProps> = ({
   caption, linkName, linkTo, extraClasses,
 }) => (
   <div className={`${lbStyles.linkbox} ${extraClasses}`}>
@@ -14,12 +20,5 @@ const LinkBox = ({
     <Link className={`${lbStyles.linkbox__link} ml-2`} to={linkTo}>{linkName}</Link>
   </div>
 );
-
-LinkBox.propTypes = {
-  caption: PropTypes.string.isRequired,
-  linkName: PropTypes.string.isRequired,
-  linkTo: PropTypes.string.isRequired,
-  extraClasses: PropTypes.string.isRequired,
-};
 
 export default LinkBox;

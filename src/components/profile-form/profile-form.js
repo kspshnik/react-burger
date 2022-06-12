@@ -3,8 +3,8 @@ import React, { useState } from 'react';
 import { Button, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDispatch, useSelector }                        from 'react-redux';
 import { setProfileEmail, setProfileName, setProfilePass } from '../../services/actionCreators';
-import { emailValidity, nameValidity, passwordValidity }   from '../../services/helpers';
-import { patchUserThunk, setProfileForm }                  from '../../services/thunks';
+import { emailValidity, nameValidity, passwordValidity } from '../../services/helpers';
+import { patchUserThunk, setProfileForm }                from '../../services/thunks';
 
 import pfStyles from './profile-form.module.css';
 

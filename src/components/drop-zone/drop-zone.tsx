@@ -1,11 +1,25 @@
-import React, { useEffect, useState } from 'react';
+import React, {
+  FC, ReactNode, useEffect, useState,
+} from 'react';
 import { useDrop } from 'react-dnd';
-import PropTypes from 'prop-types';
+import { IDropHandler, TIngredient, TIngredientType } from '../../types/types';
 
-const DropZone = ({
-  children, contentClass, hoverClass, handleDrop, type,
+type TDropZoneProps = {
+  contentClass?: string,
+  hoverClass?: string,
+  handleDrop: IDropHandler,
+  children: ReactNode | Array<ReactNode>,
+  type: TIngredientType,
+};
+
+const DropZone : FC<TDropZoneProps> = ({
+  children,
+  contentClass = '',
+  hoverClass = '',
+  handleDrop,
+  type,
 }) => {
-  const [item, setItem] = useState(null);
+  const [item, setItem] = useState<TIngredient | null>(null);
   const onDrop = () => {
     if (item) {
       handleDrop(item);
@@ -17,7 +31,7 @@ const DropZone = ({
     accept: type,
     collect: (monitor) => ({
       isOver: monitor.isOver(),
-      dropItem: monitor.getItem(),
+      dropItem: monitor.getItem<TIngredient>(),
     }),
     drop: onDrop,
   }, [item]);
@@ -34,17 +48,6 @@ const DropZone = ({
 DropZone.defaultProps = {
   contentClass: '',
   hoverClass: '',
-};
-
-DropZone.propTypes = {
-  contentClass: PropTypes.string,
-  hoverClass: PropTypes.string,
-  handleDrop: PropTypes.func.isRequired,
-  children: PropTypes.oneOfType(
-    [PropTypes.arrayOf(PropTypes.element),
-      PropTypes.element],
-  ).isRequired,
-  type: PropTypes.string.isRequired,
 };
 
 export default DropZone;

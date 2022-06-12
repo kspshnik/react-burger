@@ -1,10 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { FC, useEffect } from 'react';
 import {
   Route, Switch, useHistory, useLocation,
 } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
-
-import * as Sentry from '@sentry/react';
+import { useSelector, useDispatch } from '../../services/store/hooks';
 
 import AppHeader from '../app-header/app-header';
 
@@ -33,13 +31,13 @@ import {
 } from '../../pages';
 
 import appStyles from './app.module.css';
-import ToolTip   from '../tooltip/tooltip';
+import ToolTip from '../tooltip/tooltip';
 import {
   ERROR,
   OK,
   PRIVATE,
   PUBLIC,
-}                from '../../constants';
+} from '../../constants';
 import { jwt, token } from '../../services/api';
 import ProtectedRoute from '../protected-route/protected-route';
 import NotLoggedRoute from '../not-logged-route/not-logged-route';
@@ -51,9 +49,9 @@ import OrderDetails from '../order-details/order-details';
 import ProfileSidebar from '../profile-sidebar/profile-sidebar';
 import OrdersFeed from '../orders-feed/orders-feed';
 import ProfileForm from '../profile-form/profile-form';
-import TwoColumns  from '../two-columns/two-columns';
+import TwoColumns from '../two-columns/two-columns';
 
-const App = () => {
+const App : FC = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const location = useLocation();
@@ -67,6 +65,7 @@ const App = () => {
   const { errorMessage, successMessage } = useSelector((state) => state.api);
   const handleIngredientDetailsClose = () => {
     dispatch(releaseIngredient());
+    // TODO: Типизация location+
     history.push({ ...location.state.background, state: { background: null } });
   };
   const orderDetailsClose = () => {
@@ -111,6 +110,7 @@ const App = () => {
     <>
       <div className={appStyles.wrapper}>
         <AppHeader />
+
         <Switch location={background || location}>
           <NotLoggedRoute path='/login'>
             <LoginPage />
@@ -188,4 +188,4 @@ const App = () => {
   );
 };
 
-export default Sentry.withProfiler(App);
+export default App;

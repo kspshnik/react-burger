@@ -2,8 +2,8 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { startPublicFeed, stopPublicFeed } from '../../services/actionCreators';
-import TwoColumns                          from '../../components/two-columns/two-columns';
-import FeedInfo                            from '../../components/feed-info/feed-info';
+import TwoColumns  from '../../components/two-columns/two-columns';
+import FeedInfo    from '../../components/feed-info/feed-info';
 import OrderRibbon from '../../components/order-ribbon/order-ribbon';
 import { PUBLIC } from '../../constants';
 

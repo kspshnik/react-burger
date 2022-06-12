@@ -1,4 +1,5 @@
 import { batch } from 'react-redux';
+import { AxiosError } from 'axios';
 import {
   captureOrder,
   getOrderRequested,
@@ -9,6 +10,7 @@ import {
 import { fetchOrder } from '../api';
 import { AppThunk } from '../store/store';
 import { TAPIError } from '../../types/api.types';
+import { getAxiosErrorMessage } from '../helpers';
 
 const getOrderThunk : AppThunk = (number : number) => async (dispatch) => {
   dispatch(getOrderRequested());
@@ -17,7 +19,7 @@ const getOrderThunk : AppThunk = (number : number) => async (dispatch) => {
       data: {
         orders,
         success,
-        message = 'При получении данных произошла неизвестная ошибка :(',
+        message = 'Неизвестная ошибка при получении заказа :(',
       },
     } = await fetchOrder(number);
     if (success && !!orders && orders.length > 0) {
@@ -34,7 +36,8 @@ const getOrderThunk : AppThunk = (number : number) => async (dispatch) => {
       dispatch(getOrderFailed(message));
     }
   } catch (err) {
-    const { message = 'При получении данных произошла неизвестная ошибка :(' } = err as TAPIError;
+    const message = getAxiosErrorMessage(err as AxiosError<TAPIError>)
+      ?? 'Неизвестная ошибка при получении заказа :(';
     dispatch(getOrderFailed(message));
   }
 };

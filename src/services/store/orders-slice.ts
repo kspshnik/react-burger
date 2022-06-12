@@ -1,19 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { nanoid } from 'nanoid';
 import { TOrderState } from '../../types/store.types';
-import { TIngredient, TIngredients, TOrderRecord } from '../../types/types';
+import { TIngredient, TMoveData, TOrderRecord } from '../../types/types';
 import { reorderChoice } from '../helpers';
-
-type TMoveData = {
-  ingredient: TIngredient,
-  to: number,
-};
 
 const initialState : TOrderState = {
   bun: null,
   choice: [],
   accepted: null,
-  past: [],
 };
 
 const ordersSlice = createSlice({
@@ -23,19 +17,16 @@ const ordersSlice = createSlice({
     setBun: (state, action: PayloadAction<TIngredient>) => ({
       ...state, bun: { ...action.payload },
     }),
-    moveInterior: {
-      reducer: (state, action: PayloadAction<TMoveData>) => {
-        const { ingredient, to } = action.payload;
-        return {
-          ...state,
-          choice: reorderChoice(
-            state.choice,
-            state.choice.findIndex((item) => item.bcid === ingredient.bcid),
-            to,
-          ),
-        };
-      },
-      prepare: (ingredient: TIngredient, to: number) => ({ payload: { ingredient, to } }),
+    moveInterior: (state, action: PayloadAction<TMoveData>) => {
+      const { ingredient, to } = action.payload;
+      return {
+        ...state,
+        choice: reorderChoice(
+          state.choice,
+          state.choice.findIndex((item) => item.bcid === ingredient.bcid),
+          to,
+        ),
+      };
     },
     insertInterior: (state, action : PayloadAction<TIngredient>) => ({
       ...state, choice: [{ ...action.payload, bcid: nanoid() }, ...state.choice],
@@ -47,7 +38,7 @@ const ordersSlice = createSlice({
       ...state, bun: null, choice: [],
     }),
     archiveOrder: (state) => ({
-      ...state, past: [...state.past, state.accepted!], accepted: null,
+      ...state, accepted: null,
     }),
     setOrder: (state, action : PayloadAction<TOrderRecord>) => ({
       ...state, accepted: action.payload,

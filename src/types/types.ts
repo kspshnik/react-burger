@@ -20,6 +20,10 @@ export type TIngredient = {
   bcid?: string,
 };
 
+export type TModalWindowProps = {
+  message: string,
+};
+
 export type TIngredients = Array<TIngredient>;
 
 export type TAllIngredients = {
@@ -60,4 +64,21 @@ export type TOrderRecord = {
   order: TOrder,
 };
 
-export type TOrderRecords = Array<TOrderRecord>;
+export type TLoginRequestData = {
+  email: string,
+  password: string,
+};
+
+export type TMoveData = {
+  ingredient: TIngredient,
+  to: number,
+};
+
+export type TRibbonItemIngredient = {
+  _id: string,
+  key: string,
+};
+
+export interface IDropHandler {
+  (dropItem : TIngredient) : void;
+}

@@ -14,7 +14,7 @@ import {
 } from '../../services/actionCreators';
 
 import { nameValidity, emailValidity, passwordValidity } from '../../services/helpers';
-import loginStyles                                       from './register-page.module.css';
+import loginStyles       from './register-page.module.css';
 import registerUserThunk from '../../services/thunks/register-user-thunk';
 
 const RegisterPage = () => {

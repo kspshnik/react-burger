@@ -8,7 +8,7 @@ import { useHistory, useLocation } from 'react-router-dom';
 import opStyles from './order-plate.module.css';
 import {
   DONE, PRIVATE, PUBLIC,
-} from '../../constants';
+}                                                      from '../../constants';
 import ContentRibbon                                   from '../content-ribbon/content-ribbon';
 import { calculateTotal, prepareDateTime, statusName } from '../../services/helpers';
 import { captureOrder }                                from '../../services/actionCreators';

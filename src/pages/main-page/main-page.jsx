@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import TwoColumns        from '../../components/two-columns/two-columns';
 import BurgerIngredients from '../../components/burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../../components/burger-constructor/burger-constructor';
-import LoaderProtector from '../../components/loader-protector/loader-protector';
+import LoaderProtector   from '../../components/loader-protector/loader-protector';
 
 const MainPage = () => {
   const { isIngredientsLoading } = useSelector((state) => state.api);
