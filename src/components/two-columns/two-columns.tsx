@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 
-import { TTwoColumnsProps } from '../components.props.types';
+import { TTwoColumnsProps } from '../../types/components.props.types';
 import tcStyles from './two-columns.module.css';
 
 const TwoColumns : FC<TTwoColumnsProps> = ({ children, profile = false }) => (

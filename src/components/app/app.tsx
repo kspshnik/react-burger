@@ -4,13 +4,16 @@ import {
 } from 'react-router-dom';
 import { useSelector, useDispatch } from '../../services/store/hooks';
 
-import AppHeader from '../app-header/app-header';
-
 import '@ya.praktikum/react-developer-burger-ui-components';
 
-import Modal from '../modal/modal';
-import IngredientDetails from '../ingredient-details/ingredient-details';
-import OrderAccept from '../order-accept/order-accept';
+import {
+  ERROR,
+  OK,
+  PRIVATE,
+  PUBLIC,
+} from '../../constants';
+
+
 
 import {
   clearError,
@@ -30,15 +33,8 @@ import {
   ForgotPage, LoginPage, MainPage, RegisterPage, ResetPage,
 } from '../../pages';
 
-import appStyles from './app.module.css';
-import ToolTip from '../tooltip/tooltip';
-import {
-  ERROR,
-  OK,
-  PRIVATE,
-  PUBLIC,
-} from '../../constants';
 import { jwt, token } from '../../services/api';
+
 import ProtectedRoute from '../protected-route/protected-route';
 import NotLoggedRoute from '../not-logged-route/not-logged-route';
 import IngredientPage from '../../pages/ingredient-page/ingredient-page';
@@ -50,11 +46,19 @@ import ProfileSidebar from '../profile-sidebar/profile-sidebar';
 import OrdersFeed from '../orders-feed/orders-feed';
 import ProfileForm from '../profile-form/profile-form';
 import TwoColumns from '../two-columns/two-columns';
+import AppHeader from '../app-header/app-header';
+import IngredientDetails from '../ingredient-details/ingredient-details';
+import Modal from '../modal/modal';
+import OrderAccept from '../order-accept/order-accept';
+import ToolTip from '../tooltip/tooltip';
+
+import appStyles from './app.module.css';
+import { TLocationState } from '../../types/types';
 
 const App : FC = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const location = useLocation();
+  const location = useLocation<TLocationState>();
   const background = location.state && location.state.background;
   const { loggedIn } = useSelector((state) => state.user);
   const selectedIngredient = useSelector((store) => store.ingredients.selected);
@@ -65,7 +69,6 @@ const App : FC = () => {
   const { errorMessage, successMessage } = useSelector((state) => state.api);
   const handleIngredientDetailsClose = () => {
     dispatch(releaseIngredient());
-    // TODO: Типизация location+
     history.push({ ...location.state.background, state: { background: null } });
   };
   const orderDetailsClose = () => {

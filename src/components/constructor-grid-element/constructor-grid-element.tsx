@@ -9,11 +9,7 @@ import {
 import { ORDER } from '../../constants';
 import DropZone from '../drop-zone/drop-zone';
 import { TIngredient } from '../../types/types';
-
-type TConstructorGridElementProps = {
-  item: TIngredient & { index: number },
-  index: number,
-};
+import { TConstructorGridElementProps } from '../../types/components.props.types';
 
 const ConstructorGridElement : FC<TConstructorGridElementProps> = ({ item, index }) => {
   const dispatch = useDispatch();

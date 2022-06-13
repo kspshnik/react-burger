@@ -64,5 +64,13 @@ module.exports = {
       ],
     'default-param-last': 'off',
   },
+  overrides: [
+    {
+      "files": ["**/*.tsx"],
+      "rules": {
+        "react/prop-types": "off"
+      }
+    }
+  ],
 }
 ;

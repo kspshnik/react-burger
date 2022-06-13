@@ -11,13 +11,7 @@ import {
 import ContentRibbon from '../content-ribbon/content-ribbon';
 import { calculateTotal, prepareDateTime, statusName } from '../../services/helpers';
 import { captureOrder } from '../../services/store';
-import { TOrder } from '../../types/types';
-import { TFeedType } from '../../types/websocket.types';
-
-type TOrderPlateProps = {
-  order: TOrder,
-  feedType: TFeedType,
-};
+import { TOrderPlateProps } from '../../types/components.props.types';
 
 const OrderPlate : FC<TOrderPlateProps> = ({ order, feedType }) => {
   const dispatch = useDispatch();

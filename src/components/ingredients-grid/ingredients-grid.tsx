@@ -5,11 +5,7 @@ import { useSelector } from '../../services/store/hooks';
 import icStyles from './ingredients-grid.module.css';
 
 import IngredientCard from '../ingredient-card/ingredient-card';
-import { TIngredientType } from '../../types/types';
-
-type TIngredientsGridProps = {
-  type: TIngredientType
-};
+import { TIngredientsGridProps } from '../../types/components.props.types';
 
 const IngredientsGrid : FC<TIngredientsGridProps> = ({ type }) => {
   const { all } = useSelector((state) => state.ingredients);

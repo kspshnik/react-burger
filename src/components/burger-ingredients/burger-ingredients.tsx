@@ -15,10 +15,10 @@ import { dropInterior } from '../../services/store';
 import {TIngredient} from "../../types/types";
 
 const BurgerIngredients : FC = () => {
-  const baseRef = useRef(null);
-  const bunsRef = useRef(null);
-  const saucesRef = useRef(null);
-  const mainsRef = useRef(null);
+  const baseRef = useRef<HTMLDivElement>(null);
+  const bunsRef = useRef<HTMLHeadingElement>(null);
+  const saucesRef = useRef<HTMLHeadingElement>(null);
+  const mainsRef = useRef<HTMLHeadingElement>(null);
 
   const dispatch = useDispatch();
 
@@ -46,12 +46,11 @@ const BurgerIngredients : FC = () => {
         type={ORDER}
         handleDrop={handleDrop}>
         <nav className={biStyles.menu}>
-          {/* TODO: разобраться с типизацией рефов */}
           <Tab
             active={bunsInView}
             value='Булки'
             onClick={() => {
-              baseRef.current.scroll(0, bunsRef.current.offsetTop);
+              baseRef.current?.scroll(0, bunsRef.current?.offsetTop || 0);
             }}>
             Булки
           </Tab>
@@ -59,15 +58,16 @@ const BurgerIngredients : FC = () => {
             active={saucesInView && !bunsInView && !mainsInView}
             value='Соусы'
             onClick={() => {
-              baseRef.current.scroll(0, saucesRef.current.offsetTop);
+              baseRef.current?.scroll(0, saucesRef.current?.offsetTop || 0);
             }}>
             Соусы
           </Tab>
+          {/* TODO: UILib */}
           <Tab
             active={mainsInView || (!saucesInView && !bunsInView)}
             value='Начинки'
             onClick={() => {
-              baseRef.current.scroll(0, mainsRef.current.offsetTop);
+              baseRef.current?.scroll(0, mainsRef.current?.offsetTop || 0);
             }}>
             Начинки
           </Tab>

@@ -2,11 +2,7 @@ import React, { FC } from 'react';
 
 import '@ya.praktikum/react-developer-burger-ui-components';
 import igStyles from './info-grid.module.css';
-
-type TInfoGridProps = {
-  pendingOrders : Array<number>,
-  doneOrders: Array<number>,
-};
+import { TInfoGridProps } from '../../types/components.props.types';
 
 const InfoGrid : FC<TInfoGridProps> = ({ pendingOrders, doneOrders }) => (
   <main className={igStyles.info}>

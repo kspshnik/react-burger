@@ -4,10 +4,7 @@ import { useSelector } from '../../services/store/hooks';
 import crStyles from './content-ribbon.module.css';
 import { TRibbonItemIngredient } from '../../types/types';
 import { prepareIngredientsForRibbonItem } from '../../services/helpers';
-
-type TContentRibbonProps = {
-  content: Array<string>,
-};
+import { TContentRibbonProps } from '../../types/components.props.types';
 
 const ContentRibbon : FC<TContentRibbonProps> = ({ content }) => {
   const ingredients = useSelector((state) => state?.ingredients?.all);

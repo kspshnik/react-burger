@@ -1,14 +1,10 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React, {FC, ReactNode} from 'react';
+import React, { FC } from 'react';
 import { Redirect, Route } from 'react-router-dom';
 import { useSelector } from '../../services/store/hooks';
+import { TRouteProps } from '../../types/components.props.types';
 
-type TProtectedRouteProps = {
-  children: ReactNode | Array<ReactNode>,
-  [key:string]: any;
-};
-
-const ProtectedRoute : FC<TProtectedRouteProps> = ({ children, ...rest }) => {
+const ProtectedRoute : FC<TRouteProps> = ({ children, ...rest }) => {
   const { loggedIn } = useSelector((state) => state.user);
 
   return (

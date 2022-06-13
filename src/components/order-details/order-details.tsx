@@ -1,17 +1,14 @@
-import React, {FC, ReactNode} from 'react';
-import { useSelector } from '../../services/store/hooks';
+import React, { FC, ReactNode } from 'react';
 
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useLocation }                                 from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+import { useSelector } from '../../services/store/hooks';
 import { calculateTotal, prepareDateTime, statusName } from '../../services/helpers';
-import IngredientPlate                                 from '../ingredient-plate/ingredient-plate';
+import IngredientPlate from '../ingredient-plate/ingredient-plate';
 
 import odStyles from './order-details.module.css';
-import {TIngredient, TOrder} from "../../types/types";
-
-type TOrderDetailsProps = {
-  order: TOrder,
-}
+import { TOrderDetailsProps } from '../../types/components.props.types';
+import {TLocationState} from "../../types/types";
 
 const OrderDetails : FC<TOrderDetailsProps> = ({ order }) => {
   const {
@@ -19,7 +16,7 @@ const OrderDetails : FC<TOrderDetailsProps> = ({ order }) => {
   } = order;
   const { all } = useSelector((state) => state.ingredients || {});
   const uniqueContent = Array.from(new Set(Object.keys(ingredients)));
-  const { state } = useLocation();
+  const { state } = useLocation<TLocationState>();
   const total = calculateTotal(all!, ingredients as Array<string>);
   const makeIngredient = (itm : string) : ReactNode => {
     const ingrs = ingredients as Array<string>;

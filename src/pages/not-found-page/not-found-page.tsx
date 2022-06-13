@@ -6,10 +6,11 @@ import { useDispatch } from '../../services/store/hooks';
 import nfStyles from './not-found-page.module.css';
 import { REASON_404_GENERAL } from '../../constants';
 import { clearOrderNotFound } from '../../services/store';
+import { TLocationState } from '../../types/types';
 
 const NotFoundPage = () => {
   const history = useHistory();
-  const location = useLocation();
+  const location = useLocation<TLocationState>();
   const dispatch = useDispatch();
 
   const reasonFor404 = location?.state?.reasonFor404 || REASON_404_GENERAL;

@@ -1,14 +1,8 @@
-import React, {FC} from 'react';
+import React, { FC } from 'react';
 
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import inpStyles from './ingredient-plate.module.css';
-
-type TIngredientPlateProps = {
-  img: string,
-  name: string,
-  qty: number,
-  price: number,
-};
+import { TIngredientPlateProps } from '../../types/components.props.types';
 
 const IngredientPlate : FC<TIngredientPlateProps> = ({
   img, name, qty, price,

@@ -4,13 +4,7 @@ import '@ya.praktikum/react-developer-burger-ui-components';
 
 import { Link } from 'react-router-dom';
 import lbStyles from './link-box.module.css';
-
-type TLinkBoxProps = {
-  caption: string,
-  linkName: string,
-  linkTo: string,
-  extraClasses: string,
-};
+import { TLinkBoxProps } from '../../types/components.props.types';
 
 const LinkBox : FC<TLinkBoxProps> = ({
   caption, linkName, linkTo, extraClasses,

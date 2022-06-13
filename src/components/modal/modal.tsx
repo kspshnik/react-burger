@@ -7,13 +7,7 @@ import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import ReactDOM from 'react-dom';
 import mdStyles from './modal.module.css';
 import ModalOverlay from '../modal-overlay/modal-overlay';
-import { IGenericHandler } from '../../types/types';
-
-type TModalProps = {
-  onClose: IGenericHandler,
-  title?: string | null,
-  children: ReactNode | Array<ReactNode>,
-};
+import { TModalProps } from '../../types/components.props.types';
 
 const Modal : FC<TModalProps> = ({
   onClose, title, children,

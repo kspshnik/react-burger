@@ -1,11 +1,7 @@
 import React, { FC, MouseEventHandler } from 'react';
 
 import moStyles from './modal-overlay.module.css';
-import { IGenericHandler } from '../../types/types';
-
-type TModalOverlayProps = {
-  onClose: IGenericHandler,
-};
+import { TModalOverlayProps } from '../../types/components.props.types';
 
 const ModalOverlay : FC<TModalOverlayProps> = ({ onClose }) => {
   const handleOverlayClick : MouseEventHandler<HTMLDivElement> = (event) => {

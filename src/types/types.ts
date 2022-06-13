@@ -1,5 +1,19 @@
+import { useLocation } from 'react-router-dom';
 import {
-  BUN, SAUCE, MAIN, PENDING, CREATED, DONE, OK, INFO, ERROR,
+  BUN,
+  SAUCE,
+  MAIN,
+  PENDING,
+  CREATED,
+  DONE,
+  OK,
+  INFO,
+  ERROR,
+  INGREDIENT,
+  ORDER,
+  REASON_404_INGREDIENT,
+  REASON_404_ORDER,
+  REASON_404_GENERAL,
 } from '../constants';
 
 export type TIngredientType = typeof BUN | typeof SAUCE | typeof MAIN;
@@ -18,10 +32,6 @@ export type TIngredient = {
   image_large: string,
   __v: number,
   bcid?: string,
-};
-
-export type TModalWindowProps = {
-  message: string,
 };
 
 export type TIngredients = Array<TIngredient>;
@@ -86,5 +96,26 @@ export interface IDropHandler {
 export interface IGenericHandler {
   () : void;
 }
-
+export type TReasonFor404Type = typeof REASON_404_INGREDIENT
+  | typeof REASON_404_ORDER
+  | typeof REASON_404_GENERAL
+  | null;
 export type TTooltipType = typeof OK | typeof INFO | typeof ERROR;
+
+export type TDropItemType = typeof INGREDIENT | typeof ORDER;
+
+export interface MyLocation {
+  pathname: string;
+  search: string;
+  state: TLocationState;
+  hash: string;
+  key?: string | undefined;
+}
+export type TLocationStateItemType = string | null;
+export type TLocation = ReturnType<typeof useLocation>;
+export type TLocationState = {
+  background?: TLocation | null,
+  from?: TLocationStateItemType,
+  wayback?: TLocationStateItemType,
+  reasonFor404?: TReasonFor404Type;
+};

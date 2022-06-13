@@ -46,7 +46,7 @@ const LoginPage : FC = () => {
           <EmailInput className='pb-6' name='email' value={email} onChange={onEmailChange} />
           <PasswordInput value={password} name='password' onChange={onPasswordChange} className='pb-6' />
         </fieldset>
-        <Button type='primary' htmlType='submit' size='medium' disabled={!(isEmailValid && isPasswordValid)}>Войти</Button>
+        <Button type='primary' htmlType='submit' size='medium' disabled={!(isEmailValid && isPasswordValid) children='Войти'} />
       </form>
       <LinkBox linkName='Зарегистрироваться' linkTo='/register' extraClasses='pt-20' caption='Вы - новый пользователь?' />
       <LinkBox linkName='Забыли пароль?' linkTo='/forgot-password' extraClasses='pt-4' caption='Восстановить пароль' />

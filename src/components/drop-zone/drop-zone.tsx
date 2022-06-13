@@ -1,16 +1,9 @@
 import React, {
-  FC, ReactNode, useEffect, useState,
+  FC, useEffect, useState,
 } from 'react';
 import { useDrop } from 'react-dnd';
-import { IDropHandler, TIngredient, TIngredientType } from '../../types/types';
-
-type TDropZoneProps = {
-  contentClass?: string,
-  hoverClass?: string,
-  handleDrop: IDropHandler,
-  children: ReactNode | Array<ReactNode>,
-  type: TIngredientType,
-};
+import { TIngredient } from '../../types/types';
+import { TDropZoneProps } from '../../types/components.props.types';
 
 const DropZone : FC<TDropZoneProps> = ({
   children,
@@ -43,11 +36,6 @@ const DropZone : FC<TDropZoneProps> = ({
       {children}
     </div>
   );
-};
-
-DropZone.defaultProps = {
-  contentClass: '',
-  hoverClass: '',
 };
 
 export default DropZone;

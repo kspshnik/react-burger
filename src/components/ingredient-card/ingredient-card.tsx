@@ -10,12 +10,8 @@ import { selectIngredient, insertInterior, setBun } from '../../services/store';
 import { BUN, INGREDIENT } from '../../constants';
 
 import icStyles from './ingredient-card.module.css';
-import { TIngredient } from '../../types/types';
-
-type TIngredientCardProps = {
-  data: TIngredient,
-  count?: number,
-};
+import { TLocationState } from '../../types/types';
+import { TIngredientCardProps } from '../../types/components.props.types';
 
 const IngredientCard : FC<TIngredientCardProps> = ({ data, count = 0 }) => {
   const {
@@ -23,7 +19,7 @@ const IngredientCard : FC<TIngredientCardProps> = ({ data, count = 0 }) => {
     name, price, image, type, _id,
   } = data;
   const dispatch = useDispatch();
-  const location = useLocation();
+  const location = useLocation<TLocationState>();
   const history = useHistory();
   const [{ isOnTheWay }, dragRef] = useDrag(() => ({
     type: INGREDIENT,
@@ -88,10 +84,6 @@ const IngredientCard : FC<TIngredientCardProps> = ({ data, count = 0 }) => {
       </article>
     </li>
   );
-};
-
-IngredientCard.defaultProps = {
-  count: 0,
 };
 
 export default IngredientCard;

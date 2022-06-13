@@ -1,10 +1,12 @@
-import React, {useState, FC, ChangeEventHandler, FormEventHandler} from 'react';
+import React, {
+  useState, FC, ChangeEventHandler, FormEventHandler,
+} from 'react';
 
 import { Button, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useDispatch, useSelector }                        from '../../services/store/hooks';
+import { useDispatch, useSelector } from '../../services/store/hooks';
 import { setProfileEmail, setProfileName, setProfilePass } from '../../services/store';
 import { emailValidity, nameValidity, passwordValidity } from '../../services/helpers';
-import { patchUserThunk, setProfileForm }                from '../../services/thunks';
+import { patchUserThunk, setProfileForm } from '../../services/thunks';
 
 import pfStyles from './profile-form.module.css';
 

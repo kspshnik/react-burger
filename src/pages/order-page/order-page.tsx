@@ -9,17 +9,18 @@ import OrderDetails                          from '../../components/order-detail
 import { PRIVATE, PUBLIC, REASON_404_ORDER } from '../../constants';
 import { getOrderThunk }                     from '../../services/thunks';
 import {TFeedType} from "../../types/websocket.types";
+import {TLocationState} from "../../types/types";
 
 type TOrderPageProps = {
   feedType: TFeedType,
 }
 
-const OrderPage : FC<TOrderPageProps>  = ({ feedType }) => {
-  const location = useLocation();
+const OrderPage : FC<TOrderPageProps> = ({ feedType }) => {
+  const location = useLocation<TLocationState>();
   const dispatch = useDispatch();
   const params = React.useMemo(() => new URLSearchParams(location.search), [location]);
   const orderNumber = React.useMemo(() => Number(params.get('number')), [params]);
-  const history = useHistory();
+  const history = useHistory<TLocationState>();
   const { isIngredientsLoading, isIngredientsLoaded, isOrderNotFound } = useSelector((state) => ({
     isIngredientsLoading: state.api.isIngredientsLoading,
     isIngredientsLoaded: !!state.ingredients.all,

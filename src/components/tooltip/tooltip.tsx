@@ -5,7 +5,7 @@ import '@ya.praktikum/react-developer-burger-ui-components';
 import { ERROR, INFO, OK } from '../../constants';
 
 import ttStyles from './tooltip.module.css';
-import { TTooltipProps } from '../components.props.types';
+import { TTooltipProps } from '../../types/components.props.types';
 
 const ToolTip : FC<TTooltipProps> = ({ message, type = INFO }) => {
   const textClass = (kind : string) => {

@@ -1,11 +1,16 @@
-import React, {ChangeEventHandler, FC, FormEventHandler, MouseEventHandler, useRef, useState} from 'react';
-// import { useHistory } from 'react-router-dom';
+import React, {
+  ChangeEventHandler,
+  FC,
+  FormEventHandler,
+  MouseEventHandler, ReactNode, SyntheticEvent,
+  useRef,
+  useState,
+} from 'react';
 
 import {
   Button, EmailInput, Input, PasswordInput,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDispatch, useSelector } from '../../services/store/hooks';
-
 
 import LinkBox from '../../components/link-box/link-box';
 
@@ -17,6 +22,17 @@ import { nameValidity, emailValidity, passwordValidity } from '../../services/he
 import loginStyles       from './register-page.module.css';
 import registerUserThunk from '../../services/thunks/register-user-thunk';
 
+type TButtonProps = {
+  children: ReactNode,
+  type?: 'secondary' | 'primary',
+  size?: 'small' | 'medium' | 'large';
+  onClick?: (() => void) | ((e: SyntheticEvent) => void);
+  disabled?: boolean;
+  name?: string;
+  htmlType?: 'button' | 'submit' | 'reset';
+};
+
+
 const RegisterPage : FC = () => {
   const { name, email, password } = useSelector((store) => store.forms.register);
   const [isNameValid, setNameValidity] = useState<boolean>(false);
@@ -25,7 +41,7 @@ const RegisterPage : FC = () => {
 
   //  const history = useHistory();
   const dispatch = useDispatch();
-  const inputRef = useRef(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const onSubmit : FormEventHandler<HTMLFormElement> = (evt) => {
     evt.preventDefault();
@@ -49,7 +65,7 @@ const RegisterPage : FC = () => {
     setPasswordValidity(valid && passwordValidity(value));
   };
   const onIconClick : MouseEventHandler = () => {
-    setTimeout(() => inputRef.current.focus(), 0);
+    setTimeout(() => inputRef.current?.focus(), 0);
   };
 
   React.useEffect(() => {
@@ -73,16 +89,15 @@ const RegisterPage : FC = () => {
             onIconClick={onIconClick}
             errorText='Имя должно быть длиннее двух букв!'
             size='default' />
-          <EmailInput className='pb-6' name='email' value={email} onChange={onEmailChange} />
-          <PasswordInput value={password} name='password' onChange={onPasswordChange} className='pb-6' />
+          <EmailInput name='email' value={email} onChange={onEmailChange} />
+          <PasswordInput value={password} name='password' onChange={onPasswordChange} />
         </fieldset>
         <Button
           type='primary'
           htmlType='submit'
           size='medium'
-          disabled={isNameValid && isEmailValid && isPasswordValid}>
-          Зарегистрироваться
-        </Button>
+          disabled={isNameValid && isEmailValid && isPasswordValid}
+          children='Зарегистрироваться' />
       </form>
       <LinkBox linkName='Войти!' linkTo='/login' extraClasses='pt-20' caption='Уже зарегистрированы?' />
     </main>

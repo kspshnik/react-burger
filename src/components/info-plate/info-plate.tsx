@@ -1,13 +1,8 @@
-import React, {FC} from 'react';
-
+import React, { FC } from 'react';
 
 import '@ya.praktikum/react-developer-burger-ui-components';
 import ipStyles from './info-plate.module.css';
-
-type TInfoPlateProps = {
-  title: string,
-  quantity: number,
-};
+import { TInfoPlateProps } from '../../types/components.props.types';
 
 const InfoPlate : FC<TInfoPlateProps> = ({ title, quantity }) => (
   <div className={ipStyles.plate}>

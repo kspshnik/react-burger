@@ -6,13 +6,14 @@ import { useHistory, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from '../../services/store/hooks';
 
 import bcStyles from './burger-constructor.module.css';
+
 import ScrollArea from '../scroll-area/scroll-area';
 import ConstructorGrid from '../constructor-grid/constructor-grid';
-import placeOrderThunk from '../../services/thunks/place-order-thunk';
+import { placeOrderThunk } from '../../services/thunks';
 import { insertInterior, setBun } from '../../services/store';
 import { BUN, INGREDIENT } from '../../constants';
 import DropZone from '../drop-zone/drop-zone';
-import {IDropHandler, TIngredient} from '../../types/types';
+import { IDropHandler } from '../../types/types';
 
 const BurgerConstructor : FC = () => {
   const { all } = useSelector((store) => store.ingredients);
@@ -97,7 +98,7 @@ const BurgerConstructor : FC = () => {
           </p>
           <CurrencyIcon type='primary' />
         </div>
-        {/* TODO: разобраться с элементами из библиотеки, посмотреть в слаке историю */}
+        {/* TODO: UILib */}
         <Button
           type='primary'
           size='medium'
