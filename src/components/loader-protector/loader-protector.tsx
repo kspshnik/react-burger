@@ -1,4 +1,4 @@
-import React, { FC, ReactNode } from 'react';
+import React, { FC } from 'react';
 import Preloader from '../preloader/preloader';
 import lpStyles from '../two-columns/two-columns.module.css';
 import { TLoaderProtectorProps } from '../../types/components.props.types';

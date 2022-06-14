@@ -68,6 +68,12 @@ export type TOrder = {
 
 export type TOrders = Array<TOrder>;
 
+export type TOrdersData = {
+  orders: Array<TOrder>,
+  total: number,
+  totalToday: number,
+};
+
 export type TOrderRecord = {
   success: boolean,
   name: string,

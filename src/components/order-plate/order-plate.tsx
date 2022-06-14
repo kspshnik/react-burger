@@ -12,7 +12,7 @@ import ContentRibbon from '../content-ribbon/content-ribbon';
 import { calculateTotal, prepareDateTime, statusName } from '../../services/helpers';
 import { captureOrder } from '../../services/store';
 import { TOrderPlateProps } from '../../types/components.props.types';
-import { TLocationState } from '../../types/types';
+import { TAllIngredients, TLocationState } from '../../types/types';
 
 const OrderPlate : FC<TOrderPlateProps> = ({ order, feedType }) => {
   const dispatch = useDispatch();
@@ -26,7 +26,7 @@ const OrderPlate : FC<TOrderPlateProps> = ({ order, feedType }) => {
   const { all } = useSelector((state) => state.ingredients);
 
   const isDone = () => status === DONE;
-  const total = calculateTotal(all!, ingredients as Array<string>);
+  const total = calculateTotal(all as TAllIngredients, ingredients as Array<string>);
   const onClick = () => {
     dispatch(captureOrder(order));
     const pathToGo = feedType === PUBLIC ? `/feed/${_id}/?number=${number}` : `/profile/orders/${_id}/?number=${number}`;

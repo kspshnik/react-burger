@@ -3,6 +3,7 @@
   "version": "0.3.01",
   "private": true,
   "homepage": "./",
+  "main": "src/index.tsx",
   "dependencies": {
     "@reduxjs/toolkit": "^1.8.1",
     "@sentry/react": "^6.19.6",

@@ -1,5 +1,5 @@
 import {
-  TIngredients, TOrder, TOrders, TUser,
+  TIngredients, TOrder, TOrders, TOrdersData, TUser,
 } from './types';
 
 export type TAPIBasicResponseData = {
@@ -64,3 +64,5 @@ export type TAPIResetRequestData = {
 };
 
 export type TAPIPatchUserResponseData = TAPIBasicResponseData & TAPIUserData;
+
+export type TAPIWSResponseData = TAPIBasicResponseData & TOrdersData;

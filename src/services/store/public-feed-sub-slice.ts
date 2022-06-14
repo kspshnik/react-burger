@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { TFeedState } from '../../types/store.types';
-import { TWSData } from '../../types/websocket.types';
+import { TOrdersData } from '../../types/types';
 
 const initialState : TFeedState = {
   orders: null,
@@ -21,7 +21,7 @@ const publicFeedSubSlice = createSlice({
     setPublicFeedClosed: (state) => ({
       ...initialState, discardedAt: +Date.now(),
     }),
-    onPublicFeedMessage: (state, action: PayloadAction<TWSData>) => ({
+    onPublicFeedMessage: (state, action: PayloadAction<TOrdersData>) => ({
       ...state, ...action.payload,
     }),
     requestPublicFeed: (state) => ({

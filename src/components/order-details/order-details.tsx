@@ -8,16 +8,16 @@ import IngredientPlate from '../ingredient-plate/ingredient-plate';
 
 import odStyles from './order-details.module.css';
 import { TOrderDetailsProps } from '../../types/components.props.types';
-import {TLocationState} from "../../types/types";
+import { TAllIngredients, TLocationState } from '../../types/types';
 
 const OrderDetails : FC<TOrderDetailsProps> = ({ order }) => {
   const {
     createdAt, name, number, status, ingredients,
   } = order;
-  const { all } = useSelector((state) => state.ingredients || {});
+  const { all = {} } = useSelector((state) => state.ingredients || {});
   const uniqueContent = Array.from(new Set(Object.keys(ingredients)));
   const { state } = useLocation<TLocationState>();
-  const total = calculateTotal(all!, ingredients as Array<string>);
+  const total = calculateTotal(all as TAllIngredients, ingredients as Array<string>);
   const makeIngredient = (itm : string) : ReactNode => {
     const ingrs = ingredients as Array<string>;
     if (all && itm && all[itm] && Array.isArray(ingredients)) {

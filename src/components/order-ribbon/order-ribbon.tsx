@@ -7,11 +7,11 @@ import OrderPlate from '../order-plate/order-plate';
 import { TOrderRibbonProps } from '../../types/components.props.types';
 
 const OrderRibbon : FC<TOrderRibbonProps> = ({ feedType }) => {
-  const { orders } = useSelector((state) => state.feed[feedType] ?? []);
+  const { orders = [] } = useSelector((state) => state.feed[feedType]);
 
   return (
     <ul className={`${orStyles.ribbon} custom-scroll`}>
-      {orders!.map((order) => (
+      {orders?.map((order) => (
         <li key={order._id} className={orStyles.ribbon__item}>
           <OrderPlate order={order} feedType={feedType} />
         </li>

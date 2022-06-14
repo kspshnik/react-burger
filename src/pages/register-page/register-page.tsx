@@ -2,7 +2,7 @@ import React, {
   ChangeEventHandler,
   FC,
   FormEventHandler,
-  MouseEventHandler, ReactNode, SyntheticEvent,
+  MouseEventHandler,
   useRef,
   useState,
 } from 'react';
@@ -19,19 +19,8 @@ import {
 } from '../../services/store';
 
 import { nameValidity, emailValidity, passwordValidity } from '../../services/helpers';
-import loginStyles       from './register-page.module.css';
+import loginStyles from './register-page.module.css';
 import registerUserThunk from '../../services/thunks/register-user-thunk';
-
-type TButtonProps = {
-  children: ReactNode,
-  type?: 'secondary' | 'primary',
-  size?: 'small' | 'medium' | 'large';
-  onClick?: (() => void) | ((e: SyntheticEvent) => void);
-  disabled?: boolean;
-  name?: string;
-  htmlType?: 'button' | 'submit' | 'reset';
-};
-
 
 const RegisterPage : FC = () => {
   const { name, email, password } = useSelector((store) => store.forms.register);
@@ -96,8 +85,9 @@ const RegisterPage : FC = () => {
           type='primary'
           htmlType='submit'
           size='medium'
-          disabled={isNameValid && isEmailValid && isPasswordValid}
-          children='Зарегистрироваться' />
+          disabled={isNameValid && isEmailValid && isPasswordValid}>
+          Зарегистрироваться
+        </Button>
       </form>
       <LinkBox linkName='Войти!' linkTo='/login' extraClasses='pt-20' caption='Уже зарегистрированы?' />
     </main>

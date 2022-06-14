@@ -1,6 +1,6 @@
-import { ActionCreatorWithoutPayload, ActionCreatorWithPayload, configureStore } from '@reduxjs/toolkit';
+import { configureStore } from '@reduxjs/toolkit';
 import thunk, { ThunkAction } from 'redux-thunk';
-import { Action, ActionCreator } from 'redux';
+import { Action, ActionCreator, combineReducers } from 'redux';
 
 import apiReducer from './api-slice';
 import formsReducer from './forms-slice';
@@ -30,18 +30,7 @@ import {
 import socketMiddleware from './websocket-middleware';
 
 import { BACKEND_ROUTES, PRIVATE, PUBLIC } from '../../constants';
-import { TWSData } from '../../types/websocket.types';
-
-export type TWSActions = {
-  wsStart: typeof PUBLIC_FEED_START | typeof PRIVATE_FEED_START,
-  wsStop: typeof PUBLIC_FEED_STOP | typeof PRIVATE_FEED_STOP,
-  connectRequest: ActionCreatorWithoutPayload<string>,
-  disconnectRequest: ActionCreatorWithoutPayload<string>,
-  onOpen: ActionCreatorWithoutPayload<string>,
-  onClose: ActionCreatorWithoutPayload<string>,
-  onError: ActionCreatorWithPayload<string, string>,
-  onMessage: ActionCreatorWithPayload<TWSData, string>,
-};
+import { TWSActions } from '../../types/websocket.types';
 
 const publicFeedUrl = `${BACKEND_ROUTES.baseWS}${BACKEND_ROUTES.publicFeed}`;
 const publicFeedActions : TWSActions = {
@@ -66,16 +55,16 @@ const privateFeedActions : TWSActions = {
   onError: wsError,
   onMessage: onPrivateFeedMessage,
 };
-
+export const rootReducer = combineReducers({
+  ingredients: ingredientsReducer,
+  orders: ordersReducer,
+  api: apiReducer,
+  forms: formsReducer,
+  user: userReducer,
+  feed: feedReducer,
+});
 const store = configureStore({
-  reducer: {
-    ingredients: ingredientsReducer,
-    orders: ordersReducer,
-    api: apiReducer,
-    forms: formsReducer,
-    user: userReducer,
-    feed: feedReducer,
-  },
+  reducer: rootReducer,
   middleware: [
     thunk,
     socketMiddleware(publicFeedUrl, publicFeedActions, PUBLIC),
@@ -84,7 +73,7 @@ const store = configureStore({
   devTools: process.env.NODE_ENV !== 'production',
 });
 
-export type RootState = ReturnType<typeof store.getState>;
+export type RootState = ReturnType<typeof rootReducer>;
 export type AppDispatch = typeof store.dispatch;
 
 export type AppThunk<TReturn = void> = ActionCreator<

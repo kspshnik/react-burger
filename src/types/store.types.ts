@@ -1,11 +1,15 @@
+import { ActionCreatorWithoutPayload, ActionCreatorWithPayload } from '@reduxjs/toolkit';
 import {
   TAllIngredients,
   TIngredient,
-  TIngredients,
+  TIngredients, TMoveData,
   TOrder,
   TOrderRecord,
-  TOrders,
+  TOrders, TOrdersData, TUser,
 } from './types';
+import {
+  PRIVATE_FEED_START, PRIVATE_FEED_STOP, PUBLIC_FEED_START, PUBLIC_FEED_STOP,
+} from '../services/store';
 
 export type TIngredientsState = {
   all: TAllIngredients | null,
@@ -65,3 +69,7 @@ export type TAPIState = {
   errorMessage: string,
   successMessage: string,
 };
+type TPayloadType = string | TAllIngredients | TIngredient | TOrder | TOrderRecord
+| TMoveData | TOrdersData | TUser;
+export type TActionType =
+  ReturnType<ActionCreatorWithoutPayload> | ReturnType<ActionCreatorWithPayload<TPayloadType>>;

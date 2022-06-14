@@ -13,7 +13,7 @@ import { placeOrderThunk } from '../../services/thunks';
 import { insertInterior, setBun } from '../../services/store';
 import { BUN, INGREDIENT } from '../../constants';
 import DropZone from '../drop-zone/drop-zone';
-import { IDropHandler, MyLocation, TLocationState } from '../../types/types';
+import { IDropHandler, TLocationState } from '../../types/types';
 
 const BurgerConstructor : FC = () => {
   const { all } = useSelector((store) => store.ingredients);

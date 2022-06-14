@@ -1,15 +1,16 @@
-import React, {ChangeEventHandler, FC, FormEventHandler, useState} from 'react';
-
-import { useDispatch, useSelector } from '../../services/store/hooks';
+import React, {
+  ChangeEventHandler, FC, FormEventHandler, useState,
+} from 'react';
 
 import { Button, EmailInput, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
+import { useDispatch, useSelector } from '../../services/store/hooks';
 
 import LinkBox from '../../components/link-box/link-box';
 
-import loginStyles                                     from './login-page.module.css';
-import { loginUserThunk }                              from '../../services/thunks';
+import loginStyles from './login-page.module.css';
+import { loginUserThunk } from '../../services/thunks';
 import { resetLoginForm, setLoginEmail, setLoginPass } from '../../services/store';
-import { emailValidity, passwordValidity }             from '../../services/helpers';
+import { emailValidity, passwordValidity } from '../../services/helpers';
 
 const LoginPage : FC = () => {
   const { email, password } = useSelector((state) => state.forms.login);
@@ -46,7 +47,9 @@ const LoginPage : FC = () => {
           <EmailInput name='email' value={email} onChange={onEmailChange} />
           <PasswordInput value={password} name='password' onChange={onPasswordChange} />
         </fieldset>
-        <Button type='primary' htmlType='submit' size='medium' disabled={!(isEmailValid && isPasswordValid)} children='Войти' />
+        <Button type='primary' htmlType='submit' size='medium' disabled={!(isEmailValid && isPasswordValid)}>
+          Войти
+        </Button>
       </form>
       <LinkBox linkName='Зарегистрироваться' linkTo='/register' extraClasses='pt-20' caption='Вы - новый пользователь?' />
       <LinkBox linkName='Забыли пароль?' linkTo='/forgot-password' extraClasses='pt-4' caption='Восстановить пароль' />

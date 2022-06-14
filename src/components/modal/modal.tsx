@@ -1,5 +1,5 @@
 import React, {
-  FC, ReactNode, useEffect, useMemo,
+  FC, useEffect, useMemo,
 } from 'react';
 
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';

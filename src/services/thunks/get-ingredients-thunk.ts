@@ -1,3 +1,5 @@
+import { batch } from 'react-redux';
+import { AxiosError } from 'axios';
 import { fetchIngredients } from '../api';
 import {
   ingredientsRequested, ingredientsReceived, ingredientsFailed, setIngredients, refreshFailed,
@@ -5,9 +7,7 @@ import {
 import { AppThunk } from '../store/store';
 import { TAllIngredients } from '../../types/types';
 import { TAPIError } from '../../types/api.types';
-import {batch} from "react-redux";
-import {getAxiosErrorMessage} from "../helpers";
-import {AxiosError} from "axios";
+import { getAxiosErrorMessage } from '../helpers';
 
 const getIngredientsThunk : AppThunk = () => async (dispatch) => {
   dispatch(ingredientsRequested());

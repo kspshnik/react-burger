@@ -1,4 +1,4 @@
-import React, {FC, useRef} from 'react';
+import React, { FC, useRef } from 'react';
 
 import { useInView } from 'react-intersection-observer';
 
@@ -7,12 +7,12 @@ import { useDispatch } from '../../services/store/hooks';
 import biStyles from './burger-ingredients.module.css';
 
 import ScrollArea from '../scroll-area/scroll-area';
-import DropZone   from '../drop-zone/drop-zone';
+import DropZone from '../drop-zone/drop-zone';
 
 import IngredientsGrid from '../ingredients-grid/ingredients-grid';
-import { ORDER }        from '../../constants';
+import { ORDER } from '../../constants';
 import { dropInterior } from '../../services/store';
-import {TIngredient} from "../../types/types";
+import { TIngredient } from '../../types/types';
 
 const BurgerIngredients : FC = () => {
   const baseRef = useRef<HTMLDivElement>(null);
