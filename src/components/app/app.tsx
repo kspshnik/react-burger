@@ -13,8 +13,6 @@ import {
   PUBLIC,
 } from '../../constants';
 
-
-
 import {
   clearError,
   releaseIngredient,
@@ -53,11 +51,11 @@ import OrderAccept from '../order-accept/order-accept';
 import ToolTip from '../tooltip/tooltip';
 
 import appStyles from './app.module.css';
-import { TLocationState } from '../../types/types';
+import { TLocation, TLocationState } from '../../types/types';
 
 const App : FC = () => {
   const dispatch = useDispatch();
-  const history = useHistory();
+  const history = useHistory<TLocationState>();
   const location = useLocation<TLocationState>();
   const background = location.state && location.state.background;
   const { loggedIn } = useSelector((state) => state.user);
@@ -69,11 +67,17 @@ const App : FC = () => {
   const { errorMessage, successMessage } = useSelector((state) => state.api);
   const handleIngredientDetailsClose = () => {
     dispatch(releaseIngredient());
-    history.push({ ...location.state.background, state: { background: null } });
+    history.push({
+      ...location.state.background as TLocationState | TLocation,
+      state: { background: null },
+    });
   };
   const orderDetailsClose = () => {
     dispatch(releaseOrder());
-    history.push({ ...location.state.background, state: { background: null } });
+    history.push({
+      ...location.state.background as TLocationState | TLocation,
+      state: { background: null },
+    });
   };
   const handleOrderAcceptClose = () => dispatch(archiveOrder());
   const handleErrorClose = () => dispatch(clearError());
@@ -114,7 +118,7 @@ const App : FC = () => {
       <div className={appStyles.wrapper}>
         <AppHeader />
 
-        <Switch location={background || location}>
+        <Switch location={background as TLocation || location}>
           <NotLoggedRoute path='/login'>
             <LoginPage />
           </NotLoggedRoute>

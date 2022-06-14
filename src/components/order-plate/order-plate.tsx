@@ -12,11 +12,12 @@ import ContentRibbon from '../content-ribbon/content-ribbon';
 import { calculateTotal, prepareDateTime, statusName } from '../../services/helpers';
 import { captureOrder } from '../../services/store';
 import { TOrderPlateProps } from '../../types/components.props.types';
+import { TLocationState } from '../../types/types';
 
 const OrderPlate : FC<TOrderPlateProps> = ({ order, feedType }) => {
   const dispatch = useDispatch();
-  const location = useLocation();
-  const history = useHistory();
+  const location = useLocation<TLocationState>();
+  const history = useHistory<TLocationState>();
 
   const {
     // eslint-disable-next-line @typescript-eslint/naming-convention

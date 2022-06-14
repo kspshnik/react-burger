@@ -9,7 +9,7 @@ import { clearOrderNotFound } from '../../services/store';
 import { TLocationState } from '../../types/types';
 
 const NotFoundPage = () => {
-  const history = useHistory();
+  const history = useHistory<TLocationState>();
   const location = useLocation<TLocationState>();
   const dispatch = useDispatch();
 
@@ -20,13 +20,13 @@ const NotFoundPage = () => {
   }, [dispatch]);
 
   const onClickBack = () => {
-    history.push({ pathname: location.state.wayback || '/', state: { reasonFor404: null, wayback: null } });
+    history.push({ pathname: location.state.wayback as string || '/', state: { reasonFor404: null, wayback: null } });
   };
 
   return (
     <main className={nfStyles.main}>
       <h1 className='text text_type_digits-large text_color_error pb-15'>404</h1>
-      <p className='text text_type_main-large text_color_primary pb-25'>{`В нашей бургерной нет такого ${reasonFor404}а! :(`}</p>
+      <p className='text text_type_main-large text_color_primary pb-25'>{`В нашей бургерной нет такого ${reasonFor404 as string}а! :(`}</p>
       <Button type='primary' htmlType='button' size='large' name='back' onClick={onClickBack}>
         {`${location?.state?.wayback ? 'Возвращаемся назад!' : 'На главную!'}`}
       </Button>

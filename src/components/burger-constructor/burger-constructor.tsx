@@ -13,7 +13,7 @@ import { placeOrderThunk } from '../../services/thunks';
 import { insertInterior, setBun } from '../../services/store';
 import { BUN, INGREDIENT } from '../../constants';
 import DropZone from '../drop-zone/drop-zone';
-import { IDropHandler } from '../../types/types';
+import { IDropHandler, MyLocation, TLocationState } from '../../types/types';
 
 const BurgerConstructor : FC = () => {
   const { all } = useSelector((store) => store.ingredients);
@@ -21,8 +21,8 @@ const BurgerConstructor : FC = () => {
   const { loggedIn } = useSelector((state) => state.user);
   const { isOrderSent } = useSelector((state) => state.api);
   const dispatch = useDispatch();
-  const history = useHistory();
-  const location = useLocation();
+  const history = useHistory<TLocationState>();
+  const location = useLocation<TLocationState>();
 
   const isEmpty = () => !(!!bun || choice.length > 0);
 

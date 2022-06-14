@@ -8,7 +8,7 @@ import IngredientDetails from '../../components/ingredient-details/ingredient-de
 import { REASON_404_INGREDIENT } from '../../constants';
 
 const IngredientPage = () => {
-  const history = useHistory();
+  const history = useHistory<TLocationState>();
   const { id } = useParams<{ id: string }>();
   const dispatch = useDispatch();
 

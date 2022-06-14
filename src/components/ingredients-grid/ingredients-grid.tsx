@@ -23,9 +23,9 @@ const IngredientsGrid : FC<TIngredientsGridProps> = ({ type }) => {
     return Object.values(all);
   }, [all]);
 
-  const count = (id : string) => {
+  const count = (id : string) : number => {
     let preCount = order?.filter((item) => item?._id === id).length;
-    if (all![id].type === 'bun' && order?.map((item) => item?._id).includes(id)) {
+    if (!!all && all[id].type === 'bun' && order?.map((item) => item?._id).includes(id)) {
       preCount += 1;
     }
     return preCount;

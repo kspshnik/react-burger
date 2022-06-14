@@ -1,4 +1,4 @@
-import React, {ChangeEventHandler, FormEventHandler, useState} from 'react';
+import React, { ChangeEventHandler, FormEventHandler, useState } from 'react';
 import {
   Redirect, useLocation,
 } from 'react-router-dom';
@@ -8,18 +8,19 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import { useDispatch, useSelector } from '../../services/store/hooks';
-import LinkBox                      from '../../components/link-box/link-box';
+import LinkBox from '../../components/link-box/link-box';
 
-import resetStyles                                    from './reset-page.module.css';
+import resetStyles from './reset-page.module.css';
 import { resetResetForm, setResetCode, setResetPass } from '../../services/store';
 import { passwordValidity } from '../../services/helpers';
-import resetPasswordThunk   from '../../services/thunks/reset-password-thunk';
+import resetPasswordThunk from '../../services/thunks/reset-password-thunk';
+import { TLocationState } from '../../types/types';
 
 const ResetPage = () => {
   const dispatch = useDispatch();
   const { code, password } = useSelector((store) => store.forms.reset);
   const [isPasswordValid, setPasswordValidity] = useState<boolean>(false);
-  const location = useLocation();
+  const location = useLocation<TLocationState>();
   const onSubmit : FormEventHandler<HTMLFormElement> = (evt) => {
     evt.preventDefault();
     dispatch(resetPasswordThunk());

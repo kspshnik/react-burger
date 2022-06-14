@@ -1,19 +1,19 @@
-import React, {FC} from 'react';
+import React, { FC } from 'react';
 
 import { useHistory, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from '../../services/store/hooks';
 
 import LoaderProtector from '../../components/loader-protector/loader-protector';
-import CenterInfo                            from '../../components/center-info/center-info';
-import OrderDetails                          from '../../components/order-details/order-details';
+import CenterInfo from '../../components/center-info/center-info';
+import OrderDetails from '../../components/order-details/order-details';
 import { PRIVATE, PUBLIC, REASON_404_ORDER } from '../../constants';
-import { getOrderThunk }                     from '../../services/thunks';
-import {TFeedType} from "../../types/websocket.types";
-import {TLocationState} from "../../types/types";
+import { getOrderThunk } from '../../services/thunks';
+import { TFeedType } from '../../types/websocket.types';
+import { TLocationState } from '../../types/types';
 
 type TOrderPageProps = {
   feedType: TFeedType,
-}
+};
 
 const OrderPage : FC<TOrderPageProps> = ({ feedType }) => {
   const location = useLocation<TLocationState>();
@@ -56,6 +56,5 @@ const OrderPage : FC<TOrderPageProps> = ({ feedType }) => {
     </LoaderProtector>
   );
 };
-
 
 export default OrderPage;

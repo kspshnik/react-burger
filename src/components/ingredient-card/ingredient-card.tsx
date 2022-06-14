@@ -20,7 +20,7 @@ const IngredientCard : FC<TIngredientCardProps> = ({ data, count = 0 }) => {
   } = data;
   const dispatch = useDispatch();
   const location = useLocation<TLocationState>();
-  const history = useHistory();
+  const history = useHistory<TLocationState>();
   const [{ isOnTheWay }, dragRef] = useDrag(() => ({
     type: INGREDIENT,
     item: { ...data },

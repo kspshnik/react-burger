@@ -39,7 +39,7 @@ const RegisterPage : FC = () => {
   const [isEmailValid, setEmailValidity] = useState<boolean>(false);
   const [isPasswordValid, setPasswordValidity] = useState<boolean>(false);
 
-  //  const history = useHistory();
+  //  const history = useHistory<TLocationState>();
   const dispatch = useDispatch();
   const inputRef = useRef<HTMLInputElement>(null);
 

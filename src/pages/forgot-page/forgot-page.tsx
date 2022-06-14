@@ -1,19 +1,20 @@
-import React, {ChangeEventHandler, FC, FormEventHandler} from 'react';
+import React, { ChangeEventHandler, FC, FormEventHandler } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { Button, EmailInput } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import { useDispatch, useSelector } from '../../services/store/hooks';
-import LinkBox                      from '../../components/link-box/link-box';
+import LinkBox from '../../components/link-box/link-box';
 
-import forgotStyles                        from './forgot-page.module.css';
+import forgotStyles from './forgot-page.module.css';
 import { resetForgotForm, setForgotEmail } from '../../services/store';
-import { requestCodeThunk }                from '../../services/thunks';
+import { requestCodeThunk } from '../../services/thunks';
+import { TLocationState } from '../../types/types';
 
 const ForgotPage : FC = () => {
   const { email } = useSelector((state) => state.forms.forgot);
   const dispatch = useDispatch();
-  const history = useHistory();
+  const history = useHistory<TLocationState>();
 
   const onSubmit : FormEventHandler<HTMLFormElement> = (evt) => {
     evt.preventDefault();

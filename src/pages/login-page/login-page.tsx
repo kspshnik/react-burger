@@ -43,10 +43,10 @@ const LoginPage : FC = () => {
       <form className={`${loginStyles.form}`} onSubmit={onSubmit}>
         <h2 className={`${loginStyles.form__heading} text_type_main - medium`}>Вход</h2>
         <fieldset className={`${loginStyles.form__fieldset} pt-3 pb-3 mb-6`}>
-          <EmailInput className='pb-6' name='email' value={email} onChange={onEmailChange} />
-          <PasswordInput value={password} name='password' onChange={onPasswordChange} className='pb-6' />
+          <EmailInput name='email' value={email} onChange={onEmailChange} />
+          <PasswordInput value={password} name='password' onChange={onPasswordChange} />
         </fieldset>
-        <Button type='primary' htmlType='submit' size='medium' disabled={!(isEmailValid && isPasswordValid) children='Войти'} />
+        <Button type='primary' htmlType='submit' size='medium' disabled={!(isEmailValid && isPasswordValid)} children='Войти' />
       </form>
       <LinkBox linkName='Зарегистрироваться' linkTo='/register' extraClasses='pt-20' caption='Вы - новый пользователь?' />
       <LinkBox linkName='Забыли пароль?' linkTo='/forgot-password' extraClasses='pt-4' caption='Восстановить пароль' />

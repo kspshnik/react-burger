@@ -17,7 +17,6 @@ const ContentRibbon : FC<TContentRibbonProps> = ({ content }) => {
       {showContent.map((item : TRibbonItemIngredient) => {
         if (!ingredients || !ingredients[item._id]) return null;
         return (
-        // eslint-disable-next-line react/no-array-index-key
           <li key={item.key} className={crStyles.ribbon__item}>
             <img
               className={crStyles.ribbon_pic}

@@ -7,11 +7,12 @@ import { useDispatch } from '../../services/store/hooks';
 import { logoutUserThunk } from '../../services/thunks';
 
 import psStyles from './profile-sidebar.module.css';
+import { TLocationState } from '../../types/types';
 
 const ProfileSidebar = () => {
   const dispatch = useDispatch();
-  const history = useHistory();
-  const { pathname } = useLocation();
+  const history = useHistory<TLocationState>();
+  const { pathname } = useLocation<TLocationState>();
 
   const isProfile = () => pathname === '/profile';
   const isOrders = () => pathname.length > 9 && pathname.startsWith('/profile/orders');

@@ -7,9 +7,10 @@ import {
 
 import { Link, useLocation } from 'react-router-dom';
 import headerStyles from './app-header.module.css';
+import { TLocationState } from '../../types/types';
 
 const AppHeader : FC = () => {
-  const { pathname } = useLocation();
+  const { pathname } = useLocation<TLocationState>();
   const isMain = () => pathname === '/' || pathname.startsWith('/ingredients');
   const isProfile = () => pathname.startsWith('/profile');
   const isFeed = () => pathname.startsWith('/feed');
