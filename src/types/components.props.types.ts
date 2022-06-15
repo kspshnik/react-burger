@@ -100,7 +100,7 @@ export type TModalOverlayProps = {
 
 export type TRouteProps = {
   children: TChildrenPropType,
-  [key:string]: any;
+  [key:string]: unknown;
 };
 
 export type TOrderDetailsProps = {

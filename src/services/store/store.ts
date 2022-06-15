@@ -2,31 +2,40 @@ import { configureStore } from '@reduxjs/toolkit';
 import thunk, { ThunkAction } from 'redux-thunk';
 import { Action, ActionCreator, combineReducers } from 'redux';
 
-import apiReducer from './api-slice';
+import apiReducer, { wsError } from './api-slice';
 import formsReducer from './forms-slice';
 import ingredientsReducer from './ingredients-slice';
-import feedReducer from './feed-slice';
-import ordersReducer from './orders-slice';
-import userReducer from './user-slice';
 
-import {
+import feedReducer, {
   PRIVATE_FEED_START,
   PRIVATE_FEED_STOP,
   PUBLIC_FEED_START,
   PUBLIC_FEED_STOP,
-  requestPublicFeed,
-  requestPrivateFeed,
-  discardPrivateFeed,
+} from './feed-slice';
+
+import ordersReducer from './orders-slice';
+import userReducer from './user-slice';
+
+import {
   discardPublicFeed,
-  onPrivateFeedMessage,
   onPublicFeedMessage,
-  setPublicFeedOpened,
+  requestPublicFeed,
   setPublicFeedClosed,
+  setPublicFeedOpened,
+} from './public-feed-sub-slice';
+
+import {
+  discardPrivateFeed,
+  onPrivateFeedMessage,
+  requestPrivateFeed,
   setPrivateFeedClosed,
   setPrivateFeedOpened,
-  wsError,
-} from './index';
+} from './private-feed-sub-slice';
 
+// Рецепт, указанный на сайте Redux: https://redux.js.org/usage/usage-with-typescript#type-checking-middleware
+// не сработал, по-прежнему выдаёт ошибку, хотя сделал ровно как написали:
+// определил RootState от rootReducer, а не от getStore()
+// eslint-disable-next-line import/no-cycle
 import socketMiddleware from './websocket-middleware';
 
 import { BACKEND_ROUTES, PRIVATE, PUBLIC } from '../../constants';

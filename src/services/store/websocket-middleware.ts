@@ -1,11 +1,23 @@
 // eslint-disable @typescript-eslint/unbound-method
 import { Middleware } from 'redux';
+import { ActionCreatorWithoutPayload, ActionCreatorWithPayload } from '@reduxjs/toolkit';
 import { PRIVATE, WS_THROTTLE_THRESHOLD } from '../../constants';
 import { jwt } from '../api';
-import { rootReducer } from './store';
+// Рецепт, указанный на сайте Redux: https://redux.js.org/usage/usage-with-typescript#type-checking-middleware
+// не сработал, по-прежнему выдаёт ошибку, хотя сделал ровно как написали:
+// определил RootState от rootReducer, а не от getStore()
+// eslint-disable-next-line import/no-cycle
+import { RootState } from './store';
 import { TFeedType, TWebSocket, TWSActions } from '../../types/websocket.types';
 import { TAPIError, TAPIWSResponseData } from '../../types/api.types';
-import { TActionType } from '../../types/store.types';
+import {
+  TAllIngredients, TIngredient, TMoveData, TOrder, TOrderRecord, TOrdersData, TUser,
+} from '../../types/types';
+
+type TPayloadType = string | TAllIngredients | TIngredient | TOrder | TOrderRecord
+| TMoveData | TOrdersData | TUser;
+export type TActionType =
+  ReturnType<ActionCreatorWithoutPayload> | ReturnType<ActionCreatorWithPayload<TPayloadType>>;
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 const socketMiddleware = (
@@ -13,7 +25,7 @@ const socketMiddleware = (
   wsActions : TWSActions,
   feedType : TFeedType,
   // eslint-disable-next-line @typescript-eslint/ban-types
-) : Middleware<{}, ReturnType<typeof rootReducer>> => {
+) : Middleware<{}, RootState> => {
   let socket : TWebSocket = null;
   return (store) => (next) => (action: TActionType) => {
     // eslint-disable-next-line @typescript-eslint/unbound-method

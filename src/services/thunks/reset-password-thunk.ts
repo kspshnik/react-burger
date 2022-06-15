@@ -2,7 +2,7 @@ import { AxiosError } from 'axios';
 import { resetPassword } from '../api';
 import { passwordResetFailed, passwordResetSucceed, resetResetForm } from '../store';
 import { AppThunk } from '../store/store';
-import { TAPIError, TAPIPostOrderRequestData, TAPIResetRequestData } from '../../types/api.types';
+import { TAPIError, TAPIResetRequestData } from '../../types/api.types';
 import { getAxiosErrorMessage } from '../helpers';
 
 const resetPasswordThunk : AppThunk = () => async (dispatch, getState) => {

@@ -19,7 +19,7 @@ const privateFeedSubSlice = createSlice({
       ...state, isOpen: true, discardedAt: 0, requestedAt: +Date.now(),
     }),
     setPrivateFeedClosed: (state) => ({
-      ...initialState, discardedAt: +Date.now(),
+      ...state, ...initialState, discardedAt: +Date.now(),
     }),
     onPrivateFeedMessage: (state, action: PayloadAction<TOrdersData>) => ({
       ...state, ...action.payload,

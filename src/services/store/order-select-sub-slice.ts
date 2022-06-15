@@ -14,7 +14,7 @@ const orderSelectSubSlice = createSlice({
       ...state, order: { ...action.payload },
     }),
     releaseOrder: (state) => ({
-      ...initialState,
+      ...state, ...initialState,
     }),
   },
 });

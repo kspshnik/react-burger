@@ -19,7 +19,7 @@ const publicFeedSubSlice = createSlice({
       ...state, isOpen: true, discardedAt: 0, requestedAt: +Date.now(),
     }),
     setPublicFeedClosed: (state) => ({
-      ...initialState, discardedAt: +Date.now(),
+      ...state, ...initialState, discardedAt: +Date.now(),
     }),
     onPublicFeedMessage: (state, action: PayloadAction<TOrdersData>) => ({
       ...state, ...action.payload,
