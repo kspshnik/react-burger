@@ -62,7 +62,6 @@ const BurgerIngredients : FC = () => {
             }}>
             Соусы
           </Tab>
-          {/* TODO: UILib */}
           <Tab
             active={mainsInView || (!saucesInView && !bunsInView)}
             value='Начинки'

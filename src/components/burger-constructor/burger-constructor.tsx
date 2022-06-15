@@ -98,7 +98,6 @@ const BurgerConstructor : FC = () => {
           </p>
           <CurrencyIcon type='primary' />
         </div>
-        {/* TODO: UILib */}
         <Button
           type='primary'
           size='medium'
