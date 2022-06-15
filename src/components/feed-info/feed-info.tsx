@@ -17,8 +17,8 @@ const FeedInfo = () => {
   return (
     <section className={fiStyles.info}>
       <InfoGrid
-        pendingOrders={pendingOrders.slice(0, 15)}
-        doneOrders={doneOrders.slice(0, 15)} />
+        pendingOrders={pendingOrders}
+        doneOrders={doneOrders} />
       <InfoPlate title='Выполнено за все время:' quantity={total} />
       <InfoPlate title='Выполнено за сегодня:' quantity={totalToday} />
     </section>
