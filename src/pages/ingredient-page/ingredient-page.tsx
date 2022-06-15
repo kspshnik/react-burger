@@ -6,6 +6,7 @@ import { selectIngredient } from '../../services/store';
 import ipStyles from './ingredient-page.module.css';
 import IngredientDetails from '../../components/ingredient-details/ingredient-details';
 import { REASON_404_INGREDIENT } from '../../constants';
+import { TLocationState } from '../../types/types';
 
 const IngredientPage = () => {
   const history = useHistory<TLocationState>();
