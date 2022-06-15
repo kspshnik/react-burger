@@ -16,21 +16,12 @@ const IngredientPage = () => {
 
   const selected = useSelector((store) => store.ingredients.selected);
   const all = useSelector((store) => store.ingredients.all);
-  const isPage = () => {
-    const path = location.pathname ?? '/';
-    const { background = null } = location.state;
-    if (!path.includes(id) || background === null || !location.state) return false;
-    return true;
-  };
   React.useEffect(() => {
-    if (all && all[id] && (!location.state || !!location.state?.background)) {
+    if (all && all[id] && !location.state) {
       dispatch(selectIngredient(all[id]));
-      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-      console.log(`Checkup calculated as '${!location.state || !!location.state?.background}',\nso selectIngredient() from IngredientPage has been dispatched!`);
-      console.dir(location);
     } else if (all && !all[id]) {
       history.push({ pathname: '/404', state: { reasonFor404: REASON_404_INGREDIENT } });
-    }
+    } else if (location.state && location.state.background === null) history.push({ pathname: '/' });
   }, [all, selected, id, history, dispatch, location.state, location]);
 
   return (

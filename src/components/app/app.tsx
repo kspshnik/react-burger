@@ -66,21 +66,17 @@ const App : FC = () => {
   const isPrivateFeedOpen = useSelector((state) => state.feed.private.isOpen);
   const { errorMessage, successMessage } = useSelector((state) => state.api);
 
-  useEffect(() => {
+  /*  useEffect(() => {
     console.log('Location has changed!');
     console.dir(location);
-  }, [location]);
+  }, [location]); */
 
   const handleIngredientDetailsClose = () => {
-    console.log('Closing ings modal...');
-    console.dir(location);
     dispatch(releaseIngredient());
     history.push({
       ...location.state.background as TLocationState | TLocation,
       state: { background: null },
     });
-    console.log('history pushed!');
-    console.dir(location);
   };
   const orderDetailsClose = () => {
     dispatch(releaseOrder());
