@@ -117,10 +117,7 @@ export interface MyLocation {
   hash: string;
   key?: string | undefined;
 }
-export type TLocationStateItemType = string | null;
-export type TLocationStateType = {
-  [key: string]: string | null,
-};
+
 export type TLocation = ReturnType<typeof useLocation>;
 export type TLocationState = {
   [key: string]: string | null | TLocationState | TLocation,

@@ -1,5 +1,5 @@
 import React, {
-  FC, useEffect, useMemo,
+  FC, useMemo,
 } from 'react';
 
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -13,17 +13,7 @@ const Modal : FC<TModalProps> = ({
   onClose, title, children,
 }) => {
   const portalRoot = useMemo(() => document.getElementById('modals'), []) as Element;
-  useEffect(() => {
-    const handleEscClose = (evt : KeyboardEvent) => {
-      if (evt.key === 'Escape') {
-        onClose();
-      }
-    };
-    document.addEventListener('keydown', handleEscClose);
-    return () => {
-      document.removeEventListener('keydown', handleEscClose);
-    };
-  }, [onClose, portalRoot]);
+
   const makeCaption = () => {
     if (title) {
       return (
