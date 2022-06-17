@@ -72,18 +72,18 @@ const App : FC = () => {
   }, [location]); */
 
   const handleIngredientDetailsClose = () => {
-    dispatch(releaseIngredient());
     history.push({
       ...location.state.background as TLocationState | TLocation,
       state: { background: null },
     });
+    dispatch(releaseIngredient());
   };
   const orderDetailsClose = () => {
-    dispatch(releaseOrder());
     history.push({
       ...location.state.background as TLocationState | TLocation,
       state: { background: null },
     });
+    dispatch(releaseOrder());
   };
   const handleOrderAcceptClose = () => dispatch(archiveOrder());
   const handleErrorClose = () => dispatch(clearError());
