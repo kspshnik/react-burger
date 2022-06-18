@@ -21,7 +21,7 @@
     "react-dom": "^16.8.6",
     "react-intersection-observer": "^8.33.0",
     "react-redux": "^7.2.6",
-    "react-router-dom": "^5.2.1",
+    "react-router-dom": "^5.3.3",
     "redux": "^4.1.2",
     "redux-thunk": "^2.4.1",
     "redux-toolkit": "^1.1.2",
