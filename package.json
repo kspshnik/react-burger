@@ -5,7 +5,7 @@
   "homepage": "./",
   "main": "src/index.tsx",
   "dependencies": {
-    "@reduxjs/toolkit": "^1.8.1",
+    "@reduxjs/toolkit": "^1.9.5",
     "@sentry/react": "^6.19.7",
     "@sentry/tracing": "^6.19.6",
     "@testing-library/jest-dom": "^5.16.2",
