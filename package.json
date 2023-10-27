@@ -12,7 +12,7 @@
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
     "@ya.praktikum/react-developer-burger-ui-components": "^1.13.1",
-    "axios": "^0.27.2",
+    "axios": "^1.6.0",
     "is-email": "^1.0.2",
     "nanoid": "^3.2.0",
     "react": "^16.8.6",
